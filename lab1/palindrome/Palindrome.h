@@ -1,0 +1,8 @@
+//
+// Created by adamjaku on 28.02.17.
+//
+
+#ifndef JIMP_EXERCISES_PALINDROME_H
+#define JIMP_EXERCISES_PALINDROME_H
+
+#endif //JIMP_EXERCISES_PALINDROME_H

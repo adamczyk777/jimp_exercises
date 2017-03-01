@@ -9,7 +9,7 @@ bool is_palindrome(std::string str) {
     int j = length - 1;
     while(i <= length / 2 && j >= length / 2) {
         if(str[i] != str[j]) return false;
-        ++i;
+        i++;
         j--;
     }
     return true;

@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <iostream>
 
-uint64_t DoubleBasePalindromes(int max_value_exclusive);
 bool isPalindrome(int number, int systemBase);
+uint64_t DoubleBasePalindromes(int max_value_exclusive);
 
 #endif //JIMP_EXERCISES_DOUBLEBASEPALINDROMES_H

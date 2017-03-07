@@ -18,7 +18,7 @@ int **NewArray2D(int n_rows, int n_columns) {
     return array;
 }
 
-void FillArray2D(int **array, int n_rows, int n_columns){
+void FillArray2D(int n_rows, int n_columns, int **array){
     int num = 1;
     for (int j=0;j<n_rows;j++){
         for (int k=0;k<n_columns;k++){

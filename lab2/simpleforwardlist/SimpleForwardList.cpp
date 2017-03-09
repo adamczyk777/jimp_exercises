@@ -31,15 +31,16 @@ void DestroyList(ForwardList *list) {
 }
 
 void Append(ForwardList *list, ForwardList *tail) {
-    // przechodzenie na koniec:
     if(list == NULL) {
         list = CreateNode(tail->value);
     }
-        while (list->next != NULL) {
-            list = list->next;
-        }
-        list->next = tail;
-        if (tail != NULL) {
-            tail->next = NULL;
-        }
+    // przechodzenie na koniec:
+    while(list->next != NULL) {
+        list = list->next;
     }
+    // dopisywanie
+    list->next = tail;
+    if(tail != NULL) {
+        tail->next = NULL;
+    }
+}

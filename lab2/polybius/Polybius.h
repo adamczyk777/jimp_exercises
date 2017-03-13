@@ -10,7 +10,7 @@ using namespace std;
 #include <string>
 #include <iostream>
 #include <map>
-
+#include <vector>
 
 string PolybiusCrypt(string message);
 string PolybiusDecrypt(string crypted);

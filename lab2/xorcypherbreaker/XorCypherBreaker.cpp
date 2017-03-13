@@ -9,6 +9,7 @@ std::string XorCypherBreaker(const std::vector<char> &cryptogram, // std::string
                              const std::vector<std::string> &dictionary) {
     std::vector<char> decoded;
     std::string message;
+    std::string key;
     for(int i=97;i<=122;i++) {
         for(int j=97;j<=122;j++) {
             for(int k=97;k<=122;k++) {
@@ -22,21 +23,19 @@ std::string XorCypherBreaker(const std::vector<char> &cryptogram, // std::string
                         decoded.emplace_back(cryptogram[l+2] ^ k);
                     }
                 }
-                std::cout << "key: " << char(i) << char(j) << char(k) << " message: ";
-                for(int h=0;h<decoded.size();h++) {
-                    std::cout << decoded[h];
-                }
+                /*std::cout << "key: " << char(i) << char(j) << char(k) << " message: ";
+
                 std::cout << std::endl;
                 /*if(find(dictionary.begin(),dictionary.end(),"of") != dictionary.end()) {// zeby to kulawe rozwiazanie dzialalo to szyfr musialby bys vectorem stringow, a nie charow...
                     std::string key = char(i) + char(j) + char(k);
                     std::cout << key;
                 }*/
-                /*if(strstr(decoded, " the ")) {
-                    std::string key = char(i) + char(j) + char(k);
-                    std::cout << key;
-                }*/
+                const char* word = " the ";
+                if(std::search(decoded.begin(), decoded.end(), word, word + strlen(word)) != decoded.end()) {
+                    key = "" + char(i) + char(j) + char(k);
+                }
             }
         }
     }
-    return message;
+    return key;
 }

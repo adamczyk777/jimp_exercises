@@ -9,8 +9,9 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <cstring>
 
-std::string XorCypherBreaker(const std::vector<char> &cryptogram,
+std::string XorCypherBreaker(const std::vector<char> &cryptogram, // std::string
                              int key_length,
                              const std::vector<std::string> &dictionary);
 

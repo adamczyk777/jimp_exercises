@@ -9,6 +9,8 @@ using namespace std;
 
 #include <string>
 #include <iostream>
+#include <map>
+
 
 string PolybiusCrypt(string message);
 string PolybiusDecrypt(string crypted);

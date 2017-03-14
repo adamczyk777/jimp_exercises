@@ -38,8 +38,10 @@ int GreatestProduct(const std::vector<int> &numbers, int k) {
         std::cout << halfSorted[i] << " ";
     }
     int maxProduct = 1; // w toku
-    for(auto n: halfSorted) {
-        maxProduct *= n;
+    for(int i=0;i<halfSorted.size();i++) {
+        if(i > halfSorted.size()-k) {
+            maxProduct *= halfSorted[i];
+        }
     }
     return maxProduct;
 

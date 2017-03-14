@@ -31,7 +31,7 @@ unsigned int minimaltimedifference::MinimalTimeDifference(std::vector<std::strin
             j--;
         }
     }
-    unsigned int minDifference = 100000;
+    unsigned int minDifference = 100000; // jakas maksymalna liczba, na szybko taka
     for(int i=0;i<minutes.size()-1;i++) {
            if(minDifference > (minutes[i+1] - minutes[i])) {
                minDifference = minutes[i+1] - minutes[i];

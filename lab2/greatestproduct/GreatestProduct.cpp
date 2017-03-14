@@ -46,4 +46,3 @@ int GreatestProduct(const std::vector<int> &numbers, int k) {
     return maxProduct;
 
 }
-

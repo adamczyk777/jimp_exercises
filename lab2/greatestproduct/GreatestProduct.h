@@ -6,6 +6,9 @@
 #define JIMP_EXERCISES_GREATESTPRODUCT_H
 
 #include <vector>
+#include <iostream>
+#include <algorithm>
+#include <utility>
 
 using namespace std;
 

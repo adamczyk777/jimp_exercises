@@ -6,6 +6,9 @@
 
 unsigned int minimaltimedifference::ToMinutes(std::string time_HH_MM) {
     std::string hours = time_HH_MM.substr(0,2);
+    if(time_HH_MM.length() == 4) {
+        std::string hours = time_HH_MM.substr(0,1);
+    }
     std::string minutes = time_HH_MM.substr(3,2);
     unsigned int hoursNumber = stoi(hours);
     unsigned int minutesNumber = hoursNumber * 60 + stoi(minutes);
@@ -18,8 +21,8 @@ unsigned int minimaltimedifference::MinimalTimeDifference(std::vector<std::strin
         minutes.emplace_back(minimaltimedifference::ToMinutes(n));
     }
     // sortowanko:
-    int j, tmp;
-    for(int i=0;i<minutes.size();i++) {
+    unsigned int j, tmp;
+    for(unsigned int i=0;i<minutes.size();i++) {
         j = i;
         while (j > 0 && minutes[j] < minutes[j-1]){
             tmp = minutes[j];
@@ -30,11 +33,12 @@ unsigned int minimaltimedifference::MinimalTimeDifference(std::vector<std::strin
     }
     unsigned int minDifference = 100000;
     for(int i=0;i<minutes.size()-1;i++) {
-        std::cout << minDifference << std::endl;
-            if(minDifference > (minutes[i+1] - minutes[i])) {
-                minDifference = minutes[i+1] - minutes[i];
-            }
-
+           if(minDifference > (minutes[i+1] - minutes[i])) {
+               minDifference = minutes[i+1] - minutes[i];
+           }
+    }
+    if((minimaltimedifference::ToMinutes("24:00") - minutes[minutes.size()-1] + minutes[0]) < minDifference) { // jaby przechodzilo przez polnoc
+        minDifference = minimaltimedifference::ToMinutes("24:00") - minutes[minutes.size()-1] + minutes[0];
     }
     // find smallest difference
     return minDifference;

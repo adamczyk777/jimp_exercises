@@ -4,7 +4,7 @@
 
 #include "TinyUrl.h"
 
-std::unique_ptr<tinyurl::TinyUrlCodec> Init() {
+std::unique_ptr<tinyurl::TinyUrlCodec> tinyurl::Init() {
     std::unique_ptr<tinyurl::TinyUrlCodec> object = std::make_unique<tinyurl::TinyUrlCodec>();
     return object;
 }
@@ -38,9 +38,19 @@ void tinyurl::NextHash(array<char, 6> *state) {
 }
 
 std::string tinyurl::Encode(const std::string &url, std::unique_ptr<tinyurl::TinyUrlCodec> *codec) {
-
+    string str;
+    for (auto el : codec->get()->state) {
+        str += el;
+    }
+    codec->get()->save.emplace(str, url);
+    tinyurl::NextHash(&codec->get()->state);
+    return str;
 }
 
 std::string tinyurl::Decode(const std::unique_ptr<tinyurl::TinyUrlCodec> &codec, const std::string &hash) {
-
+    for (auto el : codec.get()->save) {
+        if (el.first == hash) {
+            return el.second;
+        }
+    }
 }

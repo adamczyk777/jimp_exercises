@@ -15,9 +15,11 @@
 namespace tinyurl {
 
     using std::array;
+    using std::string;
 
     struct TinyUrlCodec {
         std::array<char, 6> state;
+        std::map<std::string, std::string> save;
     };
 
     std::unique_ptr<TinyUrlCodec> Init();

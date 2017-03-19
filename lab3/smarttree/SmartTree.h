@@ -5,11 +5,15 @@
 #ifndef JIMP_EXERCISES_SMARTTREE_H
 #define JIMP_EXERCISES_SMARTTREE_H
 
+#include <memory>
+#include <ostream>
+#include <string>
+
 struct SmartTree {
     int value;
-    SmartTree *leftChild;
+ /*   SmartTree *leftChild;
     SmartTree *rightChild;
-    SmartTree *parent;
+    SmartTree *parent;*/
 };
 
 std::unique_ptr <SmartTree> CreateLeaf(int value);

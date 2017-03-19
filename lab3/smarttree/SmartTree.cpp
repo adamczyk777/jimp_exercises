@@ -6,7 +6,8 @@
 
 
 std::unique_ptr <SmartTree> CreateLeaf(int value) {
-    unique_ptr<SmartTree> p = make_unique<SmartTree>(value);
+    std::unique_ptr<SmartTree> Leaf = std::make_unique<SmartTree>(value);
+    return Leaf;
 }
 
 std::unique_ptr <SmartTree> InsertLeftChild(std::unique_ptr<SmartTree> tree, std::unique_ptr<SmartTree> left_subtree) {

@@ -35,11 +35,18 @@ std::unique_ptr <datastructures::SmartTree> datastructures::InsertRightChild(std
 }
 
 void datastructures::PrintTreeInOrder(const std::unique_ptr<datastructures::SmartTree> &unique_ptr, std::ostream *out) {
-
+    if(unique_ptr == nullptr) {
+        return;
+    }
+    datastructures::PrintTreeInOrder(unique_ptr->left,out);
+    *out << unique_ptr->value << ", ";
+    datastructures::PrintTreeInOrder(unique_ptr->right,out);
 }
 
 std::string datastructures::DumpTree(const std::unique_ptr<datastructures::SmartTree> &tree) {
+    std::string dump;
 
+    return dump;
 }
 
 std::unique_ptr <datastructures::SmartTree> datastructures::RestoreTree(const std::string &tree) {

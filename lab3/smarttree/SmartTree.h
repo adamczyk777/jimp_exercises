@@ -5,6 +5,13 @@
 #ifndef JIMP_EXERCISES_SMARTTREE_H
 #define JIMP_EXERCISES_SMARTTREE_H
 
+struct SmartTree {
+    int value;
+    SmartTree *leftChild;
+    SmartTree *rightChild;
+    SmartTree *parent;
+};
+
 std::unique_ptr <SmartTree> CreateLeaf(int value);
 std::unique_ptr <SmartTree> InsertLeftChild(std::unique_ptr<SmartTree> tree, std::unique_ptr<SmartTree> left_subtree);
 std::unique_ptr <SmartTree> InsertRightChild(std::unique_ptr<SmartTree> tree, std::unique_ptr<SmartTree> right_subtree);

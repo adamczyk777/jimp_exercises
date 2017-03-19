@@ -11,9 +11,9 @@
 
 struct SmartTree {
     int value;
- /*   SmartTree *leftChild;
+    SmartTree *leftChild;
     SmartTree *rightChild;
-    SmartTree *parent;*/
+    SmartTree *parent;
 };
 
 std::unique_ptr <SmartTree> CreateLeaf(int value);

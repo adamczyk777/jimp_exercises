@@ -13,11 +13,25 @@ std::unique_ptr <datastructures::SmartTree> datastructures::CreateLeaf(int value
 }
 
 std::unique_ptr <datastructures::SmartTree> datastructures::InsertLeftChild(std::unique_ptr<datastructures::SmartTree> tree, std::unique_ptr<datastructures::SmartTree> left_subtree) {
-
+    if(tree->left == nullptr) {
+        tree->left = std::move(left_subtree);
+        if(left_subtree != nullptr) {
+            tree->left->left = nullptr;
+            tree->left->right = nullptr;
+        }
+    }
+    return tree;
 }
 
 std::unique_ptr <datastructures::SmartTree> datastructures::InsertRightChild(std::unique_ptr<datastructures::SmartTree> tree, std::unique_ptr<datastructures::SmartTree> right_subtree) {
-
+    if(tree->right == nullptr) {
+        tree->right = std::move(right_subtree);
+        if(right_subtree != nullptr) {
+            tree->right->left = nullptr;
+            tree->right->right = nullptr;
+        }
+    }
+    return tree;
 }
 
 void datastructures::PrintTreeInOrder(const std::unique_ptr<datastructures::SmartTree> &unique_ptr, std::ostream *out) {

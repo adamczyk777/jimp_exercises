@@ -3,6 +3,7 @@
 //
 
 #include "DynamicTable.h"
+#include <iostream>
 
 void DTab::resize(int newSize) {
 
@@ -29,9 +30,11 @@ double DTab::get(int index) {
 }
 
 void DTab::set(double element, int index) {
- this
+    this->tab[index] = element;
 }
 
 void DTab::print() {
-
+    for(int i=0;i<this->length;i++) {
+        std::cout << this->tab[i];
+    }
 }

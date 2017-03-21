@@ -37,3 +37,26 @@ double Point::Distance(Point inny){
 void Point::ToString(ostream *out){
     (*out) << "(" << GetX() << ";" << GetY() << ")";
 }
+
+void Point::ToString(std::ostream *out) const {
+
+}
+double Point::Distance(const Point &other) const {
+
+}
+
+double Point::GetX() const {
+    return this->x_;
+}
+
+double Point::GetY() const {
+    return this->y_;
+}
+
+void Point::SetX(double x) {
+    this->x_ = x;
+}
+
+void Point::SetY(double y) {
+    this->y_ = y;
+}

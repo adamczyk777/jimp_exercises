@@ -43,12 +43,24 @@ void datastructures::PrintTreeInOrder(const std::unique_ptr<datastructures::Smar
     datastructures::PrintTreeInOrder(unique_ptr->right,out);
 }
 
-std::string datastructures::DumpTree(const std::unique_ptr<datastructures::SmartTree> &tree) {
-    std::string dump;
+std::string datastructures::DumpTree(const std::unique_ptr<datastructures::SmartTree> &tree) { // wypisuje drzewo na stringa
+    std::string value = "[none]";
+    if(tree == nullptr) {
+        return value;
+    }
+    value = std::to_string(tree->value);
+    return "[" + value + " " + datastructures::DumpTree(tree->left) + " " + datastructures::DumpTree(tree->right) + "]";
 
-    return dump;
 }
 
-std::unique_ptr <datastructures::SmartTree> datastructures::RestoreTree(const std::string &tree) {
-
+std::unique_ptr <datastructures::SmartTree> datastructures::RestoreTree(const std::string &tree) { // robi drzewo ze stringa
+    if(tree == "[none]") {
+        return nullptr;
+    }
+    std::unique_ptr <datastructures::SmartTree> root;
+    // jesli pierwsza wartosc to nie none:
+    // wstaw pierwsza wartosc
+    // wywolaj dla lewego poddrzewa z obcietym stringiem
+    // wywolaj dla prawego poddrzewa z obcietym stringiem
+    return root;
 }

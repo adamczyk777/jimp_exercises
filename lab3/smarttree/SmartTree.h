@@ -9,6 +9,7 @@
 #include <ostream>
 #include <string>
 #include <iostream>
+#include <regex>
 
 namespace datastructures {
     struct SmartTree {

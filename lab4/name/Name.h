@@ -5,7 +5,11 @@
 #ifndef JIMP_EXERCISES_NAME_H
 #define JIMP_EXERCISES_NAME_H
 
+#include <string>
+#include <iostream>
+
 using namespace std;
+
 
 class Name {
 private:
@@ -27,10 +31,10 @@ public:
 
     ~Name();
 
-    void getFirstName() const;
-    void getSecondName() const;
-    void getThirdName() const;
-    void getSurname() const;
+    string getFirstName() const;
+    string getSecondName() const;
+    string getThirdName() const;
+    string getSurname() const;
 
     void setFirstName(string firstName);
     void setSecondName(string secondName);
@@ -41,6 +45,9 @@ public:
     string toFirstNameInitials() const;
     string toSurnameNames() const;
     string toNamesSurname() const;
+
+    bool isBeforeBySurname(string compareWithThis) const;
+    bool isBeforeByFirstName(string compareWithThis) const;
 
 };
 

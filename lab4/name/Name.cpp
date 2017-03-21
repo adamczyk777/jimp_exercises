@@ -17,14 +17,14 @@ Name::Name(string firsName, string surname) {
     this->surname = surname;
 }
 
-Name::Name::Name(string firstName, string secondName, string surname) {
-    this->firstName = firsName;
+Name::Name(string firstName, string secondName, string surname) {
+    this->firstName = firstName;
     this->secondName = secondName;
     this->surname = surname;
 }
 
 Name::Name(string firstName, string secondName, string thirdName, string surname) {
-    this->firstName = firsName;
+    this->firstName = firstName;
     this->secondName = secondName;
     this->thirdName = thirdName;
     this->surname = surname;
@@ -34,33 +34,76 @@ Name::~Name(){
 
 }
 
-Name::getFirstName() {
+string Name::getFirstName() const {
     return this->firstName;
 }
-Name::getSecondName() {
+string Name::getSecondName() const {
     return this->secondName;
 }
-Name::getThirdName() {
+string Name::getThirdName() const {
     return this->thirdName;
 }
-Name::getSurname() {
+string Name::getSurname() const {
     return this->surname;
 }
 
-Name::setFirstName(string firstName) {
+void Name::setFirstName(string firstName) {
     this->firstName = firstName;
 }
-Name::setSecondName(string secondName) {
+void Name::setSecondName(string secondName) {
     this->secondName = secondName;
 }
-Name::setThirdName(string thirdName) {
+void Name::setThirdName(string thirdName) {
     this->thirdName = thirdName;
 }
-Name::setSurname(string surname){
+void Name::setSurname(string surname){
     this->surname = surname;
 }
 
-string toFullInitials() const;
-string toFirstNameInitials() const;
-string toSurnameNames() const;
-string toNamesSurname() const;
+string Name::toFullInitials() const {
+    return this->firstName.substr(0, 1) + ". " + this->secondName.substr(0,1) + ". " + this->thirdName.substr(0,1)
+    + ". " + this->surname.substr(0,1) + ".";
+}
+string Name::toFirstNameInitials() const {
+    this->firstName.substr(0, 1) + ". " + this->secondName.substr(0,1) + ". " + this->thirdName.substr(0,1) + ". "
+    + this->surname;
+}
+string Name::toSurnameNames() const {
+    return this->surname + " " + this->firstName + " " + this->secondName + " " + this->thirdName;
+}
+
+string Name::toNamesSurname() const {
+    return this->firstName + " " + this->secondName + " " + this->thirdName + " " + this->surname;
+}
+
+bool Name::isBeforeBySurname(string compareWithThis) const {
+    int i = 0;
+    while(true){
+        if (this->surname.substr(i,1) < compareWithThis.substr(i,1)) {
+            return true;
+        }
+
+        else if (this->surname.substr(i,1) == compareWithThis.substr(i,1)) {
+            i++;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+bool Name::isBeforeByFirstName(string compareWithThis) const {
+    int i = 0;
+    while(true){
+        if (this->firstName.substr(i,1) < compareWithThis.substr(i,1)) {
+            return true;
+        }
+
+        else if (this->firstName.substr(i,1) == compareWithThis.substr(i,1)) {
+            i++;
+        }
+        else {
+            return false;
+        }
+    }
+}

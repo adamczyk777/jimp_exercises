@@ -3,3 +3,7 @@
 //
 
 #include "DynamicTable.h"
+
+void DTab::resize(int newSize) {
+
+}

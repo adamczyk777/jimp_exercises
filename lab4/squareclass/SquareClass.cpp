@@ -1,18 +1,13 @@
 //
 // Created by Tay on 3/21/17.
 //
-
+#include "Point.h"
 #include "SquareClass.h"
 
 double Square::Circumference() {
-    if((b.GetX() != a.GetX())) {
-        return 4*abs(b.GetX() - a.GetX());
-    }
-    return 4*abs(a.GetX() - d.GetX());
+    return 4* sqrt((a.GetX() - b.GetX())*(a.GetX() - b.GetX() +  (a.GetY() - b.GetY())*(a.GetY() - b.GetY())));
+
 }
 double Square::Area() {
-    if((b.GetX() != a.GetX())) {
-        return abs(b.GetX() - a.GetX())*abs(b.GetX() - a.GetX());
-    }
-    return abs(a.GetX() - d.GetX())*abs(a.GetX() - d.GetX());
+    return (sqrt((a.GetX() - b.GetX())*(a.GetX() - b.GetX() +  (a.GetY() - b.GetY())*(a.GetY() - b.GetY())) * sqrt((a.GetX() - b.GetX())*(a.GetX() - b.GetX() +  (a.GetY() - b.GetY())*(a.GetY() - b.GetY())))));
 }

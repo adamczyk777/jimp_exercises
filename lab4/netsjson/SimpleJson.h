@@ -13,6 +13,7 @@
 using std::string;
 using std::vector;
 using std::map;
+using std::to_string;
 
 namespace nets {
 
@@ -41,6 +42,10 @@ namespace nets {
         const vector<JsonValue> &getJsonVector() const;
 
         void setJsonVector(const vector<JsonValue> &jsonVector);
+
+        const map<string, JsonValue> &getJsonMap() const;
+
+        void setJsonMap(const map<string, JsonValue> &jsonMap);
 
         JsonValue(const vector<JsonValue> &jsonVector);
 

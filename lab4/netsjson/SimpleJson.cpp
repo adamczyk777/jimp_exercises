@@ -88,11 +88,35 @@ nets::JsonValue::JsonValue(nets::JsonValue *jsonValue) : jsonValue(jsonValue) {
 }
 
 string nets::JsonValue::ToString() const {
-
+    if (this->jsonInt || this->jsonDouble){
+        return to_string(this->jsonInt);
+    } else if(this->jsonBool) {
+        if (this->jsonBool) {
+            return "true";
+        } else {
+            return "false";
+        }
+    } else {
+        return this->jsonString;
+    }
 }
 
 std::experimental::optional<nets::JsonValue> nets::JsonValue::ValueByName(
         const std::string &name) const {
+    if(&this->getJsonMap() != nullptr) {
+        map<string, nets::JsonValue> ret = this->getJsonMap();
+        return std::experimental::make_optional(ret[name]);
+    }
+    else {
+        return {};
+    }
+}
 
+const map<string, nets::JsonValue> &nets::JsonValue::getJsonMap() const {
+    return jsonMap;
+}
+
+void nets::JsonValue::setJsonMap(const map<string, nets::JsonValue> &jsonMap) {
+    JsonValue::jsonMap = jsonMap;
 }
 

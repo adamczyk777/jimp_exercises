@@ -14,38 +14,15 @@ using std::string;
 using std::vector;
 using std::map;
 using std::to_string;
+using std::experimental::optional;
+using std::experimental::make_optional;
+
 
 namespace nets {
 
     class JsonValue {
     public:
-        int getJsonInt() const;
-
-        void setJsonInt(int jsonInt);
-
-        double getJsonDouble() const;
-
-        void setJsonDouble(double jsonDouble);
-
-        const string &getJsonString() const;
-
-        void setJsonString(const string &jsonString);
-
-        bool isJsonBool() const;
-
-        void setJsonBool(bool jsonBool);
-
-        const JsonValue &getJsonValue() const;
-
-        void setJsonValue(JsonValue *jsonValue);
-
-        const vector<JsonValue> &getJsonVector() const;
-
-        void setJsonVector(const vector<JsonValue> &jsonVector);
-
-        const map<string, JsonValue> &getJsonMap() const;
-
-        void setJsonMap(const map<string, JsonValue> &jsonMap);
+        virtual ~JsonValue();
 
         JsonValue(const vector<JsonValue> &jsonVector);
 
@@ -63,20 +40,22 @@ namespace nets {
 
         JsonValue();
 
-        virtual ~JsonValue();
-
         string ToString() const;
 
         std::experimental::optional<JsonValue> ValueByName(const std::string &name) const;
 
+        const optional<map<string, JsonValue>> &getJsonMap() const;
+
+
+
     private:
-        int jsonInt;
-        double jsonDouble;
-        string jsonString;
-        bool jsonBool;
-        JsonValue *jsonValue;
-        vector<JsonValue> jsonVector;
-        map<string, JsonValue> jsonMap;
+        optional<int> jsonInt;
+        optional<double> jsonDouble;
+        optional<string> jsonString;
+        optional<bool> jsonBool;
+        optional<JsonValue> *jsonValue;
+        optional<vector<JsonValue>> jsonVector;
+        optional<map<string, JsonValue>> jsonMap;
     };
 
 }

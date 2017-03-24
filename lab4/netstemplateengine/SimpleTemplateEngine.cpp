@@ -17,8 +17,11 @@ std::string nets::View::Render(const std::unordered_map <std::string, std::strin
             message.replace(f, n.first.length() + 4, n.second);
         }
     }
-    // znajdz wszystkie dopasowania regexem do templejtów, ktore dostajesz pod .first i zamień je na .second.
-    // czyli petla po mapie i dla kazdego firsta zamieniasz.
+    // przelec jeszcze raz po stringu i jesli zostało cos postaci {{cokolwiek}} to zamien to na pusty string
+    /*std::regex pharse {R"(\{\{.+\}\})"};
+    while(std::regex_search(message, pharse)) {
+        std::regex_replace(message, message.begin(), message.end(), pharse, "");
+    }*/
     return message;
 }
 

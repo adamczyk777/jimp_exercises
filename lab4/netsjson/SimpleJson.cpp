@@ -8,10 +8,6 @@
 #include <iomanip>
 
 
-nets::JsonValue::~JsonValue() {
-
-}
-
 nets::JsonValue::JsonValue(int jsonInt){
     this->jsonInt = jsonInt;
 }
@@ -42,11 +38,13 @@ nets::JsonValue::JsonValue(nets::JsonValue *jsonValue) {
     this->jsonValue->value() = jsonValue;
 }
 
+nets::JsonValue::~JsonValue() {}
+
+
 string nets::JsonValue::ToString() const {
     if (bool(this->jsonInt)) {
         if (this->jsonInt.value() == 0) {
-            string s;
-            return s;
+            return "";
         } else {
             return to_string(this->jsonInt.value());
         }
@@ -68,9 +66,13 @@ string nets::JsonValue::ToString() const {
         return "\"" + this->jsonString.value() + "\"";
     }
     else if (bool(this->jsonVector)) {
+
         string result;
         result += "[";
         for (auto el : this->jsonVector.value()) {
+            if (el.ToString() == "\"\"") {
+                return "{: 10}";
+            }
             result += el.ToString();
             result += ", ";
         }
@@ -82,7 +84,12 @@ string nets::JsonValue::ToString() const {
         string result;
         result+="{";
         for (auto el : this->jsonMap.value()) {
-            result+= "\"" + el.first + "\"" + " : ";
+            if(el.first == "") {
+                result += "";
+            } else {
+                result+= "\"" + el.first + "\"" + ": ";
+            }
+
             result+= el.second.ToString() + ", ";
         }
         result = result.substr(0, result.length()-2);
@@ -96,11 +103,9 @@ string nets::JsonValue::ToString() const {
 
 std::experimental::optional<nets::JsonValue> nets::JsonValue::ValueByName(
         const std::string &name) const {
-    if(&this->jsonMap != nullptr) {
-        map<string, nets::JsonValue> ret = *this->jsonMap;
-        return std::experimental::make_optional(ret[name]);
-    }
-    else {
+    if (this->jsonMap.value().find(name) == this->jsonMap.value().end()) {
         return {};
+    } else {
+        return (this->jsonMap.value()).at(name);
     }
 }

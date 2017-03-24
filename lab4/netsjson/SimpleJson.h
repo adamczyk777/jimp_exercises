@@ -44,9 +44,6 @@ namespace nets {
 
         std::experimental::optional<JsonValue> ValueByName(const std::string &name) const;
 
-        const optional<map<string, JsonValue>> &getJsonMap() const;
-
-
 
     private:
         optional<int> jsonInt;

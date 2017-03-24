@@ -3,6 +3,9 @@
 //
 
 #include "SimpleJson.h"
+#include <math.h>
+#include <sstream>
+#include <iomanip>
 
 
 nets::JsonValue::~JsonValue() {
@@ -36,33 +39,68 @@ nets::JsonValue::JsonValue(const map<string, JsonValue> &jsonMap) {
 nets::JsonValue::JsonValue() {}
 
 nets::JsonValue::JsonValue(nets::JsonValue *jsonValue) {
-    this->jsonValue = jsonValue;
+    this->jsonValue->value() = jsonValue;
 }
 
 string nets::JsonValue::ToString() const {
-
+    if (bool(this->jsonInt)) {
+        if (this->jsonInt.value() == 0) {
+            string s;
+            return s;
+        } else {
+            return to_string(this->jsonInt.value());
+        }
+    }
+    else if (bool(this->jsonDouble)) {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(2) << this->jsonDouble.value();
+        string s = stream.str();
+        return s;
+    }
+    else if (bool(this->jsonBool)) {
+        if (this->jsonBool.value()) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+    else if (bool(this->jsonString)) {
+        return "\"" + this->jsonString.value() + "\"";
+    }
+    else if (bool(this->jsonVector)) {
+        string result;
+        result += "[";
+        for (auto el : this->jsonVector.value()) {
+            result += el.ToString();
+            result += ", ";
+        }
+        result = result.substr(0, result.length()-2);
+        result+="]";
+        return result;
+    }
+    else if (bool(this->jsonMap)) {
+        string result;
+        result+="{";
+        for (auto el : this->jsonMap.value()) {
+            result+= "\"" + el.first + "\"" + " : ";
+            result+= el.second.ToString() + ", ";
+        }
+        result = result.substr(0, result.length()-2);
+        result+= "}";
+        return result;
+    }
+    else if (bool(this->jsonValue)) {
+        return this->jsonValue->value().ToString();
+    }
 }
 
 std::experimental::optional<nets::JsonValue> nets::JsonValue::ValueByName(
         const std::string &name) const {
-    if(&this->getJsonMap() != nullptr) {
-        map<string, nets::JsonValue> ret = this->getJsonMap();
+    if(&this->jsonMap != nullptr) {
+        map<string, nets::JsonValue> ret = *this->jsonMap;
         return std::experimental::make_optional(ret[name]);
     }
     else {
         return {};
     }
 }
-
-const optional<map<string, nets::JsonValue>> &nets::JsonValue::getJsonMap() const {
-    return jsonMap;
-}
-
-const map<string, nets::JsonValue> &nets::JsonValue::getJsonMap() const {
-    return jsonMap;
-}
-
-void nets::JsonValue::setJsonMap(const map<string, nets::JsonValue> &jsonMap) {
-    JsonValue::jsonMap = jsonMap;
-}
-

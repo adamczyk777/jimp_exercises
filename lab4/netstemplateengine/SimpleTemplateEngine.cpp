@@ -9,9 +9,19 @@ nets::View::View(std::string message) {
 }
 
 std::string nets::View::Render(const std::unordered_map <std::string, std::string> &model) const {
-    std::string message;
-    // znajdz wszystkie dopasowania regexem do templejtów, ktore dostajesz pod .first i zamień je na .second.
-    // czyli petla po mapie i dla kazdego firsta zamieniasz.
+    std::string message = this->message;
+    size_t f;
+    for(const auto& n : model) {
+        while(message.find("{{" + n.first + "}}") != std::string::npos) {
+            f = message.find("{{" + n.first + "}}");
+            message.replace(f, n.first.length() + 4, n.second);
+        }
+    }
+    // przelec jeszcze raz po stringu i jesli zostało cos postaci {{cokolwiek}} to zamien to na pusty string
+    /*std::regex pharse {R"(\{\{.+\}\})"};
+    while(std::regex_search(message, pharse)) {
+        std::regex_replace(message, message.begin(), message.end(), pharse, "");
+    }*/
     return message;
 }
 

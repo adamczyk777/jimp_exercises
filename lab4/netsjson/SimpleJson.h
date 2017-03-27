@@ -10,49 +10,42 @@
 #include <vector>
 #include <map>
 
-using std::string;
-using std::vector;
-using std::map;
-using std::to_string;
-using std::experimental::optional;
-using std::experimental::make_optional;
-
+#include <experimental/optional>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <sstream>
+using namespace std;
+using experimental::optional;
+using experimental::make_optional;
 
 namespace nets {
 
     class JsonValue {
+    private:
+
+        int jsonInt;
+        double jsonDouble;
+        string jsonString;
+        bool jsonBool;
+        vector<JsonValue> jsonVector;
+        map<string, JsonValue> jsonMap;
+        int type;
+
     public:
-        virtual ~JsonValue();
 
         JsonValue(const vector<JsonValue> &jsonVector);
-
-        JsonValue(JsonValue *jsonValue);
-
         JsonValue(bool jsonBool);
-
         JsonValue(const string &jsonString);
-
         JsonValue(double jsonDouble);
-
         JsonValue(int jsonInt);
-
         JsonValue(const map<string, JsonValue> &jsonMap);
-
         JsonValue();
-
+        ~JsonValue();
         string ToString() const;
+        optional<JsonValue> ValueByName(const string &name) const;
 
-        std::experimental::optional<JsonValue> ValueByName(const std::string &name) const;
-
-
-    private:
-        optional<int> jsonInt;
-        optional<double> jsonDouble;
-        optional<string> jsonString;
-        optional<bool> jsonBool;
-        optional<JsonValue> *jsonValue;
-        optional<vector<JsonValue>> jsonVector;
-        optional<map<string, JsonValue>> jsonMap;
     };
 
 }

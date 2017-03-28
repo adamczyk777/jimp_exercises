@@ -3,12 +3,13 @@
 //
 #include "Parent.h"
 #include "Child.h"
+#include "ParentChild.h"
 
 int main() {
     Parent Andrzej;
     Child Brajan;
-    Andrzej.setAge(5);
-    Andrzej.setChild(Brajan);
-    Andrzej.changeSchool("II LO");
+    Andrzej.setChild(&Brajan);
+    Andrzej.changeSchool("liceum");
+    std::cout << Brajan.getSchool();
     return 0;
 }

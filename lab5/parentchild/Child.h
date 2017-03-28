@@ -9,11 +9,14 @@
 
 class Child {
     friend class Parent;
+
 private:
     std::string name;
     std::string surname;
     int age;
-    std::string school;
+    std::string school = "gimbaza";
+public:
+    const std::string &getSchool() const;
 };
 
 #endif //JIMP_EXERCISES_CHILD_H

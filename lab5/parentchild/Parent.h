@@ -13,13 +13,10 @@ private:
     std::string name;
     std::string surname;
     int age;
-    Child child;
+    Child* child;
 public:
     void changeSchool(std::string school_name);
-
-    void setAge(int age);
-
-    void setChild(const Child &child);
+    void setChild(Child *child);
 };
 
 #endif //JIMP_EXERCISES_PARENT_H

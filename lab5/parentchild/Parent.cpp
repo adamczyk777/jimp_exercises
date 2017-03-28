@@ -5,13 +5,9 @@
 #include "Parent.h"
 
 void Parent::changeSchool(std::string school_name) {
-    this->child.school = school_name;
+    Parent::child->school = school_name;
 }
 
-void Parent::setChild(const Child &child) {
+void Parent::setChild(Child *child) {
     Parent::child = child;
-}
-
-void Parent::setAge(int age) {
-    Parent::age = age;
 }

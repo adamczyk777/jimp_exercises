@@ -3,3 +3,7 @@
 //
 
 #include "Child.h"
+
+const std::string &Child::getSchool() const {
+    return school;
+}

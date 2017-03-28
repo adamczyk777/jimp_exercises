@@ -1,8 +1,8 @@
 
 project(parentchild)
 
-set(HEDEAR_FILES ParentChild.h)
-set(SOURCE_FILES ParentChild.cpp)
+set(HEDEAR_FILES ParentChild.h Parent.h Child.h)
+set(SOURCE_FILES ParentChild.cpp Parent.cpp Child.cpp)
 
 add_library(libparentchild STATIC ${SOURCE_FILES})
 target_include_directories(libparentchild PUBLIC .)

@@ -17,11 +17,12 @@ std::string nets::View::Render(const std::unordered_map <std::string, std::strin
             message.replace(f, n.first.length() + 4, n.second);
         }
     }
-    // przelec jeszcze raz po stringu i jesli zostało cos postaci {{cokolwiek}} to zamien to na pusty string
-    /*std::regex pharse {R"(\{\{.+\}\})"};
-    while(std::regex_search(message, pharse)) {
-        std::regex_replace(message, message.begin(), message.end(), pharse, "");
-    }*/
+    std::regex pharse {R"((\{{2})(\w+)(\}{2}))"};
+    std::smatch matches;
+    while(std::regex_search(message, matches, pharse)) {
+        f = message.find(matches[0]);
+        message.replace(f, matches[0].length(), "");
+    }
     return message;
 }
 

@@ -13,7 +13,7 @@ int main() {
             {"BLUE","#0000FF"}
     };
 
-    nets::View view1("Siema {{name}}, czy mieszkasz w {{city}}? {{name}}");
-    std::cout << view1.Render(std::unordered_map <std::string,std::string> {{"name","Xavier"}, {"city","New York"}});
+    nets::View view1("Witaj {{name}}, czy mieszkasz w {{city}}? {{name}} {{cokolwiek}} {{syf}} {{jeszczecos}}");
+    std::cout << view1.Render(std::unordered_map <std::string,std::string> {{"name","Jacob"}, {"city","New York"}});
     return 0;
 }

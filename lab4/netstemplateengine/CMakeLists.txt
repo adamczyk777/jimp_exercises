@@ -10,4 +10,3 @@ target_include_directories(libsimpletemplateengine PUBLIC .)
 add_executable(simpletemplateengine ${SOURCE_FILES} main.cpp)
 
 target_link_libraries(simpletemplateengine libsimpletemplateengine)
-

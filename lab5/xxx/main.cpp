@@ -1,7 +1,7 @@
 //
 // Created by Tay on 3/28/2017.
 //
-#include "XXX.h"
+#include "Xxx.h"
 
 int main() {
     //Konstrukcja obiektu za pomocą domyślnego konstruktora

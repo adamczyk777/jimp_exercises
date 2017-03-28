@@ -14,7 +14,7 @@ private:
     std::string name;
     std::string surname;
     int age;
-    std::string school = "gimbaza";
+    std::string school = "gimnazjum";
 public:
     const std::string &getSchool() const;
 };

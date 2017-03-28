@@ -4,17 +4,21 @@
 
 #include "Marsjanin.h"
 
-Marsjanin::liczbaMarsjan = 0;
+int Marsjanin::liczbaMarsjan = 0;
 
-void incrementMartians() const {
+void Marsjanin::incrementMartians() const {
     Marsjanin::liczbaMarsjan++;
 }
-void decrementMartians() const {
+void Marsjanin::decrementMartians() const {
     Marsjanin::liczbaMarsjan--;
 }
-void attack() const {
-    std::cout << "atakujemy" << endl;
+void Marsjanin::attack() const {
+    std::cout << "atakujemy" << std::endl;
 }
-void hide() const {
-    std::cout << "chowamy sie" << endl;
+void Marsjanin::hide() const {
+    std::cout << "chowamy sie" << std::endl;
+}
+
+Marsjanin::Marsjanin() {
+    Marsjanin::liczbaMarsjan++;
 }

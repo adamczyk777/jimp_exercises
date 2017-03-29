@@ -25,6 +25,7 @@ std::string nets::View::Render(const std::unordered_map <std::string, std::strin
         f = message.find(matches[0]);
         message.replace(f, matches[0].length(), "");
     } */
+
         // new version:
         std::string found;
         std::string to_find;

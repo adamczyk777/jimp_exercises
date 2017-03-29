@@ -15,8 +15,8 @@ memorychunk::MemoryChunk::MemoryChunk(size_t sz) {
 }
 
 int8_t *memorychunk::MemoryChunk::MemoryAt(size_t offset) const {
-    int8_t *offsetPtr;
-    return offset*sizeof(int8_t); // TODO
+    //int8_t *offsetPtr;
+    return this->Memory + (offset*sizeof(int8_t));
 }
 
 size_t memorychunk::MemoryChunk::ChunkSize() const {

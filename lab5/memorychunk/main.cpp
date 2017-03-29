@@ -6,6 +6,8 @@
 #include <iostream>
 
 int main() {
-    memory::MemoryChunk Pamiec(50);
+    memorychunk::MemoryChunk Pamiec(50);
+    std::fill(Pamiec.MemoryAt(0), Pamiec.MemoryAt(49) + 1, 50);
+    std::cout << Pamiec.MemoryAt(10);
     return 0;
 }

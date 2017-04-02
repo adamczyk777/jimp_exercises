@@ -15,11 +15,16 @@ public:
     Marsjanin();
 
     static int liczbaMarsjan;
+
     void incrementMartians() const;
+
     void decrementMartians() const;
+
     void attack() const;
+
     void hide() const;
 
+    void Marsjanin();
 };
 
 #endif //JIMP_EXERCISES_MARSJANIN_H

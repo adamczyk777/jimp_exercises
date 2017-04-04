@@ -8,10 +8,6 @@ pool::TextPool::TextPool(TextPool &&obj) {
 
 }
 
-pool::TextPool::TextPool &operator=(const pool::TextPool &&obj) {
-
-}
-
 pool::TextPool::~TextPool() {
 
 }
@@ -20,12 +16,23 @@ pool::TextPool::TextPool() {
 
 }
 
-pool::TextPool::TextPool(const std::initializer_list<std::pair<const std::string, unsigned int>> &elements) : counter_{elements} {
-
+pool::TextPool::TextPool(const std::initializer_list<std::experimental::string_view> pool_) {
+    for(auto n : pool_) {
+        if(this->pool_.count(n) == 0) {
+            StoredStringCounter++;
+        }
+        this->pool_.insert(n);
+    }
 }
 
 std::experimental::string_view pool::TextPool::Intern(const std::string &str) {
-
+    std::experimental::string_view to_add = str;
+    if(pool_.count(to_add)) {
+        StoredStringCounter++;
+    }
+    pool_.insert(to_add);
+    return str;
+    //return pool_.insert(to_add).first;
     // insert string to set
     // if added new increment counter
     // return inserted string_view

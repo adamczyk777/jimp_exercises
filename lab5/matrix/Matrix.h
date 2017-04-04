@@ -15,7 +15,7 @@ using std::stringstream;
 class Matrix {
 
 private:
-    complex<double> *matrixTab[];
+    complex<double> **matrixTab;
     int rows;
     int cols;
 
@@ -24,7 +24,7 @@ public:
 
     Matrix(int rows, int cols);
 
-    Matrix(complex<double> *matrixTab);
+    Matrix(complex<double> **matrixTab);
 
     Matrix(string matrix);
 

@@ -31,7 +31,7 @@ Matrix::Matrix(string matrix) {
     }
 }
 
-Matrix::Matrix(complex<double> *matrixTab) : matrixTab(matrixTab) {
+Matrix::Matrix(complex<double> **matrixTab) : matrixTab(matrixTab) {
 
 }
 

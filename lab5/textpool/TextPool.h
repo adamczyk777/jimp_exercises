@@ -20,21 +20,23 @@ namespace pool {
 
         // przypisujemy do zainicjalizowanego obiektu juz zainicjalizowany:
         // TextPool &operator=(const TextPool &obj); // 3. operator przypisania kopiujacy ()
-        TextPool &operator=(const TextPool &&obj); // 4. operator przypisania przenoszacy ()
+        TextPool &operator=(const pool::TextPool &&obj) { // 4. operator przypisania przenoszacy ()
+
+        }
 
         // kasujemy obiekt:
         ~TextPool(); // 5. destruktor
 
         // domyslny konstruktor:
         TextPool();
-        // konstruktor z lista inicjalizacyjna:
-        TextPool(const std::initializer_list<std::pair<const std::experimental::string_view, unsigned int>> &elements) : pool_{elements}; // dunno why error
+        // konstruktor z lista inicjalizacyjna (ma przypisac do setu to co podamy, np z uzyciem interna):
+        TextPool(const std::initializer_list<std::experimental::string_view> pool_);
         // metoda do insertowania stringa do setu i zwracania go:
         std::experimental::string_view Intern(const std::string &str);
-        // metoda do zliczania? :
+        // metoda do zwracania ilosci rzeczy w secie:
         size_t StoredStringCount() const; // const po - nie moze modyfikowac elementow skladowych klasy i nie moze wykorzystywac innych metod niz const. getter do stored strring counter
     private:
-        std::set<std::experimental::string_view, unsigned int> pool_; // here we store strings
+        std::set<std::experimental::string_view> pool_; // here we store strings
         size_t StoredStringCounter;
     };
 

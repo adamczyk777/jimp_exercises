@@ -26,8 +26,20 @@ Matrix::Matrix(string matrix) {
         stringstream ss2(element);
         string element2 = "";
         while (ss2, element2, ' ') {
-            
+
         }
     }
+}
+
+Matrix::Matrix(complex<double> *matrixTab) : matrixTab(matrixTab) {
+
+}
+
+complex<double> Matrix::getValue(int col, int row) {
+    return this->matrixTab[row][col];
+}
+
+void Matrix::setValue(int col, int row, complex<double> value) {
+    this->matrixTab[row][col] = value;
 }
 

@@ -7,10 +7,15 @@
 
 #include <complex>
 #include <string>
+#include <vector>
+#include <iostream>
+
 
 using std::string;
 using std::complex;
 using std::stringstream;
+using std::cout;
+using std::endl;
 
 class Matrix {
 
@@ -34,6 +39,9 @@ public:
 
     void setValue(int col, int row, complex<double> value);
 
+    string Print();
+
+    Matrix(const std::initializer_list<std::vector<std::complex<double> > >& list);
 };
 
 #endif //JIMP_EXERCISES_MATRIX_H

@@ -21,7 +21,8 @@ namespace pool {
         // przypisujemy do zainicjalizowanego obiektu juz zainicjalizowany:
         // TextPool &operator=(const TextPool &obj); // 3. operator przypisania kopiujacy ()
         TextPool &operator=(const pool::TextPool &&obj) { // 4. operator przypisania przenoszacy ()
-
+            this->StoredStringCounter = obj.StoredStringCounter;
+            this->pool_ = obj.pool_;
         }
 
         // kasujemy obiekt:

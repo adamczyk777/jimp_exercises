@@ -41,7 +41,17 @@ public:
 
     string Print();
 
-    Matrix(const std::initializer_list<std::vector<std::complex<double> > >& list);
+    Matrix(const std::initializer_list<std::vector<std::complex<double> > > &list);
+
+    Matrix add(Matrix m2);
+
+    Matrix sub(Matrix m2);
+
+    Matrix pow(int power);
+
+    Matrix mul(Matrix m2);
+
+    Matrix div(Matrix m2);
 };
 
 #endif //JIMP_EXERCISES_MATRIX_H

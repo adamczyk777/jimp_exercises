@@ -79,3 +79,23 @@ Matrix::Matrix(const std::initializer_list<std::vector<std::complex<double> > > 
     }
 }
 
+Matrix Matrix::add(Matrix m2) {
+    return Matrix();
+}
+
+Matrix Matrix::sub(Matrix m2) {
+    return Matrix();
+}
+
+Matrix Matrix::pow(int power) {
+    return Matrix();
+}
+
+Matrix Matrix::mul(Matrix m2) {
+    return Matrix();
+}
+
+Matrix Matrix::div(Matrix m2) {
+    return Matrix();
+}
+

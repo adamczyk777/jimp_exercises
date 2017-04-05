@@ -11,7 +11,7 @@ using std::endl;
 
 int main() {
     Matrix m1{{1.0i, 0., 0.}, {0., 1.0i, 0.}, {0., 0., 1.0i}};
-    Matrix m2{{1.0i, 0., 0.}, {0., 1.0i, 0.}, {0., 0., 1.0i}};
+    Matrix m2{{7. + 1.0i, 0.}, {0., 1.0i}, {15. + 2.0i, 0. + 3.0i}};
 
     cout << "Macierz pierwsza: " << m1.Print() << endl;
     cout << "Macierz druga: " << m2.Print() << endl;

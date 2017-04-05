@@ -50,17 +50,17 @@ string Matrix::Print() {
     string result = "[";
     for (int r = 0; r < this->rows; r++) {
         for (int c = 0; c < this->cols; c++) {
-            result += std::to_string((int)this->matrixTab[r][c].real());
+            result += std::to_string((int) this->matrixTab[r][c].real());
             if (this->matrixTab[r][c].imag() != 0.) {
                 result += "i";
-                result += std::to_string((int)this->matrixTab[r][c].imag());
+                result += std::to_string((int) this->matrixTab[r][c].imag());
             }
             result += ", ";
         }
-        result = result.substr(0, result.length()-2);
+        result = result.substr(0, result.length() - 2);
         result += "; ";
     }
-    result = result.substr(0, result.length()-2);
+    result = result.substr(0, result.length() - 2);
     result += "]";
     return result;
 }

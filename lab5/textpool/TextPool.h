@@ -37,7 +37,7 @@ namespace pool {
         size_t StoredStringCount() const; // const po - nie moze modyfikowac elementow skladowych klasy i nie moze wykorzystywac innych metod niz const. getter do stored strring counter
     private:
         std::set<std::experimental::string_view> pool_; // here we store strings
-        size_t StoredStringCounter;
+        size_t StoredStringCounter = 0;
     };
 
 }

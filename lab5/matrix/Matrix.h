@@ -16,42 +16,50 @@ using std::complex;
 using std::stringstream;
 using std::cout;
 using std::endl;
+using std::pair;
 
-class Matrix {
 
-private:
-    complex<double> **matrixTab;
-    int rows;
-    int cols;
+namespace algebra {
+    class Matrix {
 
-public:
-    Matrix();
+    private:
+        complex<double> **matrixTab;
+        int rows;
+        int cols;
 
-    Matrix(int rows, int cols);
+    public:
+        Matrix();
 
-    Matrix(complex<double> **matrixTab);
+        Matrix(int rows, int cols);
 
-    Matrix(string matrix);
+        Matrix(complex<double> **matrixTab);
 
-    ~Matrix();
+        Matrix(string matrix);
 
-    complex<double> getValue(int col, int row);
+        ~Matrix();
 
-    void setValue(int col, int row, complex<double> value);
+        complex<double> getValue(int col, int row);
 
-    string Print();
+        void setValue(int col, int row, complex<double> value);
 
-    Matrix(const std::initializer_list<std::vector<std::complex<double> > > &list);
+        string Print();
 
-    Matrix add(Matrix m2);
+        pair<size_t, size_t> Size();
 
-    Matrix sub(Matrix m2);
+        Matrix(const std::initializer_list<std::vector<std::complex<double> > > &list);
 
-    Matrix pow(int power);
+        Matrix add(Matrix m2);
 
-    Matrix mul(Matrix m2);
+        Matrix sub(Matrix m2);
 
-    Matrix div(Matrix m2);
-};
+        Matrix pow(int power);
+
+        Matrix mul(Matrix m2);
+
+        Matrix div(Matrix m2);
+    };
+}
+
+using namespace algebra;
 
 #endif //JIMP_EXERCISES_MATRIX_H

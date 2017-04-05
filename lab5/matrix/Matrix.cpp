@@ -5,6 +5,7 @@
 #include "Matrix.h"
 
 
+
 Matrix::Matrix() {}
 
 Matrix::~Matrix() {
@@ -97,5 +98,10 @@ Matrix Matrix::mul(Matrix m2) {
 
 Matrix Matrix::div(Matrix m2) {
     return Matrix();
+}
+
+pair<size_t, size_t> Matrix::Size() {
+    pair<size_t, size_t> result = {this->rows, this->cols};
+    return result;
 }
 

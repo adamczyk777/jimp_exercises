@@ -17,46 +17,38 @@ using std::stringstream;
 using std::cout;
 using std::endl;
 using std::pair;
+using std::vector;
 
 
 namespace algebra {
     class Matrix {
 
     private:
-        complex<double> **matrixTab;
+        vector<vector<std::complex<double>>> matrixTab;
         int rows;
         int cols;
 
     public:
         Matrix();
-
         Matrix(int rows, int cols);
-
-        Matrix(complex<double> **matrixTab);
-
-        Matrix(string matrix);
-
         ~Matrix();
-
-        complex<double> getValue(int col, int row);
-
+        complex<double> getValue(int col, int row) const;
         void setValue(int col, int row, complex<double> value);
-
-        string Print();
+        string Print() const;
 
         pair<size_t, size_t> Size();
 
         Matrix(const std::initializer_list<std::vector<std::complex<double> > > &list);
 
-        Matrix add(Matrix m2);
+        Matrix Add(Matrix m2) const;
 
-        Matrix sub(Matrix m2);
+        Matrix Sub(Matrix m2) const;
 
-        Matrix pow(int power);
+        Matrix Pow(int power) const;
 
-        Matrix mul(Matrix m2);
+        Matrix Mul(Matrix m2) const;
 
-        Matrix div(Matrix m2);
+        Matrix Div(Matrix m2) const;
     };
 }
 

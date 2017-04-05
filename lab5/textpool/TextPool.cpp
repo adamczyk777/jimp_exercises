@@ -5,7 +5,10 @@
 #include "TextPool.h"
 
 pool::TextPool::TextPool(TextPool &&obj) {
-
+    this->StoredStringCounter = obj.StoredStringCounter; // kopiowanie pol ze starego obiektu
+    this->pool_ = obj.pool_; // cd
+    obj.StoredStringCounter = 0; // czyszczenie starego obiektu
+    //obj.pool_; // cd
 }
 
 pool::TextPool::~TextPool() {
@@ -13,7 +16,7 @@ pool::TextPool::~TextPool() {
 }
 
 pool::TextPool::TextPool() {
-
+    this->StoredStringCounter = 0;
 }
 
 pool::TextPool::TextPool(const std::initializer_list<std::experimental::string_view> pool_) {
@@ -27,11 +30,11 @@ pool::TextPool::TextPool(const std::initializer_list<std::experimental::string_v
 
 std::experimental::string_view pool::TextPool::Intern(const std::string &str) {
     std::experimental::string_view to_add = str;
-    if(pool_.count(to_add)) {
+    if(this->pool_.count(to_add) == 0) {
         StoredStringCounter++;
     }
-    pool_.insert(to_add);
-    return str;
+    this->pool_.insert(to_add);
+    return to_add;
     //return pool_.insert(to_add).first;
     // insert string to set
     // if added new increment counter
@@ -39,5 +42,5 @@ std::experimental::string_view pool::TextPool::Intern(const std::string &str) {
 }
 
 size_t pool::TextPool::StoredStringCount() const {
-    return StoredStringCounter;
+    return this->StoredStringCounter;
 }

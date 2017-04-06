@@ -12,7 +12,7 @@ int main() {
 
     pool::TextPool pool{"abc", "efg", "hij", "klmn", "oprst", "abc", "abc", "kllll"};
     cout << pool.StoredStringCount() << endl;
-    pool::TextPool moved_pool;
+    pool::TextPool moved_pool; // wywolywany jest domyslny konstruktor. Jesli od razu zrobilibysmy  pool::TextPool moved_pool = std::move(pool) wywola sie konstruktor dla rvalue &&
     cout << "po utworzeniu: " << moved_pool.StoredStringCount() << endl;
     moved_pool = std::move(pool);
     cout << "po przypisaniu: " << moved_pool.StoredStringCount() << endl;

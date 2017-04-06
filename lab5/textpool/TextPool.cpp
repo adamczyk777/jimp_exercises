@@ -5,13 +5,6 @@
 #include "TextPool.h"
 #include <iostream>
 
-/*pool::TextPool::TextPool(TextPool &&obj) {
-    this->StoredStringCounter = obj.StoredStringCounter; // kopiowanie pol ze starego obiektu
-    this->pool_ = obj.pool_; // cd
-    obj.StoredStringCounter = 0; // czyszczenie starego obiektu
-   // obj.pool_ =; // cd
-}*/
-
 pool::TextPool::~TextPool() {
 
 }

@@ -44,6 +44,7 @@ size_t pool::TextPool::StoredStringCount() const {
 }
 
 pool::TextPool::TextPool(TextPool &&obj) {
+    this->StoredStringCounter = 0; // ta linijka jest potrzebna, gdy tworzac obiekt od razu przypisujemy do niego inny (rvalue). Bez tego bedzie tam losowa wartosc.
     std::swap(pool_,obj.pool_);
     std::swap(StoredStringCounter,obj.StoredStringCounter);
 

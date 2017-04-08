@@ -20,10 +20,13 @@ namespace pool {
 
         // przypisujemy do zainicjalizowanego obiektu juz zainicjalizowany:
         // TextPool &operator=(const TextPool &obj); // 3. operator przypisania kopiujacy ()
-        TextPool &operator=(const pool::TextPool &&obj) { // 4. operator przypisania przenoszacy ()
-            this->StoredStringCounter = obj.StoredStringCounter;
+        TextPool &operator=(pool::TextPool &&obj); //{ // 4. operator przypisania przenoszacy ()
+            /*this->StoredStringCounter = obj.StoredStringCounter;
             this->pool_ = obj.pool_;
-        }
+            obj.StoredStringCounter = 0;
+            obj.pool_.clear();
+            return *this;
+        }*/
 
         // kasujemy obiekt:
         ~TextPool(); // 5. destruktor
@@ -38,7 +41,7 @@ namespace pool {
         size_t StoredStringCount() const; // const po - nie moze modyfikowac elementow skladowych klasy i nie moze wykorzystywac innych metod niz const. getter do stored strring counter
     private:
         std::set<std::experimental::string_view> pool_; // here we store strings
-        size_t StoredStringCounter = 0;
+        size_t StoredStringCounter;
     };
 
 }

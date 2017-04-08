@@ -22,7 +22,7 @@ void Counts::setWordCount(int wordCount) {
     Counts::wordCount = wordCount;
 }
 
-void Counts::addOccurrence() {
+int Counts::operator++() {
     this->wordCount++;
+    return this->wordCount;
 }
-

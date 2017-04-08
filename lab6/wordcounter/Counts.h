@@ -20,7 +20,18 @@ public:
 
     void setWordCount(int wordCount);
 
-    void addOccurrence();
+    int operator++();
+
+    bool operator<() const;
+
+    bool operator>() const;
+
+    bool operator==() const;
+
+    bool operator<=() const;
+
+    bool operator>=() const;
+
 };
 
 

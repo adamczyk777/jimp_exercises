@@ -5,25 +5,23 @@
 #ifndef JIMP_EXERCISES_WORDCOUNTER_H
 #define JIMP_EXERCISES_WORDCOUNTER_H
 
-#include <utility>
+#include <string>
+#include <vector>
 #include "Word.h"
 #include "Counts.h"
 
 class WordCounter {
 
-private:
-    std::pair<Word, Counts> wordUccurences;
+    static void FromInputStream(std::string *istream);
+
 public:
-    //Constructors:
     WordCounter();
 
-    WordCounter(const std::pair<Word, Counts> &wordUccurences);
-
-    //Methods:
-    const std::pair<Word, Counts> &getWordUccurences() const;
-
-    void setWordUccurences(const std::pair<Word, Counts> &wordUccurences);
-
+    WordCounter(const std::initializer_list<std::vector<std::string>> &words);
+private:
+    // int wordsCount;
+    // std::vector<std::string> words;
+    std::vector<std::pair<Word,Counts>> words; // obiekty z jednym polem
 
 };
 

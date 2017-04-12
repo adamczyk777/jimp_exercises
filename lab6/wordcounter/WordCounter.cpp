@@ -4,16 +4,15 @@
 
 #include "WordCounter.h"
 
-//Constructors:
-WordCounter::WordCounter() {}
+void WordCounter::FromInputStream(std::string *istream) {
 
-WordCounter::WordCounter(const std::pair<Word, Counts> &wordUccurences) : wordUccurences(wordUccurences) {}
-
-//methods:
-const std::pair<Word, Counts> &WordCounter::getWordUccurences() const {
-    return wordUccurences;
 }
 
-void WordCounter::setWordUccurences(const std::pair<Word, Counts> &wordUccurences) {
-    WordCounter::wordUccurences = wordUccurences;
+WordCounter::WordCounter() {
+
+}
+
+WordCounter::WordCounter(const std::initializer_list<std::vector<std::string>> &words) {
+
+    //
 }

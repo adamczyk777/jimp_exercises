@@ -3,15 +3,6 @@
 //
 
 #include "Point3D.h"
-#include <cmath>
-#include <ostream>
-#include <iostream>
-
-using ::std::ostream;
-using ::std::endl;
-using ::std::pow;
-using ::std::sqrt;
-using ::std::cout;
 
 Point3D::Point3D() {
     cout << "Konstruktor Bezparametrowy punktu3d" << endl;
@@ -23,7 +14,7 @@ Point3D::Point3D(double x, double y, double z) : Point(x, y) {
     cout << "Konstruktor Punktu3D, uzywa konstruktora zwyklego punktu" << endl;
 }
 
-Point3D::~Point3D() : ~Point() {
+Point3D::~Point3D() {
     cout << "Destruktor P3D! Nic nie robie, bo nie musze zwalniać pamięci!" << endl;
 
 }

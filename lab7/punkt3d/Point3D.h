@@ -8,10 +8,8 @@
 
 #include "Point.h"
 #include <cmath>
-#include <ostream>
 #include <iostream>
 
-using ::std::ostream;
 using ::std::endl;
 using ::std::pow;
 using ::std::sqrt;

@@ -3,6 +3,10 @@
 //
 
 #include "Point3D.h"
+#include <ostream>
+using ::std::ostream;
+
+
 
 Point3D::Point3D() {
     cout << "Konstruktor Bezparametrowy punktu3d" << endl;

@@ -3,6 +3,10 @@
 //
 //Definicja znajduje się w pliku Point.cpp
 #include "Point.h"
+#include <ostream>
+using ::std::ostream;
+
+
 
 /* Aby wskazać, ze definicja funkcji dotyczy metody danej klasy
   stosujemy tzw. operator zasięgu - "::"

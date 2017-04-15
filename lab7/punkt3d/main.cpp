@@ -10,9 +10,15 @@ int main() {
     Point point{2, 2};
     Point3D point3d{2, 2, 2};
 
-    cout << point.Distance(point3d) << endl;
+//    cout << point.Distance(point3d) << endl;
 
     //Kompilator wyrzuca blad  error: 'Point' is an inaccessible base of 'Point3D'
+
+    Point3D p3d(1,2,3);
+//    cout << p3d << endl;
+
+    //Takze otrzymujemy blad, w klasie Punkt nie ma przeciazanego operatora, wiec nie jest to zaskoczeniem ze
+    // ostream nie przyjmuje argumentu typu Point3D
 
     return 0;
 }

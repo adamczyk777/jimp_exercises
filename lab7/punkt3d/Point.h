@@ -5,11 +5,9 @@
 #define PROJECTNAME_PATH_POINT_H_
 
 #include <cmath>
-#include <ostream>
 #include <iostream>
 #include "Point.h"
 
-using ::std::ostream;
 using ::std::endl;
 using ::std::pow;
 using ::std::sqrt;

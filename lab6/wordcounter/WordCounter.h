@@ -6,6 +6,7 @@
 #define JIMP_EXERCISES_WORDCOUNTER_H
 
 #include <string>
+#include <map>
 #include <vector>
 #include "Word.h"
 #include "Counts.h"
@@ -19,9 +20,7 @@ public:
 
     WordCounter(const std::initializer_list<std::vector<std::string>> &words);
 private:
-    // int wordsCount;
-    // std::vector<std::string> words;
-    std::vector<std::pair<Word,Counts>> words; // obiekty z jednym polem
+    std::map<Word,Counts> words;
 
 };
 

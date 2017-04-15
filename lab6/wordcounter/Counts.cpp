@@ -22,7 +22,3 @@ void Counts::setWordCount(int wordCount) {
     Counts::wordCount = wordCount;
 }
 
-int Counts::operator++() {
-    this->wordCount++;
-    return this->wordCount;
-}

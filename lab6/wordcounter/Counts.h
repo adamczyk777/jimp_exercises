@@ -20,18 +20,11 @@ public:
 
     void setWordCount(int wordCount);
 
-    int operator++();
-
-    bool operator<() const;
-
-    bool operator>() const;
-
-    bool operator==() const;
-
-    bool operator<=() const;
-
-    bool operator>=() const;
-
+    Counts operator++(int) {
+        Counts tmp(*this);
+        this->wordCount++;
+        return tmp;
+    }
 };
 
 

@@ -20,7 +20,11 @@ public:
 
     void setWordCount(int wordCount);
 
-    void addOccurrence();
+    Counts operator++(int) {
+        Counts tmp(*this);
+        this->wordCount++;
+        return tmp;
+    }
 };
 
 

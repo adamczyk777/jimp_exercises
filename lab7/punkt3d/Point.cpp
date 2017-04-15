@@ -4,12 +4,14 @@
 //Definicja znajduje się w pliku Point.cpp
 #include <cmath>
 #include <ostream>
+#include <iostream>
 #include "Point.h"
 
 using ::std::ostream;
 using ::std::endl;
 using ::std::pow;
 using ::std::sqrt;
+using ::std::cout;
 
 /* Aby wskazać, ze definicja funkcji dotyczy metody danej klasy
   stosujemy tzw. operator zasięgu - "::"

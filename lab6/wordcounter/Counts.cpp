@@ -1,24 +1,9 @@
-//
-// Created by adamc on 08.04.2017.
-//
-
 #include "Counts.h"
 
-//CONSTRUCTORS:
-Counts::Counts(int wordCount) : wordCount(wordCount) {
-    this->wordCount = wordCount;
+datastructures::Counts::Counts() {
+    count = 1;
 }
 
-Counts::Counts() {
-    this->wordCount = 0;
+datastructures::Counts::Counts(int i) {
+    count = i;
 }
-
-//ACCESSORS:
-int Counts::getWordCount() const {
-    return wordCount;
-}
-
-void Counts::setWordCount(int wordCount) {
-    Counts::wordCount = wordCount;
-}
-

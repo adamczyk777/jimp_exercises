@@ -1,27 +1,29 @@
-//
-// Created by adamc on 08.04.2017.
-//
+#include<string>
 
-#ifndef JIMP_EXERCISES_WORD_H
-#define JIMP_EXERCISES_WORD_H
+namespace datastructures {
+    class Word {
+    public:
+        Word();
 
-#include <string>
+        Word(std::string str);
 
-using std::string;
+        operator std::string() const {
+            return word;
+        }
 
-class Word {
-private:
-    string word;
-public:
-    //Constructors:
-    Word(const string &word);
+        bool operator==(const Word &sec) const {
+            return (word == sec.word);
+        }
 
-    Word();
-    //Accesors:
-    const string &getWord() const;
+        bool operator<(const Word &sec) const {
+            return (word < sec.word);
+        }
 
-    void setWord(const string &word);
-};
+        bool operator>(const Word &sec) const {
+            return (word > sec.word);
+        }
 
-
-#endif //JIMP_EXERCISES_WORD_H
+    private:
+        std::string word;
+    };
+}

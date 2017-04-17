@@ -1,18 +1,9 @@
-//
-// Created by adamc on 08.04.2017.
-//
-
 #include "Word.h"
-//Constructors:
-Word::Word(const string &word) : word(word) {}
 
-Word::Word() {}
-
-//Accessors:
-const string &Word::getWord() const {
-    return word;
+datastructures::Word::Word() {
+    word = "";
 }
 
-void Word::setWord(const string &word) {
-    Word::word = word;
+datastructures::Word::Word(std::string str) {
+    Word::word = str;
 }

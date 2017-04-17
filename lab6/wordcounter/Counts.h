@@ -1,31 +1,32 @@
-//
-// Created by adamc on 08.04.2017.
-//
+namespace datastructures {
+    class Counts {
+    public:
+        Counts();
 
-#ifndef JIMP_EXERCISES_COUNTS_H
-#define JIMP_EXERCISES_COUNTS_H
+        Counts(int i);
 
+        Counts &operator++() {
+            ++count;
+            return *this;
+        }
 
-class Counts {
-private:
-    int wordCount;
-public:
-    //CONSTRUCTORS:
-    Counts(int wordCount);
+        bool operator==(const Counts &sec) {
+            return (count == sec.count);
+        }
 
-    Counts();
+        bool operator<(const Counts &sec) {
+            return (count < sec.count);
+        }
 
-    // ACCESSORS:
-    int getWordCount() const;
+        bool operator>(const Counts &sec) {
+            return (count > sec.count);
+        }
 
-    void setWordCount(int wordCount);
+        operator int() const {
+            return count;
+        }
 
-    Counts operator++(int) {
-        Counts tmp(*this);
-        this->wordCount++;
-        return tmp;
-    }
-};
-
-
-#endif //JIMP_EXERCISES_COUNTS_H
+    private:
+        int count;
+    };
+}

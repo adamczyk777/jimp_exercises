@@ -3,8 +3,8 @@
 namespace datastructures {
     class Word {
     public:
+        // constructors:
         Word();
-
         Word(std::string str);
 
         operator std::string() const {

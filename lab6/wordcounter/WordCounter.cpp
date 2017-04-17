@@ -37,7 +37,7 @@ namespace datastructures {
         return words;
     }
 
-    int WordCounter::TotalWords() {
+    int WordCounter::SumWords() {
         int sum = 0;
         for (auto it = wordList.begin(); it != wordList.end(); ++it) {
             sum += it->second;
@@ -54,7 +54,7 @@ namespace datastructures {
     }
 
     std::ostream &operator<<(std::ostream &s, WordCounter &wc) {
-        s << "Total words: " << wc.TotalWords() << "\nDistinct words: " << wc.DistinctWords() << "\n";
+        s << "Total words: " << wc.SumWords() << "\nDistinct words: " << wc.DistinctWords() << "\n";
         wc.wordList.sort(CompareWords);
         for (auto it = wc.wordList.begin(); it != wc.wordList.end(); ++it) {
             s << (int)it->second << "\t" << (std::string)it->first << "\n";
@@ -75,7 +75,7 @@ namespace datastructures {
     void WordCounter::AddWord(std::string word) {
         std::string tmpword = "";
         for (char c : word) {
-            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+            if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)) {
                 tmpword += c;
             }
         }

@@ -13,11 +13,12 @@ namespace datastructures {
     class WordCounter {
 
     public:
+        // constructors:
         WordCounter();
         WordCounter(std::string path);
         WordCounter(const std::initializer_list<Word> &init_list);
 
-        int TotalWords();
+        int SumWords();
         size_t DistinctWords();
         std::set<Word> Words();
 

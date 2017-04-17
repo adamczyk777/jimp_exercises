@@ -10,16 +10,16 @@ namespace datastructures {
             return *this;
         }
 
-        bool operator==(const Counts &sec) {
-            return (count == sec.count);
+        bool operator==(const Counts &right) {
+            return (count == right.count);
         }
 
-        bool operator<(const Counts &sec) {
-            return (count < sec.count);
+        bool operator<(const Counts &right) {
+            return (count < right.count);
         }
 
-        bool operator>(const Counts &sec) {
-            return (count > sec.count);
+        bool operator>(const Counts &right) {
+            return (count > right.count);
         }
 
         operator int() const {

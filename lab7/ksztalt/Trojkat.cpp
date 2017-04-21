@@ -2,6 +2,7 @@
 // Created by adamc on 15.04.2017.
 //
 
+#include <iostream>
 #include "Trojkat.h"
 
 
@@ -11,7 +12,21 @@ Trojkat::Trojkat(double a, double b, double c) : a(a), b(b), c(c) {}
 
 void Trojkat::rysuj() const {
     Ksztalt::rysuj();
-    //implementation here!!!
+    int i,space,rows=5,k=0;
+    for(i=1;i<=rows;++i)
+    {
+        for(space=1;space<=rows-i;++space)
+        {
+            std::cout<<"  ";
+        }
+        while(k!=2*i-1)
+        {
+            std::cout<<"* ";
+            ++k;
+        }
+        k=0;
+        std::cout<<"\n";
+    }
 }
 
 double Trojkat::getA() const {

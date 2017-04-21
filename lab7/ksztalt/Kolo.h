@@ -6,7 +6,7 @@
 #define JIMP_EXERCISES_KOLO_H
 
 #include "Ksztalt.h"
-#include <stdio>
+#include <iostream>
 
 
 class Kolo : Ksztalt{

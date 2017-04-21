@@ -9,7 +9,7 @@
 #include <iostream>
 
 
-class Kolo : Ksztalt{
+class Kolo : public Ksztalt{
 public:
     void rysuj() const override;
 

@@ -8,7 +8,7 @@
 #include "Ksztalt.h"
 
 
-class Trojkat : Ksztalt {
+class Trojkat : public Ksztalt {
 public:
     Trojkat();
 

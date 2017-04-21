@@ -8,7 +8,7 @@
 #include "Ksztalt.h"
 
 
-class Kwadrat : Ksztalt {
+class Kwadrat : public Ksztalt {
 public:
     void rysuj() const override;
 

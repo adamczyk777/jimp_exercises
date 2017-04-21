@@ -3,26 +3,29 @@
 //
 
 #include <iostream>
+#include <cmath>
 #include "Kolo.h"
 
 void Kolo::rysuj() const {
     Ksztalt::rysuj();
-    int i,j,k;
+    int circle_radius = 10; // or whatever you want
 
-    for(i=0;i<9;i++)
+    for (int i = 0; i <= 2*circle_radius; i++)
     {
-        std::cout<<" ";
+        for (int j = 0; j <= 2*circle_radius; j++)
+        {
+            float distance_to_centre = sqrt((i - circle_radius)*(i - circle_radius) + (j - circle_radius)*(j - circle_radius));
+            if (distance_to_centre > circle_radius-0.5 && distance_to_centre < circle_radius+0.5)
+            {
+                std::cout << "*";
+            }
+            else
+            {
+                std::cout << " ";
+            }
+        }
+        std::cout << std::endl;
     }
-    for(j=0;j<3;j++)
-    {
-        std::cout<<"*";
-    }
-    for(k=0;k<9;k++)
-    {
-        std::cout<<" ";
-    }
-
-    std::cout<<std::endl;
 }
 
 Kolo::Kolo(double radius) : radius(radius) {

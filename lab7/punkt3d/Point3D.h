@@ -15,7 +15,7 @@ using ::std::pow;
 using ::std::sqrt;
 using ::std::cout;
 
-class Point3D : Point{
+class Point3D : public Point {
 public:
     Point3D();
 

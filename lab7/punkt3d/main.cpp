@@ -10,9 +10,9 @@ int main() {
     Point point{2, 2};
     Point3D point3d{2, 2, 2};
 
-//    cout << point.Distance(point3d) << endl;
+    cout << point.Distance(point3d) << endl;
 
-    //Kompilator wyrzuca blad  error: 'Point' is an inaccessible base of 'Point3D'
+    //Kompilator wyrzuca blad
 
     Point3D p3d(1,2,3);
 //    cout << p3d << endl;

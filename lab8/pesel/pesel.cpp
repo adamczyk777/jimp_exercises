@@ -40,3 +40,9 @@ WrongControlSum::WrongControlSum(int controlSum) : controlSum(controlSum) {}
 int WrongControlSum::getControlSum() const {
     return controlSum;
 }
+
+WrongCharacter::WrongCharacter(char wrongCharecter) : wrongCharecter(wrongCharecter) {}
+
+char WrongCharacter::getWrongCharecter() const {
+    return wrongCharecter;
+}

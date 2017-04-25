@@ -31,8 +31,12 @@ private:
 class WrongCharacter {
     //do rzucania przy zlym znaku
 public:
+    WrongCharacter(char wrongCharecter);
+
+    char getWrongCharecter() const;
 
 private:
+    char wrongCharecter;
 
 
 };

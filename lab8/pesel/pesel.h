@@ -17,10 +17,10 @@ private:
     std::string number;
 };
 
-class WrongSize {
+class WrongPeselSize {
     //do rzucania przy zlym rozmiarze
 public:
-    WrongSize(unsigned long peselSize);
+    WrongPeselSize(unsigned long peselSize);
 
     unsigned long getPeselSize() const;
 
@@ -28,10 +28,10 @@ private:
     unsigned long peselSize;
 
 };
-class WrongCharacter {
+class WrongPeselCharacter {
     //do rzucania przy zlym znaku
 public:
-    WrongCharacter(char wrongCharecter);
+    WrongPeselCharacter(char wrongCharecter);
 
     char getWrongCharecter() const;
 
@@ -40,12 +40,12 @@ private:
 
 
 };
-class WrongControlSum {
+class WrongPeselControlSum {
     //do rzucania przy zlej sumie kontrolnej na koncu
 private:
     int controlSum;
 public:
-    WrongControlSum(int controlSum);
+    WrongPeselControlSum(int controlSum);
 
     int getControlSum() const;
 

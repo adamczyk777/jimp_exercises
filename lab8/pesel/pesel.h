@@ -38,6 +38,12 @@ private:
 };
 class WrongControlSum {
     //do rzucania przy zlej sumie kontrolnej na koncu
+private:
+    int controlSum;
+public:
+    WrongControlSum(int controlSum);
+
+    int getControlSum() const;
 
 };
 

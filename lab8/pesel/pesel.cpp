@@ -31,3 +31,9 @@ WrongSize::WrongSize(unsigned long peselSize) : peselSize(peselSize) {}
 unsigned long WrongSize::getPeselSize() const {
     return peselSize;
 }
+
+WrongControlSum::WrongControlSum(int controlSum) : controlSum(controlSum) {}
+
+int WrongControlSum::getControlSum() const {
+    return controlSum;
+}

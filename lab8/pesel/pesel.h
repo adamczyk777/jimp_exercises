@@ -17,5 +17,29 @@ private:
     std::string number;
 };
 
+class WrongSize {
+    //do rzucania przy zlym rozmiarze
+public:
+    WrongSize(unsigned long peselSize);
+
+    unsigned long getPeselSize() const;
+
+private:
+    unsigned long peselSize;
+
+};
+class WrongCharacter {
+    //do rzucania przy zlym znaku
+public:
+
+private:
+
+
+};
+class WrongControlSum {
+    //do rzucania przy zlej sumie kontrolnej na koncu
+
+};
+
 
 #endif //JIMP_EXERCISES_PESEL_H

@@ -25,3 +25,9 @@ bool pesel::validatePesel(std::string pesel) {
     for(int i=0;)
     return true;
 }
+
+WrongSize::WrongSize(unsigned long peselSize) : peselSize(peselSize) {}
+
+unsigned long WrongSize::getPeselSize() const {
+    return peselSize;
+}

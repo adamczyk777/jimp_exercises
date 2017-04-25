@@ -1,0 +1,12 @@
+project(exceptions_example)
+
+set(HEDEAR_FILES )
+set(SOURCE_FILES )
+
+add_library(libexceptions_example STATIC ${SOURCE_FILES})
+target_include_directories(libexceptions_example PUBLIC .)
+
+add_executable(exceptions_example ${SOURCE_FILES} main.cpp)
+
+target_link_libraries(exceptions_example libexceptions_example)
+

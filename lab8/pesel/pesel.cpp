@@ -5,9 +5,8 @@
 #include "pesel.h"
 
 pesel::pesel(std::string pesel) {
-    if(validatePesel(pesel)) {
-        this->number = pesel;
-    }
+    validatePesel(pesel);
+    this->number = pesel;
 }
 
 void pesel::validatePesel(std::string pesel) {

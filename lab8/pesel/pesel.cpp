@@ -10,7 +10,7 @@ pesel::pesel(std::string pesel) {
     }
 }
 
-bool pesel::validatePesel(std::string pesel) {
+void pesel::validatePesel(std::string pesel) {
     // dlugosc 11 znakow:
     if (pesel.size() != 11) {
         throw(WrongPeselSize(pesel.size()));
@@ -26,7 +26,6 @@ bool pesel::validatePesel(std::string pesel) {
     if((pesel[10] - '0') != (sum % 10)) {
         throw(WrongPeselControlSum(sum % 10));
     }
-    return true;
 }
 
 WrongPeselSize::WrongPeselSize(unsigned long peselSize) : peselSize(peselSize) {}

@@ -11,7 +11,7 @@ class pesel {
 public:
     pesel(const std::string pesel);
 
-    bool validatePesel(std::string);
+    void validatePesel(std::string);
 
 private:
     std::string number;

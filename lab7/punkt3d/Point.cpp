@@ -44,3 +44,8 @@ double Point::GetX() const {
 double Point::GetY() const {
     return y_;
 }
+
+ostream &operator<<(ostream &os, const Point &point) {
+    os << "x_: " << point.x_ << " y_: " << point.y_;
+    return os;
+}

@@ -37,6 +37,10 @@ public:
     //po jego zainicjalizowaniu
     void SetX(double x);
     void SetY(double y);
+
+    friend std::ostream &operator<<(std::ostream &os, const Point &point);
+
+
 private:
     //w przeciwienstwie do pythona C++ wymaga jawnej deklaracji składowych pól klasy:
     double x_, y_;

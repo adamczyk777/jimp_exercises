@@ -12,13 +12,12 @@ int main() {
 
     cout << point.Distance(point3d) << endl;
 
-    //Liczy odleglosc na plaszyznie czyli traktuje punkt 3d jako 2d polimorfizm yeah xD
+    // Liczy odleglosc na plaszyznie czyli traktuje punkt 3d jako 2d polimorfizm yeah xD
 
     Point3D p3d(1, 2, 3);
-//    cout << p3d << endl;
+    cout << p3d << endl;
 
-    //Takze otrzymujemy blad, w klasie Punkt nie ma przeciazanego operatora, wiec nie jest to zaskoczeniem ze
-    // ostream nie przyjmuje argumentu typu Point3D
+    // wypisuje tak jak poprzednio tylko 2 wspolrzedne znowu widzimy ze szczegolniejszy obiekt jest takze tym ogolniejszym
 
     return 0;
 }

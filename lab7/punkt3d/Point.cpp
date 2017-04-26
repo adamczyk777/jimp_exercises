@@ -36,3 +36,11 @@ double Point::Distance(const Point &other) const{
 void Point::ToString(ostream *out) const{
     (*out) << "(" << GetX() << ";" << GetY() << ")";
 }
+
+double Point::GetX() const {
+    return x_;
+}
+
+double Point::GetY() const {
+    return y_;
+}

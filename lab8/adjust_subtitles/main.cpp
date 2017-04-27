@@ -34,7 +34,7 @@ void delay(char* in, char* out, int delay, int fps) {
         }*/
         // czytam od poczatku linii. Jesli pierwszy znak linii to nie { - wywalam exception. Jesli napotkam } lub koniec linii \n przestaje czytac.
         // szukam regexem:
-        if(std::regex_search(currentLine, matches, pharse)) {
+        if(std::regex_search(currentLine, matches, pharse)) { // TODO: uzyc grupowania matches zeby nie musiec obcinac stringa
             startFrame = matches[0];
             std::cout << startFrame << std::endl;
             //charCounter += startFrame.size();

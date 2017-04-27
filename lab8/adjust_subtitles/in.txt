@@ -1,0 +1,7 @@
+{20}{30} test pierwsza linia
+{35}{50} test dsadapierwsza linia
+{70}{90} test 3pierwsza linia
+{100}{900} test 4pierwsza linia
+{2000}{3000} test 5pierwsza linia
+{3004}{5006} test 6pierwsza linia
+{6032}{9006} test 7pierwsza linia

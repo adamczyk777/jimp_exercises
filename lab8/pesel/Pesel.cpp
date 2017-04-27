@@ -27,7 +27,10 @@ void academia::Pesel::validatePesel(std::string pesel) {
     }
 }
 
-academia::InvalidPeselLength::InvalidPeselLength(unsigned long peselSize) : peselSize(peselSize) {}
+
+academia::InvalidPeselLength::InvalidPeselLength(unsigned long peselSize) : peselSize(peselSize) {
+    this->peselSize = peselSize;
+}
 
 unsigned long academia::InvalidPeselLength::getPeselSize() const {
     return peselSize;

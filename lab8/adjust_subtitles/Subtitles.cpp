@@ -3,3 +3,7 @@
 //
 
 #include "Subtitles.h"
+
+void Subtitles::delay(char *in, char *out, int delay, int fps) {
+
+}

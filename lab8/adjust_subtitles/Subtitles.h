@@ -7,7 +7,8 @@
 
 
 class Subtitles {
-
+public:
+    void delay(char* in, char* out, int delay, int fps);
 };
 
 

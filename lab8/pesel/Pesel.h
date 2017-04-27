@@ -8,9 +8,9 @@
 #include <string>
 
 namespace academia {
-    class pesel {
+    class Pesel {
     public:
-        pesel(const std::string pesel);
+        Pesel(const std::string pesel);
 
         void validatePesel(std::string);
 
@@ -18,10 +18,10 @@ namespace academia {
         std::string number;
     };
 
-    class WrongPeselSize {
+    class InvalidPeselLength {
         //do rzucania przy zlym rozmiarze
     public:
-        WrongPeselSize(unsigned long peselSize);
+        InvalidPeselLength(unsigned long peselSize);
 
         unsigned long getPeselSize() const;
 
@@ -30,10 +30,10 @@ namespace academia {
 
     };
 
-    class WrongPeselCharacter {
+    class InvalidPeselCharacter {
         //do rzucania przy zlym znaku
     public:
-        WrongPeselCharacter(char wrongCharecter);
+        InvalidPeselCharacter(char wrongCharecter);
 
         char getWrongCharecter() const;
 
@@ -43,12 +43,12 @@ namespace academia {
 
     };
 
-    class WrongPeselControlSum {
+    class InvalidPeselChecksum {
         //do rzucania przy zlej sumie kontrolnej na koncu
     private:
         int controlSum;
     public:
-        WrongPeselControlSum(int controlSum);
+        InvalidPeselChecksum(int controlSum);
 
         int getControlSum() const;
 

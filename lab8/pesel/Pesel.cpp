@@ -2,14 +2,14 @@
 // Created by adamc on 25.04.2017.
 //
 
-#include "pesel.h"
+#include "Pesel.h"
 
-pesel::pesel(std::string pesel) {
+academia::pesel::pesel(std::string pesel) {
     validatePesel(pesel);
     this->number = pesel;
 }
 
-void pesel::validatePesel(std::string pesel) {
+void academia::pesel::validatePesel(std::string pesel) {
     // dlugosc 11 znakow:
     if (pesel.size() != 11) {
         throw(WrongPeselSize(pesel.size()));
@@ -27,20 +27,20 @@ void pesel::validatePesel(std::string pesel) {
     }
 }
 
-WrongPeselSize::WrongPeselSize(unsigned long peselSize) : peselSize(peselSize) {}
+academia::WrongPeselSize::WrongPeselSize(unsigned long peselSize) : peselSize(peselSize) {}
 
-unsigned long WrongPeselSize::getPeselSize() const {
+unsigned long academia::WrongPeselSize::getPeselSize() const {
     return peselSize;
 }
 
-WrongPeselControlSum::WrongPeselControlSum(int controlSum) : controlSum(controlSum) {}
+academia::WrongPeselControlSum::WrongPeselControlSum(int controlSum) : controlSum(controlSum) {}
 
-int WrongPeselControlSum::getControlSum() const {
+int academia::WrongPeselControlSum::getControlSum() const {
     return controlSum;
 }
 
-WrongPeselCharacter::WrongPeselCharacter(char wrongCharecter) : wrongCharecter(wrongCharecter) {}
+academia::WrongPeselCharacter::WrongPeselCharacter(char wrongCharecter) : wrongCharecter(wrongCharecter) {}
 
-char WrongPeselCharacter::getWrongCharecter() const {
+char academia::WrongPeselCharacter::getWrongCharecter() const {
     return wrongCharecter;
 }

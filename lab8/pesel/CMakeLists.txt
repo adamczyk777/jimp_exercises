@@ -1,7 +1,7 @@
 project(pesel)
 
-set(HEDEAR_FILES pesel.h)
-set(SOURCE_FILES pesel.cpp)
+set(HEDEAR_FILES Pesel.h)
+set(SOURCE_FILES Pesel.cpp)
 
 add_library(libpesel STATIC ${SOURCE_FILES})
 target_include_directories(libpesel PUBLIC .)

@@ -2,4 +2,4 @@ project(lab8)
 
 add_subdirectory_if_exists(pesel)
 add_subdirectory_if_exists(exceptions_example)
-add_subdirectory_if_exists(adjust_subtitles)
+add_subdirectory_if_exists(movie_subtitles)

@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <regex>
 
 bool is_digits(const std::string &str) { // funkcja sprawdza, czy string zawiera same cyfry
@@ -14,15 +13,25 @@ bool is_digits(const std::string &str) { // funkcja sprawdza, czy string zawiera
 }
 
 void delay(char *in, char *out, int delay, int fps) {
+
+    /* in - input file path
+     * out - output file path
+     * delay - delay in seconds we want to move subtitles
+     * fps - frames per second that the video is played by default */
+
     std::ifstream originFile;
     std::ofstream outputFile;
-    originFile.open(in); // to chyba samo z siebie rzuci wyjatek jak cos nie pyknie
+//    otwieranie obu plikow
+//    to chyba samo z siebie rzuci wyjatek jak cos nie pyknie
+    originFile.open(in);
     outputFile.open(out);
+
     std::string currentLine;
     std::string startFrame;
     int startingFrameNumber = 0; // tmp
     std::string endFrame;
     int endingFrameNumber = 0; // tmp
+//      nasza regexowa fraza, ktora dopasowujemy zgodnie z konwencja dla napisow
     std::regex pharse{R"((\{)(\w+)(\}))"};
     std::smatch matches;
     //int charCounter = 0;
@@ -83,8 +92,10 @@ void delay(char *in, char *out, int delay, int fps) {
 }
 
 int main() {
-    char in[200] = "/home/Tay/Projects/jimp2/jimp_exercises/lab8/adjust_subtitles/in.txt";
-    char out[200] = "/home/Tay/Projects/jimp2/jimp_exercises/lab8/adjust_subtitles/out.txt";
+//    char in[200] = "/home/Tay/Projects/jimp2/jimp_exercises/lab8/movie_subtitles/in.txt";
+//    char out[200] = "/home/Tay/Projects/jimp2/jimp_exercises/lab8/movie_subtitles/out.txt";
+    char in[200] = "C:\\Users\\adamc\\CLionProjects\\jimp_exercises\\lab8\\movie_subtitles\\in.txt";
+    char out[200] = "C:\\Users\\adamc\\CLionProjects\\jimp_exercises\\lab8\\movie_subtitles\\out.txt";
     delay(in, out, 10000, 30);
     return 0;
 }

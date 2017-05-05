@@ -5,14 +5,19 @@
 #ifndef JIMP_EXERCISES_SUBTITLES_H
 #define JIMP_EXERCISES_SUBTITLES_H
 
-namespace moviesubs{
+namespace moviesubs {
+
+//    class MovieSubtitles {
+//    public:
+//        void delay(char* in, char* out, int delay, int fps);
+//    };
 
     class MovieSubtitles {
     public:
-        void delay(char* in, char* out, int delay, int fps);
+
+    private:
+
     };
-
-
 }
 
 #endif //JIMP_EXERCISES_SUBTITLES_H

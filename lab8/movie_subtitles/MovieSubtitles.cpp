@@ -1,9 +1,9 @@
+////
+//// Created by Tay on 4/27/17.
+////
 //
-// Created by Tay on 4/27/17.
+//#include "MovieSubtitles.h"
 //
-
-#include "MovieSubtitles.h"
-
-void moviesubs::MovieSubtitles::delay(char *in, char *out, int delay, int fps) {
-
-}
+//void moviesubs::MovieSubtitles::delay(char *in, char *out, int delay, int fps) {
+//
+//}

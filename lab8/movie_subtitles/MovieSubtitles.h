@@ -54,6 +54,27 @@ namespace moviesubs {
     private:
 
     };
+
+//    Throwables :
+    class NegativeFrameAfterShift {
+
+    };
+
+    class SubtitleEndBeforeStart {
+
+    };
+
+    class InvalidSubtitleLineFormat {
+
+    };
+
+    class OutOfOrderFrames {
+
+    };
+
+    class MissingTimeSpecification {
+
+    };
 }
 
 #endif //JIMP_EXERCISES_SUBTITLES_H

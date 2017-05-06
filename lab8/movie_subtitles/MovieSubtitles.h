@@ -1,19 +1,55 @@
-//
-// Created by Tay on 4/27/17.
-//
-
 #ifndef JIMP_EXERCISES_SUBTITLES_H
 #define JIMP_EXERCISES_SUBTITLES_H
 
+//Everything is stored in one file because of tests
+//that essentially require this, and we did not want to edit them
+
+#include <string>
+#include <regex>
+
+using namespace std;
+using namespace std::literals;
+
 namespace moviesubs {
 
-//    class MovieSubtitles {
-//    public:
-//        void delay(char* in, char* out, int delay, int fps);
-//    };
-
     class MovieSubtitles {
+        /*
+         * Base Class that holds subtitle shifting methods
+         */
     public:
+        MovieSubtitles();
+
+        virtual void ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output);
+
+    private:
+
+    };
+
+    class SubRipSubtitles : MovieSubtitles {
+        /*
+         * Sub class of MovieSubtitles class
+         * should be used to handle subtitles of SubRip format only
+         */
+    public:
+        SubRipSubtitles();
+
+    private:
+        void ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output) override;
+
+    private:
+
+    };
+
+    class MicroDvdSubtitles : MovieSubtitles {
+        /*
+         * Sub Class of MovieSubtitles
+         * should be used to handle subtitles only of MicroDVD format
+         */
+    public:
+        MicroDvdSubtitles();
+
+    private:
+        void ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output) override;
 
     private:
 

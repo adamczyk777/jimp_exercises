@@ -43,23 +43,23 @@ void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream
     regex wrong_field_format{R"([0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
     regex missing_spaces{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}-->[0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
     regex too_long_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} ---> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    if (framerate < 0) {
-        throw std::invalid_argument("framerate");
-    }
+//    if (framerate < 0) {
+//        throw std::invalid_argument("framerate");
+//    }
     while (std::getline(*input, line)) {
         if (regex_match(line, pattern)) {                       // matching correct patter first
             int combined_time1 = delay + stoi(line.substr(0, 2)) * 3600000 + stoi(line.substr(3, 2)) * 60000
                                  + stoi(line.substr(6, 2)) * 1000 + stoi(line.substr(9, 3));
-            cout << combined_time1 << endl;
-            if (combined_time1 < 0) {
-                throw NegativeFrameAfterShift();
-            }
+//            cout << combined_time1 << endl;
+//            if (combined_time1 < 0) {
+//                throw NegativeFrameAfterShift();
+//            }
             int combined_time2 = delay + stoi(line.substr(17, 2)) * 3600000 + stoi(line.substr(20, 2)) * 60000
                                  + stoi(line.substr(23, 2)) * 1000 + stoi(line.substr(26, 3));
             cout << combined_time2 << endl;
-            if (combined_time1 > combined_time2) {
-                throw SubtitleEndBeforeStart();
-            }
+//            if (combined_time1 > combined_time2) {
+//                throw SubtitleEndBeforeStart();
+//            }
             // Obliczam czasy do wstawienia dla specyfikatora czasu rozpoczcia
             int milliseconds = combined_time1 % 1000;
             combined_time1 -= combined_time1 % 1000;
@@ -156,13 +156,13 @@ void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream
 
 
             *output << line << endl;
-        } else if (regex_match(line, missing_arrow) || regex_match(line, missing_milliseconds)
-                   || regex_match(line, missing_spaces) || regex_match(line, dot_instead_of_comma)
-                   || regex_match(line, arrow_too_short) || regex_match(line, semicolon_instead_of_colon)
-                   || regex_match(line, seconds_out_of_range) || regex_match(line, wrong_field_format)
-                   || regex_match(line, too_long_arrow)) {
-            // looking if there is correct looking pattern, but it is illegal
-            throw InvalidSubtitleLineFormat();
+//        } else if (regex_match(line, missing_arrow) || regex_match(line, missing_milliseconds)
+//                   || regex_match(line, missing_spaces) || regex_match(line, dot_instead_of_comma)
+//                   || regex_match(line, arrow_too_short) || regex_match(line, semicolon_instead_of_colon)
+//                   || regex_match(line, seconds_out_of_range) || regex_match(line, wrong_field_format)
+//                   || regex_match(line, too_long_arrow)) {
+//            // looking if there is correct looking pattern, but it is illegal
+//            throw InvalidSubtitleLineFormat();
 
         } else {                                                // adding line to output
             *output << line << endl;

@@ -59,23 +59,37 @@ namespace moviesubs {
 
 //    Throwables :
     class NegativeFrameAfterShift {
+    public:
+        NegativeFrameAfterShift();
+        string what() const;
+    private:
 
     };
 
     class SubtitleEndBeforeStart {
-
+    public:
+        SubtitleEndBeforeStart();
+        string what() const;
+        int LineAt() const;
+    private:
     };
 
     class InvalidSubtitleLineFormat {
-
+    public:
+        InvalidSubtitleLineFormat();
+        string what() const;
     };
 
     class OutOfOrderFrames {
-
+    public:
+        OutOfOrderFrames();
+        string what() const;
     };
 
     class MissingTimeSpecification {
-
+    public:
+        MissingTimeSpecification();
+        string what() const;
     };
 }
 

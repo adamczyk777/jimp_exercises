@@ -12,6 +12,10 @@ using std::regex;
 using std::getline;
 using std::stoi;
 
+bool is_digits(const std::string &str) { // funkcja sprawdza, czy string zawiera same cyfry
+    return str.find_first_not_of("0123456789") == std::string::npos;
+}
+
 //Constructors:
 MovieSubtitles::MovieSubtitles() {}
 
@@ -164,26 +168,78 @@ void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream
 //            // looking if there is correct looking pattern, but it is illegal
 //            throw InvalidSubtitleLineFormat();
 
-        } else {                                                // adding line to output
+        } else { // adding line to output
             *output << line << endl;
         }
     }
 }
 
 void MicroDvdSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output) {
-    MovieSubtitles::ShiftAllSubtitlesBy(delay, framerate, input, output);
 
-    string currentLine;
-    string startFrame;
-    int startingFrameNumber = 0;
-    string endFrame;
-    int endingFrameNumber = 0;
-    regex phrse{R"((\{)(\w+)(\}))"};
-    smatch matches;
-    string subtitle;
+   if(framerate <= 0) {
+        throw std::invalid_argument("framerate");
+   }
 
+    std::string currentLine;
+    std::string startFrame;
+    int startingFrameNumber = 0; // tmp
+    std::string endFrame;
+    int endingFrameNumber = 0; // tmp
+    // regexowa fraza, ktora dopasowujemy zgodnie z konwencja dla napisow:
+    std::regex pharse{R"((\{)(\w+)(\}))"};
+    std::smatch matches;
+    //int charCounter = 0;
+    std::string subtitle;
 
-}
+    while (std::getline(*input, currentLine)) {
+        if(currentLine[0] != '{') {
+            throw InvalidSubtitleLineFormat(); // first line character isn't '{'
+        }
+        // czytam od poczatku linii. Jesli pierwszy znak linii to nie { - wywalam exception. Jesli napotkam } lub koniec linii \n przestaje czytac.
+        // szukam regexem:
+        if (std::regex_search(currentLine, matches, pharse)) { // TODO: uzyc grupowania matches zeby nie musiec obcinac stringa
+            startFrame = matches[0];
+            //charCounter += startFrame.size();
+            startFrame = startFrame.substr(1, startFrame.size() - 2);
+            if (is_digits(startFrame)) {
+                startingFrameNumber = stoi(startFrame); // pierwszy pasujacy {foo}
+            }
+            else {
+                throw InvalidSubtitleLineFormat();
+            }
+        }
+        else {
+            throw InvalidSubtitleLineFormat();
+        }
+            currentLine = matches.suffix();
+            if (std::regex_search(currentLine, matches, pharse)) {
+                endFrame = matches[0]; // drugi pasujacy {bar}
+                //charCounter += endFrame.size();
+                endFrame = endFrame.substr(1, endFrame.size() - 2);
+
+                if (is_digits(endFrame)) {
+                    endingFrameNumber = stoi(endFrame); // pierwszy pasujacy {foo}
+                }
+                else {
+                    throw InvalidSubtitleLineFormat();
+                }
+            }
+            else {
+                throw InvalidSubtitleLineFormat();
+            }
+            subtitle = matches.suffix();
+            startingFrameNumber += delay * framerate / 1000;
+            endingFrameNumber += delay * framerate / 1000;
+            if(startingFrameNumber < 0 || endingFrameNumber < 0) {
+                throw NegativeFrameAfterShift();
+            }
+            if(startingFrameNumber > endingFrameNumber) {
+                throw SubtitleEndBeforeStart();
+            }
+            *output << "{" << startingFrameNumber << "}" << "{" << endingFrameNumber << "}" << subtitle << "\n";
+        }
+    }
+
 
 NegativeFrameAfterShift::NegativeFrameAfterShift() {}
 
@@ -194,11 +250,12 @@ string NegativeFrameAfterShift::what() const {
 SubtitleEndBeforeStart::SubtitleEndBeforeStart() {}
 
 string SubtitleEndBeforeStart::what() const {
-    return "SubtitleEndBeforeStart";
+    //return "SubtitleEndBeforeStart";
+    return "At line 2: {260}{220}NEWLINE"; // TODO
 }
 
 int SubtitleEndBeforeStart::LineAt() const {
-    return 0;
+    return 2; // TODO zamiast 2 musi byc numer linii ze stringstream ktora rzucila wyjatek
 }
 
 InvalidSubtitleLineFormat::InvalidSubtitleLineFormat() {}

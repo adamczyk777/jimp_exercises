@@ -9,6 +9,7 @@
 #include <regex>
 #include <iostream>
 #include <istream>
+#include <stdexcept>
 
 using namespace std;
 using namespace std::literals;
@@ -49,9 +50,7 @@ namespace moviesubs {
          */
     public:
         MicroDvdSubtitles();
-
-    private:
-        void ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output) override;
+       virtual void ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output);
 
     private:
 

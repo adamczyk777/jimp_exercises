@@ -30,40 +30,48 @@ void MovieSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream 
 }
 
 void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream *input, stringstream *output) {
-    MovieSubtitles::ShiftAllSubtitlesBy(delay, framerate, input, output);
+
+    if (framerate < 0) {
+        throw std::invalid_argument("framerate");
+    }
+
     string line; //string for storing single line from stream
     regex pattern{R"(^[0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}$)"};
-    regex pattern_frame{R"(^[0-9]*$)"};
+    //regex pattern_frame{R"(^[0-9]*$)"};
     // regex wrong patterns:
     regex dot_instead_of_comma{
             R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}(\,|\.)[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}(\,|\.)[0-9]{3})"};
     regex arrow_too_short{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} -> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex missing_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}  [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex semicolon_instead_of_colon{
-            R"([0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3} --> [0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3})"};
-    regex seconds_out_of_range{R"([0-9]{2}\:[0-9]{2}\:[0-9]{5} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex missing_milliseconds{
-            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}(\,[0-9]{3}|) --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}(\,[0-9]{3})|)"};
-    regex wrong_field_format{R"([0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
+    regex missing_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
+    regex semicolon_instead_of_colon{R"([0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3} --> [0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3})"};
+    regex seconds_out_of_range{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{5})"};
+    regex missing_milliseconds_first{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"}; // TODO  (\,[0-9]{3}|)
+    regex missing_milliseconds_second{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}$)"}; // TODO  (\,[0-9]{3}|)
+    regex wrong_field_format{R"((\w+)[0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};  // TODO magic
     regex missing_spaces{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}-->[0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex too_long_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} ---> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-//    if (framerate < 0) {
-//        throw std::invalid_argument("framerate");
-//    }
+    regex too_long_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} -+--> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"}; // TODO add + after - so it works for arrows longer than --->
+
+    int line_counter = 0;
+    /*int current_frame = 0;
+    int prev_frame;*/
+
     while (std::getline(*input, line)) {
-        if (regex_match(line, pattern)) {                       // matching correct patter first
+        if (regex_match(line, pattern)) { // matching correct pattern first
+            line_counter++; // we increment line counter only if we find time line, because subrip format doesn't use /n as a separator between 'sets'
+           /* current_frame = int(line[0] - '0');
+            cout << "tutaj " << current_frame << endl;*/
             int combined_time1 = delay + stoi(line.substr(0, 2)) * 3600000 + stoi(line.substr(3, 2)) * 60000
                                  + stoi(line.substr(6, 2)) * 1000 + stoi(line.substr(9, 3));
-//            cout << combined_time1 << endl;
-//            if (combined_time1 < 0) {
-//                throw NegativeFrameAfterShift();
-//            }
+
+          if (combined_time1 < 0) {
+                throw NegativeFrameAfterShift();
+          }
             int combined_time2 = delay + stoi(line.substr(17, 2)) * 3600000 + stoi(line.substr(20, 2)) * 60000
                                  + stoi(line.substr(23, 2)) * 1000 + stoi(line.substr(26, 3));
             cout << combined_time2 << endl;
-//            if (combined_time1 > combined_time2) {
-//                throw SubtitleEndBeforeStart();
-//            }
+           if (combined_time1 > combined_time2) {
+               throw SubtitleEndBeforeStart(line_counter, line);
+            }
             // Obliczam czasy do wstawienia dla specyfikatora czasu rozpoczcia
             int milliseconds = combined_time1 % 1000;
             combined_time1 -= combined_time1 % 1000;
@@ -158,17 +166,20 @@ void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream
                 line.replace(17, 2, to_string(hours));
             }
 
-
             *output << line << endl;
-//        } else if (regex_match(line, missing_arrow) || regex_match(line, missing_milliseconds)
-//                   || regex_match(line, missing_spaces) || regex_match(line, dot_instead_of_comma)
-//                   || regex_match(line, arrow_too_short) || regex_match(line, semicolon_instead_of_colon)
-//                   || regex_match(line, seconds_out_of_range) || regex_match(line, wrong_field_format)
-//                   || regex_match(line, too_long_arrow)) {
-//            // looking if there is correct looking pattern, but it is illegal
-//            throw InvalidSubtitleLineFormat();
-
-        } else { // adding line to output
+            } /*else if (regex_match(line, missing_arrow) || regex_match(line, missing_milliseconds)
+                       || regex_match(line, missing_spaces) || regex_match(line, dot_instead_of_comma)
+                       || regex_match(line, arrow_too_short) || regex_match(line, semicolon_instead_of_colon)
+                       || regex_match(line, seconds_out_of_range) || regex_match(line, wrong_field_format)
+                       || regex_match(line, too_long_arrow)) {*/
+            else if(regex_match(line, dot_instead_of_comma) || regex_match(line, arrow_too_short)
+                    || regex_match(line, missing_arrow) || regex_match(line, semicolon_instead_of_colon)
+                    || regex_match(line, seconds_out_of_range) || regex_match(line, missing_milliseconds_first)
+                    || regex_match(line, wrong_field_format)) {
+                // looking if there is correct looking pattern, but it is illegal
+                throw InvalidSubtitleLineFormat();
+        }
+        else { // adding line to output
             *output << line << endl;
         }
     }
@@ -190,13 +201,17 @@ void MicroDvdSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstre
     std::smatch matches;
     //int charCounter = 0;
     std::string subtitle;
+    int line_counter = 0;
+    std::string whole_line;
 
     while (std::getline(*input, currentLine)) {
+        whole_line = currentLine;
+        line_counter++;
         if(currentLine[0] != '{') {
             throw InvalidSubtitleLineFormat(); // first line character isn't '{'
         }
         // czytam od poczatku linii. Jesli pierwszy znak linii to nie { - wywalam exception. Jesli napotkam } lub koniec linii \n przestaje czytac.
-        // szukam regexem:
+
         if (std::regex_search(currentLine, matches, pharse)) { // TODO: uzyc grupowania matches zeby nie musiec obcinac stringa
             startFrame = matches[0];
             //charCounter += startFrame.size();
@@ -205,7 +220,7 @@ void MicroDvdSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstre
                 startingFrameNumber = stoi(startFrame); // pierwszy pasujacy {foo}
             }
             else {
-                throw InvalidSubtitleLineFormat();
+                throw InvalidSubtitleLineFormat(); // no digits in {}
             }
         }
         else {
@@ -234,12 +249,11 @@ void MicroDvdSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstre
                 throw NegativeFrameAfterShift();
             }
             if(startingFrameNumber > endingFrameNumber) {
-                throw SubtitleEndBeforeStart();
+                throw SubtitleEndBeforeStart(line_counter, whole_line);
             }
             *output << "{" << startingFrameNumber << "}" << "{" << endingFrameNumber << "}" << subtitle << "\n";
         }
     }
-
 
 NegativeFrameAfterShift::NegativeFrameAfterShift() {}
 
@@ -247,15 +261,21 @@ string NegativeFrameAfterShift::what() const {
     return "NegativeFrameAfterShift";
 }
 
-SubtitleEndBeforeStart::SubtitleEndBeforeStart() {}
+SubtitleEndBeforeStart::SubtitleEndBeforeStart(int line_number, std::string line_content) {
+    this->line_number = line_number;
+    this->line_content = line_content;
+}
 
 string SubtitleEndBeforeStart::what() const {
-    //return "SubtitleEndBeforeStart";
-    return "At line 2: {260}{220}NEWLINE"; // TODO
+    std::string to_return = "At line ";
+    to_return += to_string(this->line_number);
+    to_return +=  ": ";
+    to_return +=  this->line_content;
+    return to_return;
 }
 
 int SubtitleEndBeforeStart::LineAt() const {
-    return 2; // TODO zamiast 2 musi byc numer linii ze stringstream ktora rzucila wyjatek
+    return this->line_number;
 }
 
 InvalidSubtitleLineFormat::InvalidSubtitleLineFormat() {}

@@ -17,7 +17,7 @@ namespace academia {
         virtual void Serialize(Serializer * serializer) = 0;
     };
 
-    class Serializer : Serializable {
+    class Serializer {
     public:
         Serializer(std::ostream *out);
 

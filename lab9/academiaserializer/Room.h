@@ -11,12 +11,19 @@
 namespace academia {
 
     class Room : public Serializable {
-        void Serialize(Serializer * serializer );
+    public:
+        enum class Type {
+            COMPUTER_LAB
+        };
+
+        void Serialize(Serializer * serializer);
+
+        Room(int id, const std::string &name, Type type);
 
     private:
         int id;
         std::string name;
-        std::string type;
+        Type type;
     };
 }
 

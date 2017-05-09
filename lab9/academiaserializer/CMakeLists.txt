@@ -2,7 +2,7 @@
 project(serialization)
 
 set(HEDEAR_FILES Serialization.h Room.h Building.h Serializable.h)
-set(SOURCE_FILES Serializable.cpp Building.cpp Serializable.cpp)
+set(SOURCE_FILES Serializable.cpp Room.cpp Building.cpp Serializable.cpp)
 
 add_library(libserialization STATIC ${SOURCE_FILES})
 target_include_directories(libserialization PUBLIC .)

@@ -8,7 +8,7 @@
 
 class Serializable {
 public:
-    void Serialize(Serializer *) = 0;
+    virtual void Serialize(Serializer * serializer) = 0;
 };
 
 

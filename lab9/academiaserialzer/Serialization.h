@@ -5,8 +5,8 @@
 #ifndef JIMP_EXERCISES_SERIALIZATION_H
 #define JIMP_EXERCISES_SERIALIZATION_H
 
+#include "Serializable.h"
 #include "Building.h"
 #include "Room.h"
-#include "Serializable.h"
 
 #endif //JIMP_EXERCISES_SERIALIZATION_H

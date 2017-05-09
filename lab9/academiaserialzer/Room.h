@@ -8,9 +8,15 @@
 
 #include "Serializable.h"
 
-class Room: public Serializable {
+namespace academia {
 
-};
+    class Room : public Serializable {
+        void Serialize(Serializer * serializer );
+
+    private:
+
+    };
+}
 
 
 #endif //JIMP_EXERCISES_ROOM_H

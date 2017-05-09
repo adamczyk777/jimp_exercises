@@ -7,7 +7,8 @@
 
 
 class Serializable {
-
+public:
+    void Serialize(Serializer *) = 0;
 };
 
 

@@ -6,8 +6,10 @@
 #define JIMP_EXERCISES_BUILDING_H
 
 
-class Building {
+#include "Serializable.h"
 
+class Building: public Serializable {
+// array of rooms
 };
 
 

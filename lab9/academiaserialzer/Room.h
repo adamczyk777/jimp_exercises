@@ -6,7 +6,9 @@
 #define JIMP_EXERCISES_ROOM_H
 
 
-class Room {
+#include "Serializable.h"
+
+class Room: public Serializable {
 
 };
 

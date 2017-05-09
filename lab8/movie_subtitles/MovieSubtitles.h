@@ -67,10 +67,12 @@ namespace moviesubs {
 
     class SubtitleEndBeforeStart {
     public:
-        SubtitleEndBeforeStart();
+        SubtitleEndBeforeStart(int line_number, std::string line_content);
         string what() const;
         int LineAt() const;
     private:
+        int line_number;
+        std::string line_content;
     };
 
     class InvalidSubtitleLineFormat {

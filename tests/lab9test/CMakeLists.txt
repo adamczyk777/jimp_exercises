@@ -14,7 +14,7 @@ add_gtest_with_memleak(json_serializer libserialization)
 #######################################################################
 ##  ALL TESTS
 #######################################################################
-add_executable(lab9_all_tests ${SOURCE_FILES} ../../lab9/academiaserialzer/Room.cpp ../../lab9/academiaserialzer/Room.h ../../lab9/academiaserialzer/Building.cpp ../../lab9/academiaserialzer/Building.h ../../lab9/academiaserialzer/Serializable.cpp ../../lab9/academiaserialzer/Serializable.h)
+add_executable(lab9_all_tests ${SOURCE_FILES} ../../lab9/academiaserialzer/Room.cpp ../../lab9/academiaserialzer/Room.h ../../lab9/academiaserialzer/Building.cpp ../../lab9/academiaserialzer/Building.h ../../lab9/academiaserialzer/Serializable.cpp ../../lab9/academiaserialzer/Serializable.h ../../lab9/academiaserialzer/Serialization.h)
 
 target_link_libraries(lab9_all_tests ${GTEST_LIBS})
 target_link_libraries(lab9_all_tests libserialization)

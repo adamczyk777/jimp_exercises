@@ -14,7 +14,9 @@ namespace academia {
         void Serialize(Serializer * serializer );
 
     private:
-
+        int id;
+        std::string name;
+        std::string type;
     };
 }
 

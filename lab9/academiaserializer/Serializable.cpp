@@ -3,3 +3,5 @@
 //
 
 #include "Serializable.h"
+
+academia::Serializer::Serializer(std::ostream *out) {}

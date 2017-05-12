@@ -5,8 +5,12 @@
 #ifndef JIMP_EXERCISES_JSONSERIALIZER_H
 #define JIMP_EXERCISES_JSONSERIALIZER_H
 
+#include "Serializable.h"
+
 namespace academia {
-    class JsonSerializer : Serializer {
+    class JsonSerializer : public Serializer {
+    public:
+        JsonSerializer(std::ostream *out) : Serializer(out) {} // ??
         void IntegerField(const std::string &field_name, int value);
         void DoubleField(const std::string &field_name, double value);
         void StringField(const std::string &field_name, const std::string &value);

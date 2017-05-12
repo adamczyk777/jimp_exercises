@@ -5,8 +5,10 @@
 #ifndef JIMP_EXERCISES_XMLSERIALIZER_H
 #define JIMP_EXERCISES_XMLSERIALIZER_H
 
+#include "Serializable.h"
+
 namespace academia {
-    class XmlSerializer : Serializer {
+    class XmlSerializer : public Serializer {
         void IntegerField(const std::string &field_name, int value);
         void DoubleField(const std::string &field_name, double value);
         void StringField(const std::string &field_name, const std::string &value);

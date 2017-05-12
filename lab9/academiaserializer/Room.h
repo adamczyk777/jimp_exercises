@@ -13,7 +13,9 @@ namespace academia {
     class Room : public Serializable {
     public:
         enum class Type {
-            COMPUTER_LAB
+            COMPUTER_LAB,
+            LECTURE_HALL,
+            CLASSROOM
         };
 
         void Serialize(Serializer * serializer);

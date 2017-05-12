@@ -7,11 +7,21 @@
 
 
 #include "Serializable.h"
+#include "Room.h"
+#include <vector>
 
 namespace academia {
 
     class Building : public Serializable {
-// array of rooms
+    // array of rooms
+    public:
+        Building(int id, const std::string &name, const std::vector<Room> &rooms);
+        void Serialize(Serializer * serializer);
+
+    private:
+        int id;
+        std::string name;
+        std::vector<Room> rooms;
     };
 }
 

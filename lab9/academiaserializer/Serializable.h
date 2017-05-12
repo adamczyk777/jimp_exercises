@@ -29,6 +29,7 @@ namespace academia {
                         const std::vector<std::reference_wrapper<const academia::Serializable>> &value) = 0;
         virtual void Header(const std::string &object_name) = 0;
         virtual void Footer(const std::string &object_name) = 0;
+        virtual void endingLine(const std::string &field_name) = 0;
     };
 }
 

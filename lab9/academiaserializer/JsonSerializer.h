@@ -20,6 +20,7 @@ namespace academia {
                                 const std::vector<std::reference_wrapper<const academia::Serializable>> &value);
         void Header(const std::string &object_name);
         void Footer(const std::string &object_name);
+        void endingLine(const std::string &field_name);
         std::ostream *test;
     };
 }

@@ -4,10 +4,18 @@
 
 #include "Building.h"
 
-academia::Building::Building(int id, const std::string &name, const std::vector<academia::Room> &rooms) : id(id),
-                                                                                                          name(name),
-                                                                                                          rooms(rooms) {}
+
 
 void academia::Building::Serialize(academia::Serializer *serializer) {
-
+    serializer->Header("");
+    serializer->IntegerField("id", this->id);
+    serializer->endingLine("id");
+    serializer->StringField("name", this->name);
+    serializer->endingLine("name");
+    //serializer->ArrayField("rooms", this->rooms);
+    serializer->Footer("");
 }
+
+academia::Building::Building(int id, const std::string &name,
+                             const std::vector<academia::Room> &rooms) : id(id), name(name),
+                                                                                                 rooms(rooms) {}

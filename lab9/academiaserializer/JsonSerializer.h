@@ -10,7 +10,7 @@
 namespace academia {
     class JsonSerializer : public Serializer {
     public:
-        JsonSerializer(std::ostream *out) : Serializer(out) {} // ??
+        JsonSerializer(std::ostream *out); // ??
         void IntegerField(const std::string &field_name, int value);
         void DoubleField(const std::string &field_name, double value);
         void StringField(const std::string &field_name, const std::string &value);

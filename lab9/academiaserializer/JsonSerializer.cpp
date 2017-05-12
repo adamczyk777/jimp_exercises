@@ -5,9 +5,6 @@
 #include "JsonSerializer.h"
 
 namespace academia {
-    void IntegerField(const std::string &field_name, int value) {
-
-    }
 
     void JsonSerializer::IntegerField(const std::string &field_name, int value) {
 
@@ -40,5 +37,8 @@ namespace academia {
 
     void JsonSerializer::Footer(const std::string &object_name) {
 
+    }
+
+    JsonSerializer::JsonSerializer(std::ostream *out) : Serializer(out) {
     }
 }

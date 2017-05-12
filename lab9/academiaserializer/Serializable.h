@@ -20,7 +20,6 @@ namespace academia {
     class Serializer {
     public:
         Serializer(std::ostream *out);
-
         virtual void IntegerField(const std::string &field_name, int value) = 0;
         virtual void DoubleField(const std::string &field_name, double value) = 0;
         virtual void StringField(const std::string &field_name, const std::string &value) = 0;

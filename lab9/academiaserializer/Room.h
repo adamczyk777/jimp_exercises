@@ -13,7 +13,7 @@ namespace academia {
     class Room : public Serializable {
     public:
         enum class Type {
-            COMPUTER_LAB,
+            COMPUTER_LAB = 0,
             LECTURE_HALL,
             CLASSROOM
         };
@@ -23,6 +23,7 @@ namespace academia {
         Room(int id, const std::string &name, Type type);
 
     private:
+        std::string enum_array[3] = {"COMPUTER_LAB", "LECTURE_HALL", "CLASSROOM"};
         int id;
         std::string name;
         Type type;

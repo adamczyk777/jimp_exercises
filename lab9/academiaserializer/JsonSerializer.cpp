@@ -40,7 +40,6 @@ namespace academia {
     }
 
     JsonSerializer::JsonSerializer(std::ostream *out) : Serializer(out) {
-        // uzywajac metod zaladuj do stringstreama out JSONa
         this->test = out;
     }
 

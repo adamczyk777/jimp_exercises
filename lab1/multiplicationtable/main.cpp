@@ -3,6 +3,6 @@
 //
 
 int main(){
-    //TODO: Simple out for this function ~Adamczyk
+    //TODO: Simple test for this function ~Adamczyk
     return 0;
 }

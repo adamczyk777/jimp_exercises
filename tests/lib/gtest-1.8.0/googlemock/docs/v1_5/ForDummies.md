@@ -3,7 +3,7 @@
 (**Note:** If you get compiler errors that you don't understand, be sure to consult [Google Mock Doctor](V1_5_FrequentlyAskedQuestions#How_am_I_supposed_to_make_sense_of_these_horrible_template_error.md).)
 
 # What Is Google C++ Mocking Framework? #
-When you write a prototype or out, often it's not feasible or wise to rely on real objects entirely. A **mock object** implements the same interface as a real object (so it can be used as one), but lets you specify at run time how it will be used and what it should do (which methods will be called? in which order? how many times? with what arguments? what will they return? etc).
+When you write a prototype or test, often it's not feasible or wise to rely on real objects entirely. A **mock object** implements the same interface as a real object (so it can be used as one), but lets you specify at run time how it will be used and what it should do (which methods will be called? in which order? how many times? with what arguments? what will they return? etc).
 
 **Note:** It is easy to confuse the term _fake objects_ with mock objects. Fakes and mocks actually mean very different things in the Test-Driven Development (TDD) community:
 
@@ -34,7 +34,7 @@ Google Mock was built to help C++ programmers. It was inspired by [jMock](http:/
   * You are stuck with a sub-optimal design and wish you had done more prototyping before it was too late, but prototyping in C++ is by no means "rapid".
   * Your tests are slow as they depend on too many libraries or use expensive resources (e.g. a database).
   * Your tests are brittle as some resources they use are unreliable (e.g. the network).
-  * You want to out how your code handles a failure (e.g. a file checksum error), but it's not easy to cause one.
+  * You want to test how your code handles a failure (e.g. a file checksum error), but it's not easy to cause one.
   * You need to make sure that your module interacts with other modules in the right way, but it's hard to observe the interaction; therefore you resort to observing the side effects at the end of the action, which is awkward at best.
   * You want to "mock out" your dependencies, except that they don't have mock implementations yet; and, frankly, you aren't thrilled by some of those hand-written mocks.
 
@@ -47,7 +47,7 @@ We encourage you to use Google Mock as:
 Using Google Mock is easy! Inside your C++ source file, just `#include` `<gtest/gtest.h>` and `<gmock/gmock.h>`, and you are ready to go.
 
 # A Case for Mock Turtles #
-Let's look at an example. Suppose you are developing a graphics program that relies on a LOGO-like API for drawing. How would you out that it does the right thing? Well, you can run it and compare the screen with a golden screen snapshot, but let's admit it: tests like this are expensive to run and fragile (What if you just upgraded to a shiny new graphics card that has better anti-aliasing? Suddenly you have to update all your golden images.). It would be too painful if all your tests are like this. Fortunately, you learned about Dependency Injection and know the right thing to do: instead of having your application talk to the drawing API directly, wrap the API in an interface (say, `Turtle`) and code to that interface:
+Let's look at an example. Suppose you are developing a graphics program that relies on a LOGO-like API for drawing. How would you test that it does the right thing? Well, you can run it and compare the screen with a golden screen snapshot, but let's admit it: tests like this are expensive to run and fragile (What if you just upgraded to a shiny new graphics card that has better anti-aliasing? Suddenly you have to update all your golden images.). It would be too painful if all your tests are like this. Fortunately, you learned about Dependency Injection and know the right thing to do: instead of having your application talk to the drawing API directly, wrap the API in an interface (say, `Turtle`) and code to that interface:
 
 ```
 class Turtle {
@@ -67,7 +67,7 @@ class Turtle {
 
 You can control whether the turtle's movement will leave a trace using `PenUp()` and `PenDown()`, and control its movement using `Forward()`, `Turn()`, and `GoTo()`. Finally, `GetX()` and `GetY()` tell you the current position of the turtle.
 
-Your program will normally use a real implementation of this interface. In tests, you can use a mock implementation instead. This allows you to easily check what drawing primitives your program is calling, with what arguments, and in which order. Tests written this way are much more robust (they won't break because your new machine does anti-aliasing differently), easier to read and maintain (the intent of a out is expressed in the code, not in some binary images), and run _much, much faster_.
+Your program will normally use a real implementation of this interface. In tests, you can use a mock implementation instead. This allows you to easily check what drawing primitives your program is calling, with what arguments, and in which order. Tests written this way are much more robust (they won't break because your new machine does anti-aliasing differently), easier to read and maintain (the intent of a test is expressed in the code, not in some binary images), and run _much, much faster_.
 
 # Writing the Mock Class #
 If you are lucky, the mocks you need to use have already been implemented by some nice people. If, however, you find yourself in the position to write a mock class, relax - Google Mock turns this task into a fun game! (Well, almost.)
@@ -108,7 +108,7 @@ complexity of the C++ language, this script may not always work, but
 it can be quite handy when it does.  For more details, read the [user documentation](http://code.google.com/p/googlemock/source/browse/trunk/scripts/generator/README).
 
 ## Where to Put It ##
-When you define a mock class, you need to decide where to put its definition. Some people put it in a `*_test.cc`. This is fine when the interface being mocked (say, `Foo`) is owned by the same person or team. Otherwise, when the owner of `Foo` changes it, your out could break. (You can't really expect `Foo`'s maintainer to fix every out that uses `Foo`, can you?)
+When you define a mock class, you need to decide where to put its definition. Some people put it in a `*_test.cc`. This is fine when the interface being mocked (say, `Foo`) is owned by the same person or team. Otherwise, when the owner of `Foo` changes it, your test could break. (You can't really expect `Foo`'s maintainer to fix every test that uses `Foo`, can you?)
 
 So, the rule of thumb is: if you need to mock `Foo` and it's owned by others, define the mock class in `Foo`'s package (better, in a `testing` sub-package such that you can clearly separate production code and testing utilities), and put it in a `mock_foo.h`. Then everyone can reference `mock_foo.h` from their tests. If `Foo` ever changes, there is only one copy of `MockFoo` to change, and only tests that depend on the changed methods need to be fixed.
 
@@ -149,7 +149,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-As you might have guessed, this out checks that `PenDown()` is called at least once. If the `painter` object didn't call this method, your out will fail with a message like this:
+As you might have guessed, this test checks that `PenDown()` is called at least once. If the `painter` object didn't call this method, your test will fail with a message like this:
 
 ```
 path/to/my_test.cc:119: Failure
@@ -158,7 +158,7 @@ Actually: never called;
 Expected: called at least once.
 ```
 
-**Tip 1:** If you run the out from an Emacs buffer, you can hit `<Enter>` on the line number displayed in the error message to jump right to the failed expectation.
+**Tip 1:** If you run the test from an Emacs buffer, you can hit `<Enter>` on the line number displayed in the error message to jump right to the failed expectation.
 
 **Tip 2:** If your mock objects are never deleted, the final verification won't happen. Therefore it's a good idea to use a heap leak checker in your tests when you allocate mocks on the heap.
 
@@ -166,7 +166,7 @@ Expected: called at least once.
 
 This means `EXPECT_CALL()` should be read as expecting that a call will occur _in the future_, not that a call has occurred. Why does Google Mock work like that? Well, specifying the expectation beforehand allows Google Mock to report a violation as soon as it arises, when the context (stack trace, etc) is still available. This makes debugging much easier.
 
-Admittedly, this out is contrived and doesn't do much. You can easily achieve the same effect without using Google Mock. However, as we shall reveal soon, Google Mock allows you to do _much more_ with the mocks.
+Admittedly, this test is contrived and doesn't do much. You can easily achieve the same effect without using Google Mock. However, as we shall reveal soon, Google Mock allows you to do _much more_ with the mocks.
 
 ## Using Google Mock with Any Testing Framework ##
 If you want to use something other than Google Test (e.g. [CppUnit](http://apps.sourceforge.net/mediawiki/cppunit/index.php?title=Main_Page) or
@@ -174,7 +174,7 @@ If you want to use something other than Google Test (e.g. [CppUnit](http://apps.
 ```
 int main(int argc, char** argv) {
   // The following line causes Google Mock to throw an exception on failure,
-  // which will be interpreted by your testing framework as a out failure.
+  // which will be interpreted by your testing framework as a test failure.
   ::testing::GTEST_FLAG(throw_on_failure) = true;
   ::testing::InitGoogleMock(&argc, argv);
   ... whatever your testing framework requires ...
@@ -183,12 +183,12 @@ int main(int argc, char** argv) {
 
 This approach has a catch: it makes Google Mock throw an exception
 from a mock object's destructor sometimes.  With some compilers, this
-sometimes causes the out program to crash.  You'll still be able to
-notice that the out has failed, but it's not a graceful failure.
+sometimes causes the test program to crash.  You'll still be able to
+notice that the test has failed, but it's not a graceful failure.
 
 A better solution is to use Google Test's
 [event listener API](http://code.google.com/p/googletest/wiki/GoogleTestAdvancedGuide#Extending_Google_Test_by_Handling_Test_Events)
-to report a out failure to your testing framework properly.  You'll need to
+to report a test failure to your testing framework properly.  You'll need to
 implement the `OnTestPartResult()` method of the event listener interface, but it
 should be straightforward.
 
@@ -198,7 +198,7 @@ technically part of Google Mock.).  If there is a reason that you
 cannot use Google Test, please let us know.
 
 # Setting Expectations #
-The key to using a mock object successfully is to set the _right expectations_ on it. If you set the expectations too strict, your out will fail as the result of unrelated changes. If you set them too loose, bugs can slip through. You want to do it just right such that your out can catch exactly the kind of bugs you intend it to catch. Google Mock provides the necessary means for you to do it "just right."
+The key to using a mock object successfully is to set the _right expectations_ on it. If you set the expectations too strict, your test will fail as the result of unrelated changes. If you set them too loose, bugs can slip through. You want to do it just right such that your test can catch exactly the kind of bugs you intend it to catch. Google Mock provides the necessary means for you to do it "just right."
 
 ## General Syntax ##
 In Google Mock we use the `EXPECT_CALL()` macro to set an expectation on a mock method. The general syntax is:
@@ -246,7 +246,7 @@ using ::testing::_;
 EXPECT_CALL(turtle, Forward(_));
 ```
 
-`_` is an instance of what we call **matchers**. A matcher is like a predicate and can out whether an argument is what we'd expect. You can use a matcher inside `EXPECT_CALL()` wherever a function argument is expected.
+`_` is an instance of what we call **matchers**. A matcher is like a predicate and can test whether an argument is what we'd expect. You can use a matcher inside `EXPECT_CALL()` wherever a function argument is expected.
 
 A list of built-in matchers can be found in the [CheatSheet](V1_5_CheatSheet.md). For example, here's the `Ge` (greater than or equal) matcher:
 
@@ -258,7 +258,7 @@ EXPECT_CALL(turtle, Forward(Ge(100)));
 This checks that the turtle will be told to go forward by at least 100 units.
 
 ## Cardinalities: How Many Times Will It Be Called? ##
-The first clause we can specify following an `EXPECT_CALL()` is `Times()`. We call its argument a **cardinality** as it tells _how many times_ the call should occur. It allows us to repeat an expectation many times without actually writing it as many times. More importantly, a cardinality can be "fuzzy", just like a matcher can be. This allows a user to express the intent of a out exactly.
+The first clause we can specify following an `EXPECT_CALL()` is `Times()`. We call its argument a **cardinality** as it tells _how many times_ the call should occur. It allows us to repeat an expectation many times without actually writing it as many times. More importantly, a cardinality can be "fuzzy", just like a matcher can be. This allows a user to express the intent of a test exactly.
 
 An interesting special case is when we say `Times(0)`. You may have guessed - it means that the function shouldn't be called with the given arguments at all, and Google Mock will report a Google Test failure whenever the function is (wrongfully) called.
 
@@ -339,7 +339,7 @@ EXPECT_CALL(turtle, Forward(10))  // #2
 
 If `Forward(10)` is called three times in a row, the third time it will be an error, as the last matching expectation (#2) has been saturated. If, however, the third `Forward(10)` call is replaced by `Forward(20)`, then it would be OK, as now #1 will be the matching expectation.
 
-**Side note:** Why does Google Mock search for a match in the _reverse_ order of the expectations? The reason is that this allows a user to set up the default expectations in a mock object's constructor or the out fixture's set-up phase and then customize the mock by writing more specific expectations in the out body. So, if you have two expectations on the same method, you want to put the one with more specific matchers **after** the other, or the more specific rule would be shadowed by the more general one that comes after it.
+**Side note:** Why does Google Mock search for a match in the _reverse_ order of the expectations? The reason is that this allows a user to set up the default expectations in a mock object's constructor or the test fixture's set-up phase and then customize the mock by writing more specific expectations in the test body. So, if you have two expectations on the same method, you want to put the one with more specific matchers **after** the other, or the more specific rule would be shadowed by the more general one that comes after it.
 
 ## Ordered vs Unordered Calls ##
 By default, an expectation can match a call even though an earlier expectation hasn't been satisfied. In other words, the calls don't have to occur in the order the expectations are specified.
@@ -363,12 +363,12 @@ TEST(FooTest, DrawsLineSegment) {
 
 By creating an object of type `InSequence`, all expectations in its scope are put into a _sequence_ and have to occur _sequentially_. Since we are just relying on the constructor and destructor of this object to do the actual work, its name is really irrelevant.
 
-In this example, we out that `Foo()` calls the three expected functions in the order as written. If a call is made out-of-order, it will be an error.
+In this example, we test that `Foo()` calls the three expected functions in the order as written. If a call is made out-of-order, it will be an error.
 
 (What if you care about the relative order of some of the calls, but not all of them? Can you specify an arbitrary partial order? The answer is ... yes! If you are impatient, the details can be found in the [CookBook](V1_5_CookBook.md).)
 
 ## All Expectations Are Sticky (Unless Said Otherwise) ##
-Now let's do a quick quiz to see how well you can use this mock stuff already. How would you out that the turtle is asked to go to the origin _exactly twice_ (you want to ignore any other instructions it receives)?
+Now let's do a quick quiz to see how well you can use this mock stuff already. How would you test that the turtle is asked to go to the origin _exactly twice_ (you want to ignore any other instructions it receives)?
 
 After you've come up with your answer, take a look at ours and compare notes (solve it yourself first - don't cheat!):
 
@@ -431,7 +431,7 @@ By the way, the other situation where an expectation may _not_ be sticky is when
 ## Uninteresting Calls ##
 A mock object may have many methods, and not all of them are that interesting. For example, in some tests we may not care about how many times `GetX()` and `GetY()` get called.
 
-In Google Mock, if you are not interested in a method, just don't say anything about it. If a call to this method occurs, you'll see a warning in the out output, but it won't be a failure.
+In Google Mock, if you are not interested in a method, just don't say anything about it. If a call to this method occurs, you'll see a warning in the test output, but it won't be a failure.
 
 # What Now? #
 Congratulations! You've learned enough about Google Mock to start using it. Now, you might want to join the [googlemock](http://groups.google.com/group/googlemock) discussion group and actually write some tests using Google Mock - it will be fun. Hey, it may even be addictive - you've been warned.

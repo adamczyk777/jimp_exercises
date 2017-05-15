@@ -36,9 +36,9 @@ AC_PROG_LIBTOOL
 # hashbang.
 PYTHON=  # We *do not* allow the user to specify a python interpreter
 AC_PATH_PROG([PYTHON],[python],[:])
-AS_IF([out "$PYTHON" != ":"],
+AS_IF([test "$PYTHON" != ":"],
       [AM_PYTHON_CHECK_VERSION([$PYTHON],[2.3],[:],[PYTHON=":"])])
-AM_CONDITIONAL([HAVE_PYTHON],[out "$PYTHON" != ":"])
+AM_CONDITIONAL([HAVE_PYTHON],[test "$PYTHON" != ":"])
 
 # Configure pthreads.
 AC_ARG_WITH([pthreads],
@@ -48,14 +48,14 @@ AC_ARG_WITH([pthreads],
             [with_pthreads=check])
 
 have_pthreads=no
-AS_IF([out "x$with_pthreads" != "xno"],
+AS_IF([test "x$with_pthreads" != "xno"],
       [ACX_PTHREAD(
         [],
-        [AS_IF([out "x$with_pthreads" != "xcheck"],
+        [AS_IF([test "x$with_pthreads" != "xcheck"],
                [AC_MSG_FAILURE(
                  [--with-pthreads was specified, but unable to be used])])])
        have_pthreads="$acx_pthread_ok"])
-AM_CONDITIONAL([HAVE_PTHREADS],[out "x$have_pthreads" = "xyes"])
+AM_CONDITIONAL([HAVE_PTHREADS],[test "x$have_pthreads" = "xyes"])
 AC_SUBST(PTHREAD_CFLAGS)
 AC_SUBST(PTHREAD_LIBS)
 

@@ -68,12 +68,12 @@ acx_pthread_ok=no
 
 # We used to check for pthread.h first, but this fails if pthread.h
 # requires special compiler flags (e.g. on True64 or Sequent).
-# It gets checked for in the link out anyway.
+# It gets checked for in the link test anyway.
 
 # First of all, check if the user has set any of the PTHREAD_LIBS,
 # etcetera environment variables, and if threads linking works using
 # them:
-if out x"$PTHREAD_LIBS$PTHREAD_CFLAGS" != x; then
+if test x"$PTHREAD_LIBS$PTHREAD_CFLAGS" != x; then
         save_CFLAGS="$CFLAGS"
         CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
         save_LIBS="$LIBS"
@@ -81,7 +81,7 @@ if out x"$PTHREAD_LIBS$PTHREAD_CFLAGS" != x; then
         AC_MSG_CHECKING([for pthread_join in LIBS=$PTHREAD_LIBS with CFLAGS=$PTHREAD_CFLAGS])
         AC_TRY_LINK_FUNC(pthread_join, acx_pthread_ok=yes)
         AC_MSG_RESULT($acx_pthread_ok)
-        if out x"$acx_pthread_ok" = xno; then
+        if test x"$acx_pthread_ok" = xno; then
                 PTHREAD_LIBS=""
                 PTHREAD_CFLAGS=""
         fi
@@ -136,7 +136,7 @@ case "${host_cpu}-${host_os}" in
         ;;
 esac
 
-if out x"$acx_pthread_ok" = xno; then
+if test x"$acx_pthread_ok" = xno; then
 for flag in $acx_pthread_flags; do
 
         case $flag in
@@ -151,7 +151,7 @@ for flag in $acx_pthread_flags; do
 
 		pthread-config)
 		AC_CHECK_PROG(acx_pthread_config, pthread-config, yes, no)
-		if out x"$acx_pthread_config" = xno; then continue; fi
+		if test x"$acx_pthread_config" = xno; then continue; fi
 		PTHREAD_CFLAGS="`pthread-config --cflags`"
 		PTHREAD_LIBS="`pthread-config --ldflags` `pthread-config --libs`"
 		;;
@@ -186,7 +186,7 @@ for flag in $acx_pthread_flags; do
         CFLAGS="$save_CFLAGS"
 
         AC_MSG_RESULT($acx_pthread_ok)
-        if out "x$acx_pthread_ok" = xyes; then
+        if test "x$acx_pthread_ok" = xyes; then
                 break;
         fi
 
@@ -196,7 +196,7 @@ done
 fi
 
 # Various other checks:
-if out "x$acx_pthread_ok" = xyes; then
+if test "x$acx_pthread_ok" = xyes; then
         save_LIBS="$LIBS"
         LIBS="$PTHREAD_LIBS $LIBS"
         save_CFLAGS="$CFLAGS"
@@ -210,7 +210,7 @@ if out "x$acx_pthread_ok" = xyes; then
                         [attr_name=$attr; break])
 	done
         AC_MSG_RESULT($attr_name)
-        if out "$attr_name" != PTHREAD_CREATE_JOINABLE; then
+        if test "$attr_name" != PTHREAD_CREATE_JOINABLE; then
             AC_DEFINE_UNQUOTED(PTHREAD_CREATE_JOINABLE, $attr_name,
                                [Define to necessary symbol if this constant
                                 uses a non-standard name on your system.])
@@ -223,14 +223,14 @@ if out "x$acx_pthread_ok" = xyes; then
             *solaris* | *-osf* | *-hpux*) flag="-D_REENTRANT";;
         esac
         AC_MSG_RESULT(${flag})
-        if out "x$flag" != xno; then
+        if test "x$flag" != xno; then
             PTHREAD_CFLAGS="$flag $PTHREAD_CFLAGS"
         fi
 
         LIBS="$save_LIBS"
         CFLAGS="$save_CFLAGS"
         # More AIX lossage: must compile with xlc_r or cc_r
-	if out x"$GCC" != xyes; then
+	if test x"$GCC" != xyes; then
           AC_CHECK_PROGS(PTHREAD_CC, xlc_r cc_r, ${CC})
         else
           PTHREAD_CC=$CC
@@ -260,25 +260,25 @@ if out "x$acx_pthread_ok" = xyes; then
 	LIBS="$PTHREAD_LIBS $LIBS"
 	CC="$PTHREAD_CC"
 	
-	# In order not to create several levels of indentation, we out
+	# In order not to create several levels of indentation, we test
 	# the value of "$done" until we find the cure or run out of ideas.
 	done="no"
 	
 	# First, make sure the CFLAGS we added are actually accepted by our
 	# compiler.  If not (and OS X's ld, for instance, does not accept -z),
-	# then we can't do this out.
-	if out x"$done" = xno; then
+	# then we can't do this test.
+	if test x"$done" = xno; then
 	   AC_MSG_CHECKING([whether to check for GCC pthread/shared inconsistencies])
 	   AC_TRY_LINK(,, , [done=yes])
 	
-	   if out "x$done" = xyes ; then
+	   if test "x$done" = xyes ; then
 	      AC_MSG_RESULT([no])
 	   else
 	      AC_MSG_RESULT([yes])
 	   fi
 	fi
 	
-	if out x"$done" = xno; then
+	if test x"$done" = xno; then
 	   AC_MSG_CHECKING([whether -pthread is sufficient with -shared])
 	   AC_TRY_LINK([#include <pthread.h>],
 	      [pthread_t th; pthread_join(th, 0);
@@ -286,7 +286,7 @@ if out "x$acx_pthread_ok" = xyes; then
 	      pthread_create(0,0,0,0); pthread_cleanup_pop(0); ],
 	      [done=yes])
 	   
-	   if out "x$done" = xyes; then
+	   if test "x$done" = xyes; then
 	      AC_MSG_RESULT([yes])
 	   else
 	      AC_MSG_RESULT([no])
@@ -297,7 +297,7 @@ if out "x$acx_pthread_ok" = xyes; then
 	# Linux gcc on some architectures such as mips/mipsel forgets
 	# about -lpthread
 	#
-	if out x"$done" = xno; then
+	if test x"$done" = xno; then
 	   AC_MSG_CHECKING([whether -lpthread fixes that])
 	   LIBS="-lpthread $PTHREAD_LIBS $save_LIBS"
 	   AC_TRY_LINK([#include <pthread.h>],
@@ -306,7 +306,7 @@ if out "x$acx_pthread_ok" = xyes; then
 	      pthread_create(0,0,0,0); pthread_cleanup_pop(0); ],
 	      [done=yes])
 	
-	   if out "x$done" = xyes; then
+	   if test "x$done" = xyes; then
 	      AC_MSG_RESULT([yes])
 	      PTHREAD_LIBS="-lpthread $PTHREAD_LIBS"
 	   else
@@ -316,7 +316,7 @@ if out "x$acx_pthread_ok" = xyes; then
 	#
 	# FreeBSD 4.10 gcc forgets to use -lc_r instead of -lc
 	#
-	if out x"$done" = xno; then
+	if test x"$done" = xno; then
 	   AC_MSG_CHECKING([whether -lc_r fixes that])
 	   LIBS="-lc_r $PTHREAD_LIBS $save_LIBS"
 	   AC_TRY_LINK([#include <pthread.h>],
@@ -325,14 +325,14 @@ if out "x$acx_pthread_ok" = xyes; then
 	        pthread_create(0,0,0,0); pthread_cleanup_pop(0); ],
 	       [done=yes])
 	
-	   if out "x$done" = xyes; then
+	   if test "x$done" = xyes; then
 	      AC_MSG_RESULT([yes])
 	      PTHREAD_LIBS="-lc_r $PTHREAD_LIBS"
 	   else
 	      AC_MSG_RESULT([no])
 	   fi
 	fi
-	if out x"$done" = xno; then
+	if test x"$done" = xno; then
 	   # OK, we have run out of ideas
 	   AC_MSG_WARN([Impossible to determine how to use pthreads with shared libraries])
 	
@@ -352,7 +352,7 @@ AC_SUBST(PTHREAD_CFLAGS)
 AC_SUBST(PTHREAD_CC)
 
 # Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
-if out x"$acx_pthread_ok" = xyes; then
+if test x"$acx_pthread_ok" = xyes; then
         ifelse([$1],,AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.]),[$1])
         :
 else

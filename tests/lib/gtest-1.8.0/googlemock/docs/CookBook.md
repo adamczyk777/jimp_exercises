@@ -144,7 +144,7 @@ class MockPacketStream {
 ```
 
 Note that the mock class doesn't define `AppendPacket()`, unlike the
-real class. That's fine as long as the out doesn't need to call it.
+real class. That's fine as long as the test doesn't need to call it.
 
 Next, you need a way to say that you want to use
 `ConcretePacketStream` in production code, and use `MockPacketStream`
@@ -225,15 +225,15 @@ combine this with the recipe for [mocking non-virtual methods](#Mocking_Nonvirtu
 If a mock method has no `EXPECT_CALL` spec but is called, Google Mock
 will print a warning about the "uninteresting call". The rationale is:
 
-  * New methods may be added to an interface after a out is written. We shouldn't fail a out just because a method it doesn't know about is called.
-  * However, this may also mean there's a bug in the out, so Google Mock shouldn't be silent either. If the user believes these calls are harmless, he can add an `EXPECT_CALL()` to suppress the warning.
+  * New methods may be added to an interface after a test is written. We shouldn't fail a test just because a method it doesn't know about is called.
+  * However, this may also mean there's a bug in the test, so Google Mock shouldn't be silent either. If the user believes these calls are harmless, he can add an `EXPECT_CALL()` to suppress the warning.
 
 However, sometimes you may want to suppress all "uninteresting call"
 warnings, while sometimes you may want the opposite, i.e. to treat all
 of them as errors. Google Mock lets you make the decision on a
 per-mock-object basis.
 
-Suppose your out uses a mock class `MockFoo`:
+Suppose your test uses a mock class `MockFoo`:
 
 ```
 TEST(...) {
@@ -245,8 +245,8 @@ TEST(...) {
 
 If a method of `mock_foo` other than `DoThis()` is called, it will be
 reported by Google Mock as a warning. However, if you rewrite your
-out to use `NiceMock<MockFoo>` instead, the warning will be gone,
-resulting in a cleaner out output:
+test to use `NiceMock<MockFoo>` instead, the warning will be gone,
+resulting in a cleaner test output:
 
 ```
 using ::testing::NiceMock;
@@ -285,7 +285,7 @@ TEST(...) {
   EXPECT_CALL(mock_foo, DoThis());
   ... code that uses mock_foo ...
 
-  // The out will fail if a method of mock_foo other than DoThis()
+  // The test will fail if a method of mock_foo other than DoThis()
   // is called.
 }
 ```
@@ -351,7 +351,7 @@ the mock class much more user-friendly.
 ## Alternative to Mocking Concrete Classes ##
 
 Often you may find yourself using classes that don't implement
-interfaces. In order to out your code that uses such a class (let's
+interfaces. In order to test your code that uses such a class (let's
 call it `Concrete`), you may be tempted to make the methods of
 `Concrete` virtual and then mock it.
 
@@ -365,7 +365,7 @@ there is a valid reason for a subclass to override it.
 
 Mocking concrete classes directly is problematic as it creates a tight
 coupling between the class and the tests - any small change in the
-class may invalidate your tests and make out maintenance a pain.
+class may invalidate your tests and make test maintenance a pain.
 
 To avoid such problems, many programmers have been practicing "coding
 to interfaces": instead of talking to the `Concrete` class, your code
@@ -489,7 +489,7 @@ TEST(AbcTest, Xyz) {
 Regarding the tip on mixing a mock and a fake, here's an example on
 why it may be a bad sign: Suppose you have a class `System` for
 low-level system operations. In particular, it does file and I/O
-operations. And suppose you want to out how your code uses `System`
+operations. And suppose you want to test how your code uses `System`
 to do I/O, and you just want the file operations to work normally. If
 you mock out the entire `System` class, you'll have to provide a fake
 implementation for the file operation part, which suggests that
@@ -504,7 +504,7 @@ and split `System`'s functionalities into the two. Then you can mock
 When using testing doubles (mocks, fakes, stubs, and etc), sometimes
 their behaviors will differ from those of the real objects. This
 difference could be either intentional (as in simulating an error such
-that you can out the error handling code) or unintentional. If your
+that you can test the error handling code) or unintentional. If your
 mocks have different behaviors than the real objects by mistake, you
 could end up with code that passes the tests but fails in production.
 
@@ -543,7 +543,7 @@ class MockFoo : public Foo {
       .Times(3);
   EXPECT_CALL(mock, DoThat("Hi"))
       .Times(AtLeast(1));
-  ... use mock in out ...
+  ... use mock in test ...
 ```
 
 With this, Google Mock will verify that your code made the right calls
@@ -578,7 +578,7 @@ class MockFoo : public Foo {
 
 Sometimes you may want to call `Foo::Concrete()` instead of
 `MockFoo::Concrete()`. Perhaps you want to do it as part of a stub
-action, or perhaps your out doesn't need to mock `Concrete()` at all
+action, or perhaps your test doesn't need to mock `Concrete()` at all
 (but it would be oh-so painful to have to define a new mock class
 whenever you don't need to mock one of its methods).
 
@@ -913,7 +913,7 @@ called `ASSERT_THAT` and `EXPECT_THAT`:
   EXPECT_THAT(value, matcher);  // The non-fatal version.
 ```
 
-For example, in a Google Test out you can write:
+For example, in a Google Test test you can write:
 
 ```
 #include "gmock/gmock.h"
@@ -1077,7 +1077,7 @@ a match failure, so you can write `Pointee(m)` instead of
   AllOf(NotNull(), Pointee(m))
 ```
 
-without worrying that a `NULL` pointer will crash your out.
+without worrying that a `NULL` pointer will crash your test.
 
 Also, did we tell you that `Pointee()` works with both raw pointers
 **and** smart pointers (`linked_ptr`, `shared_ptr`, `scoped_ptr`, and
@@ -1245,23 +1245,23 @@ matcher variable and use that variable repeatedly! For example,
 
 There are basically two constructs for defining the behavior of a mock object: `ON_CALL` and `EXPECT_CALL`. The difference? `ON_CALL` defines what happens when a mock method is called, but _doesn't imply any expectation on the method being called._ `EXPECT_CALL` not only defines the behavior, but also sets an expectation that _the method will be called with the given arguments, for the given number of times_ (and _in the given order_ when you specify the order too).
 
-Since `EXPECT_CALL` does more, isn't it better than `ON_CALL`? Not really. Every `EXPECT_CALL` adds a constraint on the behavior of the code under out. Having more constraints than necessary is _baaad_ - even worse than not having enough constraints.
+Since `EXPECT_CALL` does more, isn't it better than `ON_CALL`? Not really. Every `EXPECT_CALL` adds a constraint on the behavior of the code under test. Having more constraints than necessary is _baaad_ - even worse than not having enough constraints.
 
 This may be counter-intuitive. How could tests that verify more be worse than tests that verify less? Isn't verification the whole point of tests?
 
-The answer, lies in _what_ a out should verify. **A good out verifies the contract of the code.** If a out over-specifies, it doesn't leave enough freedom to the implementation. As a result, changing the implementation without breaking the contract (e.g. refactoring and optimization), which should be perfectly fine to do, can break such tests. Then you have to spend time fixing them, only to see them broken again the next time the implementation is changed.
+The answer, lies in _what_ a test should verify. **A good test verifies the contract of the code.** If a test over-specifies, it doesn't leave enough freedom to the implementation. As a result, changing the implementation without breaking the contract (e.g. refactoring and optimization), which should be perfectly fine to do, can break such tests. Then you have to spend time fixing them, only to see them broken again the next time the implementation is changed.
 
-Keep in mind that one doesn't have to verify more than one property in one out. In fact, **it's a good style to verify only one thing in one out.** If you do that, a bug will likely break only one or two tests instead of dozens (which case would you rather debug?). If you are also in the habit of giving tests descriptive names that tell what they verify, you can often easily guess what's wrong just from the out log itself.
+Keep in mind that one doesn't have to verify more than one property in one test. In fact, **it's a good style to verify only one thing in one test.** If you do that, a bug will likely break only one or two tests instead of dozens (which case would you rather debug?). If you are also in the habit of giving tests descriptive names that tell what they verify, you can often easily guess what's wrong just from the test log itself.
 
-So use `ON_CALL` by default, and only use `EXPECT_CALL` when you actually intend to verify that the call is made. For example, you may have a bunch of `ON_CALL`s in your out fixture to set the common mock behavior shared by all tests in the same group, and write (scarcely) different `EXPECT_CALL`s in different `TEST_F`s to verify different aspects of the code's behavior. Compared with the style where each `TEST` has many `EXPECT_CALL`s, this leads to tests that are more resilient to implementational changes (and thus less likely to require maintenance) and makes the intent of the tests more obvious (so they are easier to maintain when you do need to maintain them).
+So use `ON_CALL` by default, and only use `EXPECT_CALL` when you actually intend to verify that the call is made. For example, you may have a bunch of `ON_CALL`s in your test fixture to set the common mock behavior shared by all tests in the same group, and write (scarcely) different `EXPECT_CALL`s in different `TEST_F`s to verify different aspects of the code's behavior. Compared with the style where each `TEST` has many `EXPECT_CALL`s, this leads to tests that are more resilient to implementational changes (and thus less likely to require maintenance) and makes the intent of the tests more obvious (so they are easier to maintain when you do need to maintain them).
 
-If you are bothered by the "Uninteresting mock function call" message printed when a mock method without an `EXPECT_CALL` is called, you may use a `NiceMock` instead to suppress all such messages for the mock object, or suppress the message for specific methods by adding `EXPECT_CALL(...).Times(AnyNumber())`. DO NOT suppress it by blindly adding an `EXPECT_CALL(...)`, or you'll have a out that's a pain to maintain.
+If you are bothered by the "Uninteresting mock function call" message printed when a mock method without an `EXPECT_CALL` is called, you may use a `NiceMock` instead to suppress all such messages for the mock object, or suppress the message for specific methods by adding `EXPECT_CALL(...).Times(AnyNumber())`. DO NOT suppress it by blindly adding an `EXPECT_CALL(...)`, or you'll have a test that's a pain to maintain.
 
 ## Ignoring Uninteresting Calls ##
 
 If you are not interested in how a mock method is called, just don't
 say anything about it. In this case, if the method is ever called,
-Google Mock will perform its default action to allow the out program
+Google Mock will perform its default action to allow the test program
 to continue. If you are not happy with the default action taken by
 Google Mock, you can override it using `DefaultValue<T>::Set()`
 (described later in this document) or `ON_CALL()`.
@@ -1301,19 +1301,19 @@ statements will be an error.
 
 _Uninteresting_ calls and _unexpected_ calls are different concepts in Google Mock. _Very_ different.
 
-A call `x.Y(...)` is **uninteresting** if there's _not even a single_ `EXPECT_CALL(x, Y(...))` set. In other words, the out isn't interested in the `x.Y()` method at all, as evident in that the out doesn't care to say anything about it.
+A call `x.Y(...)` is **uninteresting** if there's _not even a single_ `EXPECT_CALL(x, Y(...))` set. In other words, the test isn't interested in the `x.Y()` method at all, as evident in that the test doesn't care to say anything about it.
 
-A call `x.Y(...)` is **unexpected** if there are some `EXPECT_CALL(x, Y(...))s` set, but none of them matches the call. Put another way, the out is interested in the `x.Y()` method (therefore it _explicitly_ sets some `EXPECT_CALL` to verify how it's called); however, the verification fails as the out doesn't expect this particular call to happen.
+A call `x.Y(...)` is **unexpected** if there are some `EXPECT_CALL(x, Y(...))s` set, but none of them matches the call. Put another way, the test is interested in the `x.Y()` method (therefore it _explicitly_ sets some `EXPECT_CALL` to verify how it's called); however, the verification fails as the test doesn't expect this particular call to happen.
 
-**An unexpected call is always an error,** as the code under out doesn't behave the way the out expects it to behave.
+**An unexpected call is always an error,** as the code under test doesn't behave the way the test expects it to behave.
 
-**By default, an uninteresting call is not an error,** as it violates no constraint specified by the out. (Google Mock's philosophy is that saying nothing means there is no constraint.) However, it leads to a warning, as it _might_ indicate a problem (e.g. the out author might have forgotten to specify a constraint).
+**By default, an uninteresting call is not an error,** as it violates no constraint specified by the test. (Google Mock's philosophy is that saying nothing means there is no constraint.) However, it leads to a warning, as it _might_ indicate a problem (e.g. the test author might have forgotten to specify a constraint).
 
 In Google Mock, `NiceMock` and `StrictMock` can be used to make a mock class "nice" or "strict". How does this affect uninteresting calls and unexpected calls?
 
-A **nice mock** suppresses uninteresting call warnings. It is less chatty than the default mock, but otherwise is the same. If a out fails with a default mock, it will also fail using a nice mock instead. And vice versa. Don't expect making a mock nice to change the out's result.
+A **nice mock** suppresses uninteresting call warnings. It is less chatty than the default mock, but otherwise is the same. If a test fails with a default mock, it will also fail using a nice mock instead. And vice versa. Don't expect making a mock nice to change the test's result.
 
-A **strict mock** turns uninteresting call warnings into errors. So making a mock strict may change the out's result.
+A **strict mock** turns uninteresting call warnings into errors. So making a mock strict may change the test's result.
 
 Let's look at an example:
 
@@ -1323,7 +1323,7 @@ TEST(...) {
   EXPECT_CALL(mock_registry, GetDomainOwner("google.com"))
           .WillRepeatedly(Return("Larry Page"));
 
-  // Use mock_registry in code under out.
+  // Use mock_registry in code under test.
   ... &mock_registry ...
 }
 ```
@@ -1382,7 +1382,7 @@ out-of-order, Google Mock will report an error.
 Sometimes requiring everything to occur in a predetermined order can
 lead to brittle tests. For example, we may care about `A` occurring
 before both `B` and `C`, but aren't interested in the relative order
-of `B` and `C`. In this case, the out should reflect our real intent,
+of `B` and `C`. In this case, the test should reflect our real intent,
 instead of being overly constraining.
 
 Google Mock allows you to impose an arbitrary DAG (directed acyclic
@@ -1813,7 +1813,7 @@ As you may have guessed, when there are more than one `ON_CALL()`
 statements, the news order take precedence over the older ones. In
 other words, the **last** one that matches the function arguments will
 be used. This matching order allows you to set up the common behavior
-in a mock object's constructor or the out fixture's set-up phase and
+in a mock object's constructor or the test fixture's set-up phase and
 specialize the mock's behavior later.
 
 ## Using Functions/Methods/Functors as Actions ##
@@ -1866,11 +1866,11 @@ invoked such that the callee has the full context of the call to work
 with. If the invoked function is not interested in some or all of the
 arguments, it can simply ignore them.
 
-Yet, a common pattern is that a out author wants to invoke a function
+Yet, a common pattern is that a test author wants to invoke a function
 without the arguments of the mock function. `Invoke()` allows her to
 do that using a wrapper function that throws away the arguments before
 invoking an underlining nullary function. Needless to say, this can be
-tedious and obscures the intent of the out.
+tedious and obscures the intent of the test.
 
 `InvokeWithoutArgs()` solves this problem. It's like `Invoke()` except
 that it doesn't pass the mock function's arguments to the
@@ -2004,12 +2004,12 @@ using ::testing::_;
 using ::testing::Invoke;
 using ::testing::Return;
 
-int Process(const MyData& word);
+int Process(const MyData& data);
 string DoSomething();
 
 class MockFoo : public Foo {
  public:
-  MOCK_METHOD1(Abc, void(const MyData& word));
+  MOCK_METHOD1(Abc, void(const MyData& data));
   MOCK_METHOD0(Xyz, bool());
 };
 ...
@@ -2371,7 +2371,7 @@ Now there’s one topic we haven’t covered: how do you set expectations on `Sh
 
 Some of you may have spotted one problem with this approach: the `DoShareBuzz()` mock method differs from the real `ShareBuzz()` method in that it cannot take ownership of the buzz parameter - `ShareBuzz()` will always delete buzz after `DoShareBuzz()` returns.  What if you need to save the buzz object somewhere for later use when `ShareBuzz()` is called?  Indeed, you'd be stuck.
 
-Another problem with the `DoShareBuzz()` we had is that it can surprise people reading or maintaining the out, as one would expect that `DoShareBuzz()` has (logically) the same contract as `ShareBuzz()`.
+Another problem with the `DoShareBuzz()` we had is that it can surprise people reading or maintaining the test, as one would expect that `DoShareBuzz()` has (logically) the same contract as `ShareBuzz()`.
 
 Fortunately, these problems can be fixed with a bit more code.  Let's try to get it right this time:
 
@@ -2492,7 +2492,7 @@ be destoyed.
 How could it be that your mock object won't eventually be destroyed?
 Well, it might be created on the heap and owned by the code you are
 testing. Suppose there's a bug in that code and it doesn't delete the
-mock object properly - you could end up with a passing out when
+mock object properly - you could end up with a passing test when
 there's actually a bug.
 
 Using a heap checker is a good idea and can alleviate the concern, but
@@ -2527,13 +2527,13 @@ there is no point going further when the verification has failed.
 ## Using Check Points ##
 
 Sometimes you may want to "reset" a mock object at various check
-points in your out: at each check point, you verify that all existing
+points in your test: at each check point, you verify that all existing
 expectations on the mock object have been satisfied, and then you set
 some new expectations on it as if it's newly created. This allows you
 to work with a mock object in "phases" whose sizes are each
 manageable.
 
-One such scenario is that in your out's `SetUp()` function, you may
+One such scenario is that in your test's `SetUp()` function, you may
 want to put the object you are testing into a certain state, with the
 help from a mock object. Once in the desired state, you want to clear
 all expectations on the mock, such that in the `TEST_F` body you can
@@ -2650,11 +2650,11 @@ platforms that support the pthreads library (this includes Linux and Mac).
 To make it thread-safe on other platforms we only need to implement
 some synchronization operations in `"gtest/internal/gtest-port.h"`.
 
-In a **unit** out, it's best if you could isolate and out a piece of
+In a **unit** test, it's best if you could isolate and test a piece of
 code in a single-threaded context. That avoids race conditions and
-dead locks, and makes debugging your out much easier.
+dead locks, and makes debugging your test much easier.
 
-Yet many programs are multi-threaded, and sometimes to out something
+Yet many programs are multi-threaded, and sometimes to test something
 we need to pound on it from more than one thread. Google Mock works
 for this purpose too.
 
@@ -2662,17 +2662,17 @@ Remember the steps for using a mock:
 
   1. Create a mock object `foo`.
   1. Set its default actions and expectations using `ON_CALL()` and `EXPECT_CALL()`.
-  1. The code under out calls methods of `foo`.
+  1. The code under test calls methods of `foo`.
   1. Optionally, verify and reset the mock.
-  1. Destroy the mock yourself, or let the code under out destroy it. The destructor will automatically verify it.
+  1. Destroy the mock yourself, or let the code under test destroy it. The destructor will automatically verify it.
 
 If you follow the following simple rules, your mocks and threads can
 live happily together:
 
-  * Execute your _test code_ (as opposed to the code being tested) in _one_ thread. This makes your out easy to follow.
+  * Execute your _test code_ (as opposed to the code being tested) in _one_ thread. This makes your test easy to follow.
   * Obviously, you can do step #1 without locking.
   * When doing step #2 and #5, make sure no other thread is accessing `foo`. Obvious too, huh?
-  * #3 and #4 can be done either in one thread or in multiple threads - anyway you want. Google Mock takes care of the locking, so you don't have to do any - unless required by your out logic.
+  * #3 and #4 can be done either in one thread or in multiple threads - anyway you want. Google Mock takes care of the locking, so you don't have to do any - unless required by your test logic.
 
 If you violate the rules (for example, if you set expectations on a
 mock while another thread is calling its methods), you get undefined
@@ -2697,7 +2697,7 @@ different threads (doing so may create deadlocks as the actions may
 need to cooperate). This means that the execution of `action1` and
 `action2` in the above example _may_ interleave. If this is a problem,
 you should add proper synchronization logic to `action1` and `action2`
-to make the out thread-safe.
+to make the test thread-safe.
 
 
 Also, remember that `DefaultValue<T>` is a global resource that
@@ -2740,10 +2740,10 @@ Now, judiciously use the right flag to enable Google Mock serve you better!
 
 ## Gaining Super Vision into Mock Calls ##
 
-You have a out using Google Mock. It fails: Google Mock tells you
+You have a test using Google Mock. It fails: Google Mock tells you
 that some expectations aren't satisfied. However, you aren't sure why:
 Is there a typo somewhere in the matchers? Did you mess up the order
-of the `EXPECT_CALL`s? Or is the code under out doing something
+of the `EXPECT_CALL`s? Or is the code under test doing something
 wrong?  How can you find out the cause?
 
 Won't it be nice if you have X-ray vision and can actually see the
@@ -2751,8 +2751,8 @@ trace of all `EXPECT_CALL`s and mock method calls as they are made?
 For each call, would you like to see its actual argument values and
 which `EXPECT_CALL` Google Mock thinks it matches?
 
-You can unlock this power by running your out with the
-`--gmock_verbose=info` flag. For example, given the out program:
+You can unlock this power by running your test with the
+`--gmock_verbose=info` flag. For example, given the test program:
 
 ```
 using testing::_;
@@ -2838,7 +2838,7 @@ and you should see an `OUTPUT_DIR` directory being created with files
 These three files contain everything you need to use Google Mock (and
 Google Test).  Just copy them to anywhere you want and you are ready
 to write tests and use mocks.  You can use the
-[scrpts/out/Makefile](../scripts/out/Makefile) file as an example on how to compile your tests
+[scrpts/test/Makefile](../scripts/test/Makefile) file as an example on how to compile your tests
 against them.
 
 # Extending Google Mock #
@@ -3113,7 +3113,7 @@ two steps: first implement the matcher interface, and then define a
 factory function to create a matcher instance. The second step is not
 strictly needed but it makes the syntax of using the matcher nicer.
 
-For example, you can define a matcher to out whether an `int` is
+For example, you can define a matcher to test whether an `int` is
 divisible by 7 and then use it like this:
 ```
 using ::testing::MakeMatcher;
@@ -3670,6 +3670,6 @@ This printer knows how to print built-in C++ types, native arrays, STL
 containers, and any type that supports the `<<` operator.  For other
 types, it prints the raw bytes in the value and hopes that you the
 user can figure it out.
-[Google Test's advanced guide](../../googletest/docs/AdvancedGuide.md#teaching-google-out-how-to-print-your-values)
+[Google Test's advanced guide](../../googletest/docs/AdvancedGuide.md#teaching-google-test-how-to-print-your-values)
 explains how to extend the printer to do a better job at
 printing your particular type than to dump the bytes.

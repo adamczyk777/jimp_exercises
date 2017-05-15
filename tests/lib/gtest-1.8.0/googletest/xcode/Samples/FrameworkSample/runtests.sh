@@ -42,14 +42,14 @@ test_executables=$@
 succeeded=0
 failed=0
 failed_list=()
-for out in ${test_executables[*]}; do
-  "$out"
+for test in ${test_executables[*]}; do
+  "$test"
   result=$?
   if [ $result -eq 0 ]; then
     succeeded=$(( $succeeded + 1 ))
   else
     failed=$(( failed + 1 ))
-    failed_list="$failed_list $out"
+    failed_list="$failed_list $test"
   fi
 done
 

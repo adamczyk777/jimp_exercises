@@ -19,19 +19,19 @@ class WordCounterTests : public ::testing::Test, MemLeakTest {
 TEST_F(WordCounterTests, IsAbleToCreateEmptyWordCounter) {
   WordCounter counter;
   EXPECT_EQ(0,counter.DistinctWords());
-  EXPECT_EQ(0, counter.SumWords());
+  EXPECT_EQ(0,counter.TotalWords());
 }
 
 TEST_F(WordCounterTests, IsAbleToInitilzeWordCounter) {
   WordCounter counter {Word("enigma"), Word("puzzle")};
   EXPECT_EQ(2,counter.DistinctWords());
-  EXPECT_EQ(2, counter.SumWords());
+  EXPECT_EQ(2,counter.TotalWords());
 }
 
 TEST_F(WordCounterTests, IsAbleToInitilzeWordCounterWithDuplicatedWords) {
   WordCounter counter {Word("a"), Word("p"), Word("a"), Word("a")};
   EXPECT_EQ(2,counter.DistinctWords());
-  EXPECT_EQ(4, counter.SumWords());
+  EXPECT_EQ(4,counter.TotalWords());
 }
 
 TEST_F(WordCounterTests, IsAbleToQueryWordsCounts) {
@@ -45,7 +45,7 @@ TEST_F(WordCounterTests, IsAbleToQueryNotPreviouslyStoredWord) {
   WordCounter counter;
   EXPECT_EQ(0, counter["abc"]);
   EXPECT_EQ(0, counter.DistinctWords());
-  EXPECT_EQ(0, counter.SumWords());
+  EXPECT_EQ(0, counter.TotalWords());
 }
 
 TEST_F(WordCounterTests, IsAbleListWords) {

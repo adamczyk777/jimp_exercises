@@ -31,9 +31,9 @@ AC_PROG_LIBTOOL
 # hashbang.
 PYTHON=  # We *do not* allow the user to specify a python interpreter
 AC_PATH_PROG([PYTHON],[python],[:])
-AS_IF([out "$PYTHON" != ":"],
+AS_IF([test "$PYTHON" != ":"],
       [AM_PYTHON_CHECK_VERSION([$PYTHON],[2.3],[:],[PYTHON=":"])])
-AM_CONDITIONAL([HAVE_PYTHON],[out "$PYTHON" != ":"])
+AM_CONDITIONAL([HAVE_PYTHON],[test "$PYTHON" != ":"])
 
 # TODO(chandlerc@google.com) Check for the necessary system headers.
 
@@ -45,19 +45,19 @@ AC_ARG_WITH([pthreads],
             [with_pthreads=check])
 
 have_pthreads=no
-AS_IF([out "x$with_pthreads" != "xno"],
+AS_IF([test "x$with_pthreads" != "xno"],
       [ACX_PTHREAD(
         [],
-        [AS_IF([out "x$with_pthreads" != "xcheck"],
+        [AS_IF([test "x$with_pthreads" != "xcheck"],
                [AC_MSG_FAILURE(
                  [--with-pthreads was specified, but unable to be used])])])
        have_pthreads="$acx_pthread_ok"])
-AM_CONDITIONAL([HAVE_PTHREADS],[out "x$have_pthreads" == "xyes"])
+AM_CONDITIONAL([HAVE_PTHREADS],[test "x$have_pthreads" == "xyes"])
 AC_SUBST(PTHREAD_CFLAGS)
 AC_SUBST(PTHREAD_LIBS)
 
 # GoogleMock currently has hard dependencies upon GoogleTest above and beyond
-# running its own out suite, so we both provide our own version in
+# running its own test suite, so we both provide our own version in
 # a subdirectory and provide some logic to use a custom version or a system
 # installed version.
 AC_ARG_WITH([gtest],
@@ -76,7 +76,7 @@ AC_ARG_ENABLE([external-gtest],
                               installed or user provided gtest. Any option to
                               '--with-gtest' is ignored. (Default is enabled.)])
               ], [], [enable_external_gtest=yes])
-AS_IF([out "x$with_gtest" == "xno"],
+AS_IF([test "x$with_gtest" == "xno"],
       [AC_MSG_ERROR([dnl
 Support for GoogleTest was explicitly disabled. Currently GoogleMock has a hard
 dependency upon GoogleTest to build, please provide a version, or allow
@@ -103,27 +103,27 @@ HAVE_BUILT_GTEST="no"
 
 GTEST_MIN_VERSION="1.7.0"
 
-AS_IF([out "x${enable_external_gtest}" = "xyes"],
+AS_IF([test "x${enable_external_gtest}" = "xyes"],
       [# Begin filling in variables as we are able.
-      AS_IF([out "x${with_gtest}" != "xyes"],
-            [AS_IF([out -x "${with_gtest}/scripts/gtest-config"],
+      AS_IF([test "x${with_gtest}" != "xyes"],
+            [AS_IF([test -x "${with_gtest}/scripts/gtest-config"],
                    [GTEST_CONFIG="${with_gtest}/scripts/gtest-config"],
                    [GTEST_CONFIG="${with_gtest}/bin/gtest-config"])
-            AS_IF([out -x "${GTEST_CONFIG}"], [],
+            AS_IF([test -x "${GTEST_CONFIG}"], [],
                   [AC_MSG_ERROR([dnl
 Unable to locate either a built or installed Google Test at '${with_gtest}'.])
                   ])])
 
-      AS_IF([out -x "${GTEST_CONFIG}"], [],
+      AS_IF([test -x "${GTEST_CONFIG}"], [],
             [AC_PATH_PROG([GTEST_CONFIG], [gtest-config])])
-      AS_IF([out -x "${GTEST_CONFIG}"],
+      AS_IF([test -x "${GTEST_CONFIG}"],
             [AC_MSG_CHECKING([for Google Test version >= ${GTEST_MIN_VERSION}])
             AS_IF([${GTEST_CONFIG} --min-version=${GTEST_MIN_VERSION}],
                   [AC_MSG_RESULT([yes])
                   HAVE_BUILT_GTEST="yes"],
                   [AC_MSG_RESULT([no])])])])
 
-AS_IF([out "x${HAVE_BUILT_GTEST}" = "xyes"],
+AS_IF([test "x${HAVE_BUILT_GTEST}" = "xyes"],
       [GTEST_CPPFLAGS=`${GTEST_CONFIG} --cppflags`
       GTEST_CXXFLAGS=`${GTEST_CONFIG} --cxxflags`
       GTEST_LDFLAGS=`${GTEST_CONFIG} --ldflags`

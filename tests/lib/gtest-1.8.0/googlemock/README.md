@@ -172,7 +172,7 @@ something like the following will do:
 
 (We need -pthread as Google Test and Google Mock use threads.)
 
-Next, you should compile your out source file with
+Next, you should compile your test source file with
 ${GTEST\_DIR}/include and ${GMOCK\_DIR}/include in the header search
 path, and link it with gmock and any other necessary libraries:
 
@@ -183,7 +183,7 @@ As an example, the make/ directory contains a Makefile that you can
 use to build Google Mock on systems where GNU make is available
 (e.g. Linux, Mac OS X, and Cygwin).  It doesn't try to build Google
 Mock's own tests.  Instead, it just builds the Google Mock library and
-a sample out.  You can use it as a starting point for your own build
+a sample test.  You can use it as a starting point for your own build
 script.
 
 If the default settings are correct for your environment, the

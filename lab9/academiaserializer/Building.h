@@ -9,6 +9,7 @@
 #include "Serializable.h"
 #include "Room.h"
 #include <vector>
+#include <functional>
 //#include <reference>
 
 namespace academia {
@@ -16,14 +17,14 @@ namespace academia {
     class Building : public Serializable {
     // array of rooms
     public:
-        Building(int id, const std::string &name, const std::vector<Room> &rooms);
+        Building(int id, std::string name, const std::vector<std::reference_wrapper<const Serializable>> &r) : id{id}, name{name}, rooms{r} {}
 
         void Serialize(Serializer * serializer);
 
     private:
         int id;
         std::string name;
-        std::vector<Room> rooms;
+        std::vector<std::reference_wrapper<const Serializable>> rooms;
     };
 }
 

@@ -22,13 +22,20 @@ namespace academia {
         *this->test << "\"" << field_name << "\": " << value;
     }
 
-    void JsonSerializer::SerializableField(const std::string &field_name, const academia::Serializable &value) {
+    void JsonSerializer::SerializableField(const std::string &field_name, const Serializable &value) {
+        *this->test << "\"" << field_name << "\"";
+        //value.Serialize(this); // TODO
+        *this->test << ", ";
 
     }
 
     void JsonSerializer::ArrayField(const std::string &field_name,
-                                    const std::vector<std::reference_wrapper<const academia::Serializable>> &value) {
-
+                                    const std::vector<std::reference_wrapper<const Serializable>> &value) {
+        *this->test << "\"" << field_name << "\": [";
+        /*for(const Serializable &n : value) { // TODO
+            SerializableField(" ", n);
+        }*/
+        *this->test << "]";
     }
 
     void JsonSerializer::Header(const std::string &object_name) {

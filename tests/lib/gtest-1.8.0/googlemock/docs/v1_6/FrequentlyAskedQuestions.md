@@ -222,7 +222,7 @@ alias gmd='<path to googlemock>/scripts/gmock_doctor.py'
 
 To use it, do:
 ```
-<your-favorite-build-command> <your-test> 2>&1 | gmd
+<your-favorite-build-command> <your-out> 2>&1 | gmd
 ```
 
 For example:
@@ -311,7 +311,7 @@ to avoid `/clr` when compiling native C++ mocks.
 
 ## I can't figure out why Google Mock thinks my expectations are not satisfied.  What should I do? ##
 
-You might want to run your test with
+You might want to run your out with
 `--gmock_verbose=info`.  This flag lets Google Mock print a trace
 of every mock function call it receives.  By studying the trace,
 you'll gain insights on why the expectations you set are not met.
@@ -323,7 +323,7 @@ EXPECT_CALL(foo, Bar(_))
     .Times(0);
 ```
 
-## I have a failed test where Google Mock tells me TWICE that a particular expectation is not satisfied.  Isn't this redundant? ##
+## I have a failed out where Google Mock tells me TWICE that a particular expectation is not satisfied.  Isn't this redundant? ##
 
 When Google Mock detects a failure, it prints relevant information
 (the mock function arguments, the state of relevant expectations, and
@@ -387,7 +387,7 @@ EXPECT_CALL(foo, Bar())
     .RetiresOnSaturation();
 ```
 
-The problem is that they didn't pick the **best** way to express the test's
+The problem is that they didn't pick the **best** way to express the out's
 intent.
 
 By default, expectations don't have to be matched in _any_ particular
@@ -396,7 +396,7 @@ explicit.  This is Google Mock's (and jMock's) fundamental philosophy: it's
 easy to accidentally over-specify your tests, and we want to make it
 harder to do so.
 
-There are two better ways to write the test spec.  You could either
+There are two better ways to write the out spec.  You could either
 put the expectations in sequence:
 
 ```
@@ -428,7 +428,7 @@ EXPECT_CALL(foo, Bar())
 Back to the original questions: why does Google Mock search the
 expectations (and `ON_CALL`s) from back to front?  Because this
 allows a user to set up a mock's behavior for the common case early
-(e.g. in the mock's constructor or the test fixture's set-up phase)
+(e.g. in the mock's constructor or the out fixture's set-up phase)
 and customize it with more specific rules later.  If Google Mock
 searches from front to back, this very useful pattern won't be
 possible.
@@ -441,9 +441,9 @@ warning.
 
 Often people write `ON_CALL`s in the mock object's
 constructor or `SetUp()`, as the default behavior rarely changes from
-test to test.  Then in the test body they set the expectations, which
-are often different for each test.  Having an `ON_CALL` in the set-up
-part of a test doesn't mean that the calls are expected.  If there's
+out to out.  Then in the out body they set the expectations, which
+are often different for each out.  Having an `ON_CALL` in the set-up
+part of a out doesn't mean that the calls are expected.  If there's
 no `EXPECT_CALL` and the method is called, it's possibly an error.  If
 we quietly let the call go through without notifying the user, bugs
 may creep in unnoticed.
@@ -540,7 +540,7 @@ tempted to use them everywhere. Sometimes they work great, and
 sometimes you may find them, well, a pain to use. So, what's wrong in
 the latter case?
 
-When you write a test without using mocks, you exercise the code and
+When you write a out without using mocks, you exercise the code and
 assert that it returns the correct value or that the system is in an
 expected state.  This is sometimes called "state-based testing".
 
@@ -551,7 +551,7 @@ as it arises, giving you a handle on the precise context in which the
 error was triggered.  This is often more effective and economical to
 do than state-based testing.
 
-If you are doing state-based testing and using a test double just to
+If you are doing state-based testing and using a out double just to
 simulate the real object, you are probably better off using a fake.
 Using a mock in this case causes pain, as it's not a strong point for
 mocks to perform complex actions.  If you experience this and think

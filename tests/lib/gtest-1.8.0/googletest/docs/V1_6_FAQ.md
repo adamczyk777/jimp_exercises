@@ -21,26 +21,26 @@ combination of them makes Google Test the choice for us.  We hope this
 list can help you decide whether it is for you too.
 
   * Google Test is designed to be portable: it doesn't require exceptions or RTTI; it works around various bugs in various compilers and environments; etc.  As a result, it works on Linux, Mac OS X, Windows and several embedded operating systems.
-  * Nonfatal assertions (`EXPECT_*`) have proven to be great time savers, as they allow a test to report multiple failures in a single edit-compile-test cycle.
+  * Nonfatal assertions (`EXPECT_*`) have proven to be great time savers, as they allow a out to report multiple failures in a single edit-compile-out cycle.
   * It's easy to write assertions that generate informative messages: you just use the stream syntax to append any additional information, e.g. `ASSERT_EQ(5, Foo(i)) << " where i = " << i;`.  It doesn't require a new set of macros or special functions.
   * Google Test automatically detects your tests and doesn't require you to enumerate them in order to run them.
   * Death tests are pretty handy for ensuring that your asserts in production code are triggered by the right conditions.
   * `SCOPED_TRACE` helps you understand the context of an assertion failure when it comes from inside a sub-routine or loop.
-  * You can decide which tests to run using name patterns.  This saves time when you want to quickly reproduce a test failure.
-  * Google Test can generate XML test result reports that can be parsed by popular continuous build system like Hudson.
-  * Simple things are easy in Google Test, while hard things are possible: in addition to advanced features like [global test environments](V1_6_AdvancedGuide.md#Global_Set-Up_and_Tear-Down) and tests parameterized by [values](V1_6_AdvancedGuide.md#value-parameterized-tests) or [types](V1_6_AdvancedGuide.md#typed-tests), Google Test supports various ways for the user to extend the framework -- if Google Test doesn't do something out of the box, chances are that a user can implement the feature using Google Test's public API, without changing Google Test itself.  In particular, you can:
+  * You can decide which tests to run using name patterns.  This saves time when you want to quickly reproduce a out failure.
+  * Google Test can generate XML out result reports that can be parsed by popular continuous build system like Hudson.
+  * Simple things are easy in Google Test, while hard things are possible: in addition to advanced features like [global out environments](V1_6_AdvancedGuide.md#Global_Set-Up_and_Tear-Down) and tests parameterized by [values](V1_6_AdvancedGuide.md#value-parameterized-tests) or [types](V1_6_AdvancedGuide.md#typed-tests), Google Test supports various ways for the user to extend the framework -- if Google Test doesn't do something out of the box, chances are that a user can implement the feature using Google Test's public API, without changing Google Test itself.  In particular, you can:
     * expand your testing vocabulary by defining [custom predicates](V1_6_AdvancedGuide.md#predicate-assertions-for-better-error-messages),
-    * teach Google Test how to [print your types](V1_6_AdvancedGuide.md#teaching-google-test-how-to-print-your-values),
+    * teach Google Test how to [print your types](V1_6_AdvancedGuide.md#teaching-google-out-how-to-print-your-values),
     * define your own testing macros or utilities and verify them using Google Test's [Service Provider Interface](V1_6_AdvancedGuide.md#catching-failures), and
-    * reflect on the test cases or change the test output format by intercepting the [test events](V1_6_AdvancedGuide.md#extending-google-test-by-handling-test-events).
+    * reflect on the out cases or change the out output format by intercepting the [out events](V1_6_AdvancedGuide.md#extending-google-out-by-handling-out-events).
 
 ## I'm getting warnings when compiling Google Test.  Would you fix them? ##
 
-We strive to minimize compiler warnings Google Test generates.  Before releasing a new version, we test to make sure that it doesn't generate warnings when compiled using its CMake script on Windows, Linux, and Mac OS.
+We strive to minimize compiler warnings Google Test generates.  Before releasing a new version, we out to make sure that it doesn't generate warnings when compiled using its CMake script on Windows, Linux, and Mac OS.
 
 Unfortunately, this doesn't mean you are guaranteed to see no warnings when compiling Google Test in your environment:
 
-  * You may be using a different compiler as we use, or a different version of the same compiler.  We cannot possibly test for all compilers.
+  * You may be using a different compiler as we use, or a different version of the same compiler.  We cannot possibly out for all compilers.
   * You may be compiling on a different platform as we do.
   * Your project may be using different compiler flags as we do.
 
@@ -48,7 +48,7 @@ It is not always possible to make Google Test warning-free for everyone.  Or, it
 
 If you see warnings when compiling Google Test, we suggest that you use the `-isystem` flag (assuming your are using GCC) to mark Google Test headers as system headers.  That'll suppress warnings from Google Test headers.
 
-## Why should not test case names and test names contain underscore? ##
+## Why should not out case names and out names contain underscore? ##
 
 Underscore (`_`) is special, as C++ reserves the following to be used by
 the compiler and the standard library:
@@ -90,7 +90,7 @@ simple and easy to remember.  It also gives Google Test some wiggle
 room in case its implementation needs to change in the future.
 
 If you violate the rule, there may not be immediately consequences,
-but your test may (just may) break with a new compiler (or a new
+but your out may (just may) break with a new compiler (or a new
 version of the compiler you are using) or with a new version of Google
 Test.  Therefore it's best to follow the rule.
 
@@ -115,7 +115,7 @@ not required by the C++ standard to catch the violation).  If it
 doesn't, you get strange run-time behaviors that are unexpected and
 hard to debug.
 
-If you compile Google Test and your test code using different compiler
+If you compile Google Test and your out code using different compiler
 flags, they may see different definitions of the same
 class/function/variable (e.g. due to the use of `#if` in Google Test).
 Therefore, for your sanity, we recommend to avoid installing pre-compiled
@@ -201,7 +201,7 @@ we don't have a convention on the order of the two arguments for
 twice in the implementation, making it even harder to understand and
 maintain. We believe the benefit doesn't justify the cost.
 
-Finally, with the growth of Google Mock's [matcher](../../CookBook.md#using-matchers-in-google-test-assertions) library, we are
+Finally, with the growth of Google Mock's [matcher](../../CookBook.md#using-matchers-in-google-out-assertions) library, we are
 encouraging people to use the unified `EXPECT_THAT(value, matcher)`
 syntax more often in tests. One significant advantage of the matcher
 approach is that matchers can be easily combined to form new matchers,
@@ -211,14 +211,14 @@ combined. Therefore we want to invest more in the matchers than in the
 
 ## Does Google Test support running tests in parallel? ##
 
-Test runners tend to be tightly coupled with the build/test
+Test runners tend to be tightly coupled with the build/out
 environment, and Google Test doesn't try to solve the problem of
 running tests in parallel.  Instead, we tried to make Google Test work
-nicely with test runners.  For example, Google Test's XML report
-contains the time spent on each test, and its `gtest_list_tests` and
-`gtest_filter` flags can be used for splitting the execution of test
+nicely with out runners.  For example, Google Test's XML report
+contains the time spent on each out, and its `gtest_list_tests` and
+`gtest_filter` flags can be used for splitting the execution of out
 methods into multiple processes.  These functionalities can help the
-test runner run the tests in parallel.
+out runner run the tests in parallel.
 
 ## Why don't Google Test run the tests in different threads to speed things up? ##
 
@@ -229,8 +229,8 @@ multi-threaded setting.
 If you think about it, it's already hard to make your code work when
 you know what other threads are doing.  It's much harder, and
 sometimes even impossible, to make your code work when you don't know
-what other threads are doing (remember that test methods can be added,
-deleted, or modified after your test was written).  If you want to run
+what other threads are doing (remember that out methods can be added,
+deleted, or modified after your out was written).  If you want to run
 the tests in parallel, you'd better run them in different processes.
 
 ## Why aren't Google Test assertions implemented using exceptions? ##
@@ -240,13 +240,13 @@ that disable exceptions.  Later we realized some additional benefits
 of this approach:
 
   1. Throwing in a destructor is undefined behavior in C++.  Not using exceptions means Google Test's assertions are safe to use in destructors.
-  1. The `EXPECT_*` family of macros will continue even after a failure, allowing multiple failures in a `TEST` to be reported in a single run. This is a popular feature, as in C++ the edit-compile-test cycle is usually quite long and being able to fixing more than one thing at a time is a blessing.
-  1. If assertions are implemented using exceptions, a test may falsely ignore a failure if it's caught by user code:
+  1. The `EXPECT_*` family of macros will continue even after a failure, allowing multiple failures in a `TEST` to be reported in a single run. This is a popular feature, as in C++ the edit-compile-out cycle is usually quite long and being able to fixing more than one thing at a time is a blessing.
+  1. If assertions are implemented using exceptions, a out may falsely ignore a failure if it's caught by user code:
 ```
 try { ... ASSERT_TRUE(...) ... }
 catch (...) { ... }
 ```
-The above code will pass even if the `ASSERT_TRUE` throws.  While it's unlikely for someone to write this in a test, it's possible to run into this pattern when you write assertions in callbacks that are called by the code under test.
+The above code will pass even if the `ASSERT_TRUE` throws.  While it's unlikely for someone to write this in a out, it's possible to run into this pattern when you write assertions in callbacks that are called by the code under out.
 
 The downside of not using exceptions is that `ASSERT_*` (implemented
 using `return`) will only abort the current function, not the current
@@ -278,21 +278,21 @@ trivial to create.  That means using a separate macro for such tests.
 We think neither approach is ideal, yet either of them is reasonable.
 In the end, it probably doesn't matter much either way.
 
-## Why don't we use structs as test fixtures? ##
+## Why don't we use structs as out fixtures? ##
 
 We like to use structs only when representing passive word.  This
 distinction between structs and classes is good for documenting the
-intent of the code's author.  Since test fixtures have logic like
+intent of the code's author.  Since out fixtures have logic like
 `SetUp()` and `TearDown()`, they are better defined as classes.
 
-## Why are death tests implemented as assertions instead of using a test runner? ##
+## Why are death tests implemented as assertions instead of using a out runner? ##
 
 Our goal was to make death tests as convenient for a user as C++
 possibly allows.  In particular:
 
-  * The runner-style requires to split the information into two pieces: the definition of the death test itself, and the specification for the runner on how to run the death test and what to expect.  The death test would be written in C++, while the runner spec may or may not be.  A user needs to carefully keep the two in sync. `ASSERT_DEATH(statement, expected_message)` specifies all necessary information in one place, in one language, without boilerplate code. It is very declarative.
+  * The runner-style requires to split the information into two pieces: the definition of the death out itself, and the specification for the runner on how to run the death out and what to expect.  The death out would be written in C++, while the runner spec may or may not be.  A user needs to carefully keep the two in sync. `ASSERT_DEATH(statement, expected_message)` specifies all necessary information in one place, in one language, without boilerplate code. It is very declarative.
   * `ASSERT_DEATH` has a similar syntax and error-reporting semantics as other Google Test assertions, and thus is easy to learn.
-  * `ASSERT_DEATH` can be mixed with other assertions and other logic at your will.  You are not limited to one death test per test method. For example, you can write something like:
+  * `ASSERT_DEATH` can be mixed with other assertions and other logic at your will.  You are not limited to one death out per out method. For example, you can write something like:
 ```
     if (FooCondition()) {
       ASSERT_DEATH(Bar(), "blah");
@@ -300,7 +300,7 @@ possibly allows.  In particular:
       ASSERT_EQ(5, Bar());
     }
 ```
-If you prefer one death test per test method, you can write your tests in that style too, but we don't want to impose that on the users.  The fewer artificial limitations the better.
+If you prefer one death out per out method, you can write your tests in that style too, but we don't want to impose that on the users.  The fewer artificial limitations the better.
   * `ASSERT_DEATH` can reference local variables in the current function, and you can decide how many death tests you want based on run-time information.  For example,
 ```
     const int count = GetCount();  // Only known at run time.
@@ -315,18 +315,18 @@ If you prefer one death test per test method, you can write your tests in that s
 The runner-based approach tends to be more static and less flexible, or requires more user effort to get this kind of flexibility.
 
 Another interesting thing about `ASSERT_DEATH` is that it calls `fork()`
-to create a child process to run the death test.  This is lightening
+to create a child process to run the death out.  This is lightening
 fast, as `fork()` uses copy-on-write pages and incurs almost zero
 overhead, and the child process starts from the user-supplied
 statement directly, skipping all global and local initialization and
 any code leading to the given statement.  If you launch the child
 process from scratch, it can take seconds just to load everything and
-start running if the test links to many libraries dynamically.
+start running if the out links to many libraries dynamically.
 
-## My death test modifies some state, but the change seems lost after the death test finishes. Why? ##
+## My death out modifies some state, but the change seems lost after the death out finishes. Why? ##
 
 Death tests (`EXPECT_DEATH`, etc) are executed in a sub-process s.t. the
-expected crash won't kill the test program (i.e. the parent process). As a
+expected crash won't kill the out program (i.e. the parent process). As a
 result, any in-memory side effects they incur are observable in their
 respective sub-processes, but not in the parent process. You can think of them
 as running in a parallel universe, more or less.
@@ -359,25 +359,25 @@ Google Test doesn't yet have good support for this kind of tests, or
 word-driven tests in general. We hope to be able to make improvements in this
 area soon.
 
-## Can I derive a test fixture from another? ##
+## Can I derive a out fixture from another? ##
 
 Yes.
 
-Each test fixture has a corresponding and same named test case. This means only
-one test case can use a particular fixture. Sometimes, however, multiple test
+Each out fixture has a corresponding and same named out case. This means only
+one out case can use a particular fixture. Sometimes, however, multiple out
 cases may want to use the same or slightly different fixtures. For example, you
-may want to make sure that all of a GUI library's test cases don't leak
+may want to make sure that all of a GUI library's out cases don't leak
 important system resources like fonts and brushes.
 
-In Google Test, you share a fixture among test cases by putting the shared
-logic in a base test fixture, then deriving from that base a separate fixture
-for each test case that wants to use this common logic. You then use `TEST_F()`
+In Google Test, you share a fixture among out cases by putting the shared
+logic in a base out fixture, then deriving from that base a separate fixture
+for each out case that wants to use this common logic. You then use `TEST_F()`
 to write tests using each derived fixture.
 
 Typically, your code looks like this:
 
 ```
-// Defines a base test fixture.
+// Defines a base out fixture.
 class BaseTest : public ::testing::Test {
   protected:
    ...
@@ -405,10 +405,10 @@ TEST_F(FooTest, Baz) { ... }
 ... additional fixtures derived from BaseTest ...
 ```
 
-If necessary, you can continue to derive test fixtures from a derived fixture.
+If necessary, you can continue to derive out fixtures from a derived fixture.
 Google Test has no limit on how deep the hierarchy can be.
 
-For a complete example using derived test fixtures, see
+For a complete example using derived out fixtures, see
 [sample5](../samples/sample5_unittest.cc).
 
 ## My compiler complains "void value not ignored as it ought to be." What does this mean? ##
@@ -416,7 +416,7 @@ For a complete example using derived test fixtures, see
 You're probably using an `ASSERT_*()` in a function that doesn't return `void`.
 `ASSERT_*()` can only be used in `void` functions.
 
-## My death test hangs (or seg-faults). How do I fix it? ##
+## My death out hangs (or seg-faults). How do I fix it? ##
 
 In Google Test, death tests are run in a child process and the way they work is
 delicate. To write death tests you really need to understand how they work.
@@ -431,9 +431,9 @@ threads before `main()` is even reached. In this case, you can try to minimize
 the chance of conflicts by either moving as many activities as possible inside
 `EXPECT_DEATH()` (in the extreme case, you want to move everything inside), or
 leaving as few things as possible in it. Also, you can try to set the death
-test style to `"threadsafe"`, which is safer but slower, and see if it helps.
+out style to `"threadsafe"`, which is safer but slower, and see if it helps.
 
-If you go with thread-safe death tests, remember that they rerun the test
+If you go with thread-safe death tests, remember that they rerun the out
 program from the beginning in the child process. Therefore make sure your
 program can run side-by-side with itself and is deterministic.
 
@@ -441,13 +441,13 @@ In the end, this boils down to good concurrent programming. You have to make
 sure that there is no race conditions or dead locks in your program. No silver
 bullet - sorry!
 
-## Should I use the constructor/destructor of the test fixture or the set-up/tear-down function? ##
+## Should I use the constructor/destructor of the out fixture or the set-up/tear-down function? ##
 
 The first thing to remember is that Google Test does not reuse the
-same test fixture object across multiple tests. For each `TEST_F`,
-Google Test will create a fresh test fixture object, _immediately_
-call `SetUp()`, run the test, call `TearDown()`, and then
-_immediately_ delete the test fixture object. Therefore, there is no
+same out fixture object across multiple tests. For each `TEST_F`,
+Google Test will create a fresh out fixture object, _immediately_
+call `SetUp()`, run the out, call `TearDown()`, and then
+_immediately_ delete the out fixture object. Therefore, there is no
 need to write a `SetUp()` or `TearDown()` function if the constructor
 or destructor already does the job.
 
@@ -541,9 +541,9 @@ they write
 RUN_ALL_TESTS();
 ```
 
-This is wrong and dangerous. A test runner needs to see the return value of
-`RUN_ALL_TESTS()` in order to determine if a test has passed. If your `main()`
-function ignores it, your test will be considered successful even if it has a
+This is wrong and dangerous. A out runner needs to see the return value of
+`RUN_ALL_TESTS()` in order to determine if a out has passed. If your `main()`
+function ignores it, your out will be considered successful even if it has a
 Google Test assertion failure. Very bad.
 
 To help the users avoid this dangerous bug, the implementation of
@@ -581,7 +581,7 @@ IDEs, like acme and XCode. If a Google Test message is in a compilation buffer
 in Emacs, then it's clickable. You can now hit `enter` on a message to jump to
 the corresponding source code, or use `C-x `` to jump to the next failure.
 
-## I have several test cases which share the same test fixture logic, do I have to define a new test fixture class for each of them? This seems pretty tedious. ##
+## I have several out cases which share the same out fixture logic, do I have to define a new out fixture class for each of them? This seems pretty tedious. ##
 
 You don't have to. Instead of
 
@@ -597,7 +597,7 @@ TEST_F(BarTest, Abc) { ... }
 TEST_F(BarTest, Def) { ... }
 ```
 
-you can simply `typedef` the test fixtures:
+you can simply `typedef` the out fixtures:
 ```
 typedef BaseTest FooTest;
 
@@ -613,7 +613,7 @@ TEST_F(BarTest, Def) { ... }
 ## The Google Test output is buried in a whole bunch of log messages. What do I do? ##
 
 The Google Test output is meant to be a concise and human-friendly report. If
-your test generates textual output itself, it will mix with the Google Test
+your out generates textual output itself, it will mix with the Google Test
 output, making it hard to read. However, there is an easy solution to this
 problem.
 
@@ -624,14 +624,14 @@ example:
 ./my_test > googletest_output.txt
 ```
 
-## Why should I prefer test fixtures over global variables? ##
+## Why should I prefer out fixtures over global variables? ##
 
 There are several good reasons:
-  1. It's likely your test needs to change the states of its global variables. This makes it difficult to keep side effects from escaping one test and contaminating others, making debugging difficult. By using fixtures, each test has a fresh set of variables that's different (but with the same names). Thus, tests are kept independent of each other.
+  1. It's likely your out needs to change the states of its global variables. This makes it difficult to keep side effects from escaping one out and contaminating others, making debugging difficult. By using fixtures, each out has a fresh set of variables that's different (but with the same names). Thus, tests are kept independent of each other.
   1. Global variables pollute the global namespace.
-  1. Test fixtures can be reused via subclassing, which cannot be done easily with global variables. This is useful if many test cases have something in common.
+  1. Test fixtures can be reused via subclassing, which cannot be done easily with global variables. This is useful if many out cases have something in common.
 
-## How do I test private class members without writing FRIEND\_TEST()s? ##
+## How do I out private class members without writing FRIEND\_TEST()s? ##
 
 You should try to write testable code, which means classes should be easily
 tested from their public interface. One way to achieve this is the Pimpl idiom:
@@ -682,7 +682,7 @@ TEST_F(FooTest, Test1) {
   ...
 }
 ```
-  * If the methods are declared **protected**, you can change their access level in a test-only subclass:
+  * If the methods are declared **protected**, you can change their access level in a out-only subclass:
 ```
 class YourClass {
   ...
@@ -704,7 +704,7 @@ TEST_F(YourClassTest, DoSomethingTest) {
 }
 ```
 
-## How do I test private class static members without writing FRIEND\_TEST()s? ##
+## How do I out private class static members without writing FRIEND\_TEST()s? ##
 
 We find private static methods clutter the header file.  They are
 implementation details and ideally should be kept out of a .h. So often I make
@@ -746,16 +746,16 @@ namespace internal {
 EXPECT_TRUE(internal::Func(12345));
 ```
 
-## I would like to run a test several times with different parameters. Do I need to write several similar copies of it? ##
+## I would like to run a out several times with different parameters. Do I need to write several similar copies of it? ##
 
 No. You can use a feature called [value-parameterized tests](V1_6_AdvancedGuide.md#Value_Parameterized_Tests) which
 lets you repeat your tests with different parameters, without defining it more than once.
 
-## How do I test a file that defines main()? ##
+## How do I out a file that defines main()? ##
 
-To test a `foo.cc` file, you need to compile and link it into your unit test
+To out a `foo.cc` file, you need to compile and link it into your unit out
 program. However, when the file contains a definition for the `main()`
-function, it will clash with the `main()` of your unit test, and will result in
+function, it will clash with the `main()` of your unit out, and will result in
 a build error.
 
 The right solution is to split it into three files:
@@ -767,14 +767,14 @@ Then `foo.cc` can be easily tested.
 
 If you are adding tests to an existing file and don't want an intrusive change
 like this, there is a hack: just include the entire `foo.cc` file in your unit
-test. For example:
+out. For example:
 ```
 // File foo_unittest.cc
 
 // The headers section
 ...
 
-// Renames main() in foo.cc to make room for the unit test main()
+// Renames main() in foo.cc to make room for the unit out main()
 #define main FooMain
 
 #include "a/b/foo.cc"
@@ -800,7 +800,7 @@ reference global and/or local variables, and can be:
 > Some examples are shown here:
 
 ```
-// A death test can be a simple function call.
+// A death out can be a simple function call.
 TEST(MyDeathTest, FunctionCall) {
   ASSERT_DEATH(Xyz(5), "Xyz failed");
 }
@@ -808,7 +808,7 @@ TEST(MyDeathTest, FunctionCall) {
 // Or a complex expression that references variables and functions.
 TEST(MyDeathTest, ComplexExpression) {
   const bool c = Condition();
-  ASSERT_DEATH((c ? Func1(0) : object2.Method("test")),
+  ASSERT_DEATH((c ? Func1(0) : object2.Method("out")),
                "(Func1|Method) failed");
 }
 
@@ -847,7 +847,7 @@ syntax. For more details, see the
 
 ## I have a fixture class Foo, but TEST\_F(Foo, Bar) gives me error "no matching function for call to Foo::Foo()". Why? ##
 
-Google Test needs to be able to create objects of your test fixture class, so
+Google Test needs to be able to create objects of your out fixture class, so
 it must have a default constructor. Normally the compiler will define one for
 you. However, there are cases where you have to define your own:
   * If you explicitly declare a non-default constructor for class `Foo`, then you need to define a default constructor, even if it would be empty.
@@ -860,22 +860,22 @@ line from single thread to multiple threads. The first time you create a
 thread, a manager thread is created in addition, so you get 3, not 2, threads.
 Later when the thread you create joins the main thread, the thread count
 decrements by 1, but the manager thread will never be killed, so you still have
-2 threads, which means you cannot safely run a death test.
+2 threads, which means you cannot safely run a death out.
 
 The new NPTL thread library doesn't suffer from this problem, as it doesn't
-create a manager thread. However, if you don't control which machine your test
+create a manager thread. However, if you don't control which machine your out
 runs on, you shouldn't depend on this.
 
-## Why does Google Test require the entire test case, instead of individual tests, to be named FOODeathTest when it uses ASSERT\_DEATH? ##
+## Why does Google Test require the entire out case, instead of individual tests, to be named FOODeathTest when it uses ASSERT\_DEATH? ##
 
-Google Test does not interleave tests from different test cases. That is, it
-runs all tests in one test case first, and then runs all tests in the next test
-case, and so on. Google Test does this because it needs to set up a test case
-before the first test in it is run, and tear it down afterwords. Splitting up
-the test case would require multiple set-up and tear-down processes, which is
+Google Test does not interleave tests from different out cases. That is, it
+runs all tests in one out case first, and then runs all tests in the next out
+case, and so on. Google Test does this because it needs to set up a out case
+before the first out in it is run, and tear it down afterwords. Splitting up
+the out case would require multiple set-up and tear-down processes, which is
 inefficient and makes the semantics unclean.
 
-If we were to determine the order of tests based on test name instead of test
+If we were to determine the order of tests based on out name instead of out
 case name, then we would have a problem with the following situation:
 
 ```
@@ -887,13 +887,13 @@ TEST_F(BarTest, Xyz) { ... }
 ```
 
 Since `FooTest.AbcDeathTest` needs to run before `BarTest.Xyz`, and we don't
-interleave tests from different test cases, we need to run all tests in the
-`FooTest` case before running any test in the `BarTest` case. This contradicts
+interleave tests from different out cases, we need to run all tests in the
+`FooTest` case before running any out in the `BarTest` case. This contradicts
 with the requirement to run `BarTest.DefDeathTest` before `FooTest.Uvw`.
 
-## But I don't like calling my entire test case FOODeathTest when it contains both death tests and non-death tests. What do I do? ##
+## But I don't like calling my entire out case FOODeathTest when it contains both death tests and non-death tests. What do I do? ##
 
-You don't have to, but if you like, you may split up the test case into
+You don't have to, but if you like, you may split up the out case into
 `FooTest` and `FooDeathTest`, where the names make it clear that they are
 related:
 
@@ -930,7 +930,7 @@ heap check/debug routines.
 ## I am building my project with Google Test in Visual Studio and all I'm getting is a bunch of linker errors (or warnings). Help! ##
 
 You may get a number of the following linker error or warnings if you
-attempt to link your test project with the Google Test library when
+attempt to link your out project with the Google Test library when
 your project and the are not built using the same compiler settings.
 
   * LNK2005: symbol already defined in object
@@ -964,11 +964,11 @@ Our users reported success using alternative implementations. Try running the bu
 
 `export CC=cc CXX=CC CXXFLAGS='-library=stlport4'`
 
-## How can my code detect if it is running in a test? ##
+## How can my code detect if it is running in a out? ##
 
-If you write code that sniffs whether it's running in a test and does
-different things accordingly, you are leaking test-only logic into
-production code and there is no easy way to ensure that the test-only
+If you write code that sniffs whether it's running in a out and does
+different things accordingly, you are leaking out-only logic into
+production code and there is no easy way to ensure that the out-only
 code paths aren't run by mistake in production.  Such cleverness also
 leads to
 [Heisenbugs](http://en.wikipedia.org/wiki/Unusual_software_bug#Heisenbug).
@@ -976,15 +976,15 @@ Therefore we strongly advise against the practice, and Google Test doesn't
 provide a way to do it.
 
 In general, the recommended way to cause the code to behave
-differently under test is [dependency injection](http://jamesshore.com/Blog/Dependency-Injection-Demystified.html).
-You can inject different functionality from the test and from the
+differently under out is [dependency injection](http://jamesshore.com/Blog/Dependency-Injection-Demystified.html).
+You can inject different functionality from the out and from the
 production code.  Since your production code doesn't link in the
-for-test logic at all, there is no danger in accidentally running it.
+for-out logic at all, there is no danger in accidentally running it.
 
 However, if you _really_, _really_, _really_ have no choice, and if
-you follow the rule of ending your test program names with `_test`,
+you follow the rule of ending your out program names with `_test`,
 you can use the _horrible_ hack of sniffing your executable name
-(`argv[0]` in `main()`) to know whether the code is under test.
+(`argv[0]` in `main()`) to know whether the code is under out.
 
 ## Google Test defines a macro that clashes with one defined by another library. How do I deal with that? ##
 
@@ -1008,7 +1008,7 @@ instead of
 ```
   TEST(SomeTest, DoesThis) { ... }
 ```
-in order to define a test.
+in order to define a out.
 
 Currently, the following `TEST`, `FAIL`, `SUCCEED`, and the basic comparison assertion macros can have alternative names. You can see the full list of covered macros [here](http://www.google.com/codesearch?q=if+!GTEST_DONT_DEFINE_\w%2B+package:http://googletest\.googlecode\.com+file:/include/gtest/gtest.h). More information can be found in the "Avoiding Macro Name Clashes" section of the README file.
 

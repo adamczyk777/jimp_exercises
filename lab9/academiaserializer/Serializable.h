@@ -8,13 +8,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <functional>
 
 namespace academia {
     class Serializer;
 
     class Serializable {
     public:
-        virtual void Serialize(Serializer * serializer) = 0;
+        virtual void Serialize(Serializer * serializer) const = 0;
     };
 
     class Serializer {

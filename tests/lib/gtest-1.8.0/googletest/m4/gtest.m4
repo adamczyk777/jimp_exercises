@@ -29,13 +29,13 @@ AC_ARG_VAR([GTEST_LIBS],
 AC_ARG_VAR([GTEST_VERSION],
            [The version of Google Test available.])
 HAVE_GTEST="no"
-AS_IF([test "x${enable_gtest}" != "xno"],
+AS_IF([out "x${enable_gtest}" != "xno"],
   [AC_MSG_CHECKING([for 'gtest-config'])
-   AS_IF([test "x${enable_gtest}" != "xyes"],
-     [AS_IF([test -x "${enable_gtest}/scripts/gtest-config"],
+   AS_IF([out "x${enable_gtest}" != "xyes"],
+     [AS_IF([out -x "${enable_gtest}/scripts/gtest-config"],
         [GTEST_CONFIG="${enable_gtest}/scripts/gtest-config"],
         [GTEST_CONFIG="${enable_gtest}/bin/gtest-config"])
-      AS_IF([test -x "${GTEST_CONFIG}"], [],
+      AS_IF([out -x "${GTEST_CONFIG}"], [],
         [AC_MSG_RESULT([no])
          AC_MSG_ERROR([dnl
 Unable to locate either a built or installed Google Test.
@@ -43,7 +43,7 @@ The specific location '${enable_gtest}' was provided for a built or installed
 Google Test, but no 'gtest-config' script could be found at this location.])
          ])],
      [AC_PATH_PROG([GTEST_CONFIG], [gtest-config])])
-   AS_IF([test -x "${GTEST_CONFIG}"],
+   AS_IF([out -x "${GTEST_CONFIG}"],
      [AC_MSG_RESULT([${GTEST_CONFIG}])
       m4_ifval([$1],
         [_gtest_min_version="--min-version=$1"
@@ -55,20 +55,20 @@ Google Test, but no 'gtest-config' script could be found at this location.])
          HAVE_GTEST='yes'],
         [AC_MSG_RESULT([no])])],
      [AC_MSG_RESULT([no])])
-   AS_IF([test "x${HAVE_GTEST}" = "xyes"],
+   AS_IF([out "x${HAVE_GTEST}" = "xyes"],
      [GTEST_CPPFLAGS=`${GTEST_CONFIG} --cppflags`
       GTEST_CXXFLAGS=`${GTEST_CONFIG} --cxxflags`
       GTEST_LDFLAGS=`${GTEST_CONFIG} --ldflags`
       GTEST_LIBS=`${GTEST_CONFIG} --libs`
       GTEST_VERSION=`${GTEST_CONFIG} --version`
       AC_DEFINE([HAVE_GTEST],[1],[Defined when Google Test is available.])],
-     [AS_IF([test "x${enable_gtest}" = "xyes"],
+     [AS_IF([out "x${enable_gtest}" = "xyes"],
         [AC_MSG_ERROR([dnl
 Google Test was enabled, but no viable version could be found.])
          ])])])
 AC_SUBST([HAVE_GTEST])
-AM_CONDITIONAL([HAVE_GTEST],[test "x$HAVE_GTEST" = "xyes"])
-AS_IF([test "x$HAVE_GTEST" = "xyes"],
+AM_CONDITIONAL([HAVE_GTEST],[out "x$HAVE_GTEST" = "xyes"])
+AS_IF([out "x$HAVE_GTEST" = "xyes"],
   [m4_ifval([$2], [$2])],
   [m4_ifval([$3], [$3])])
 ])

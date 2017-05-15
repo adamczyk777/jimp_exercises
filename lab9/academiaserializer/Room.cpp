@@ -7,7 +7,7 @@
 namespace academia {
     Room::Room(int id, const std::string &name, Room::Type type) : id(id), name(name), type(type) {}
 
-    void Room::Serialize(Serializer *serializer) {
+    void Room::Serialize(Serializer *serializer) const {
         serializer->Header("room");
         serializer->IntegerField("id", this->id);
         serializer->endingLine("id");

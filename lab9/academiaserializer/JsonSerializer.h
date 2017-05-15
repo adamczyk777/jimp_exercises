@@ -22,7 +22,7 @@ namespace academia {
         void Footer(const std::string &object_name);
         void endingLine(const std::string &field_name);
     protected:
-        std::ostream *test;
+        std::ostream *out;
     };
 }
 

@@ -67,7 +67,7 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-# Builds a sample test.  A test should link with either gtest.a or
+# Builds a sample out.  A out should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 

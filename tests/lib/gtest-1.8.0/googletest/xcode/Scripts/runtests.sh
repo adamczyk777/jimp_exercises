@@ -45,14 +45,14 @@ test_executables=("$BUILT_PRODUCTS_DIR/gtest_unittest-framework"
 succeeded=0
 failed=0
 failed_list=()
-for test in ${test_executables[*]}; do
-  "$test"
+for out in ${test_executables[*]}; do
+  "$out"
   result=$?
   if [ $result -eq 0 ]; then
     succeeded=$(( $succeeded + 1 ))
   else
     failed=$(( failed + 1 ))
-    failed_list="$failed_list $test"
+    failed_list="$failed_list $out"
   fi
 done
 

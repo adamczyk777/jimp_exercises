@@ -45,19 +45,19 @@ INSTANTIATE_TEST_CASE_P(TemplateEngineTestsFixture,
                         ::testing::ValuesIn(templateEngineTestData));
 
 TEST_F(TemplateEngineTests, ViewHasToBeImmutable) {
-  const auto view = make_unique<View>("Test {{test}}");
-  EXPECT_EQ("Test 56$", view->Render({{"test", "56$"}}));
-  EXPECT_EQ("Test %%", view->Render({{"test", "%%"}}));
+  const auto view = make_unique<View>("Test {{out}}");
+  EXPECT_EQ("Test 56$", view->Render({{"out", "56$"}}));
+  EXPECT_EQ("Test %%", view->Render({{"out", "%%"}}));
 }
 
 TEST_F(TemplateEngineTests, OnlyDoubleBracesSequencesHasToBeInfluenced) {
-  const auto view = make_unique<View>("test {{test}} of {test} but {{test} or {test}} and {{{test}}}");
-  EXPECT_EQ("test 888 of {test} but {{test} or {test}} and {888}", view->Render({{"test", "888"}}));
+  const auto view = make_unique<View>("out {{out}} of {out} but {{out} or {out}} and {{{out}}}");
+  EXPECT_EQ("out 888 of {out} but {{out} or {out}} and {888}", view->Render({{"out", "888"}}));
 }
 
 TEST_F(TemplateEngineTests, MissingDataShouldBeBlank) {
-  const auto view = make_unique<View>("Test {{test}} missing:{{missing}}:missing");
-  EXPECT_EQ("Test replacement missing::missing", view->Render({{"test", "replacement"}}));
+  const auto view = make_unique<View>("Test {{out}} missing:{{missing}}:missing");
+  EXPECT_EQ("Test replacement missing::missing", view->Render({{"out", "replacement"}}));
 }
 
 TEST_F(TemplateEngineTests, TemplatesMayContainUnderscores) {

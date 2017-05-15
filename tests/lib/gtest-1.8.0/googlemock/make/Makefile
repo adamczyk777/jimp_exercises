@@ -24,7 +24,7 @@ GTEST_DIR = ../../googletest
 GMOCK_DIR = ..
 
 # Where to find user code.
-USER_DIR = ../test
+USER_DIR = ../out
 
 # Flags passed to the preprocessor.
 # Set Google Test and Google Mock's header directories as system
@@ -59,9 +59,9 @@ clean :
 	rm -f $(TESTS) gmock.a gmock_main.a *.o
 
 # Builds gmock.a and gmock_main.a.  These libraries contain both
-# Google Mock and Google Test.  A test should link with either gmock.a
+# Google Mock and Google Test.  A out should link with either gmock.a
 # or gmock_main.a, depending on whether it defines its own main()
-# function.  It's fine if your test only uses features from Google
+# function.  It's fine if your out only uses features from Google
 # Test (and not Google Mock).
 
 # Usually you shouldn't tweak such internal variables, indicated by a
@@ -92,7 +92,7 @@ gmock.a : gmock-all.o gtest-all.o
 gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-# Builds a sample test.
+# Builds a sample out.
 
 gmock_test.o : $(USER_DIR)/gmock_test.cc $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/gmock_test.cc

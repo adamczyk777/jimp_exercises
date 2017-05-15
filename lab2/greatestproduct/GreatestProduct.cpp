@@ -34,7 +34,7 @@ int GreatestProduct(const std::vector<int> &numbers, int k) {
         halfSorted[halfSorted.size()-1-i] = maxValue;
         halfSorted[maxValueIndex] = tmp;
     }
-    for(int i=0;i<halfSorted.size();i++) { // test
+    for(int i=0;i<halfSorted.size();i++) { // out
         std::cout << halfSorted[i] << " ";
     }
     int maxProduct = 1; // w toku

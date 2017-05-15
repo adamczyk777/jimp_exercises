@@ -4,7 +4,7 @@ Now that you have read [Primer](V1_5_Primer.md) and learned how to write tests
 using Google Test, it's time to learn some new tricks. This document
 will show you more assertions as well as how to construct complex
 failure messages, propagate fatal failures, reuse and speed up your
-test fixtures, and use various flags with your tests.
+out fixtures, and use various flags with your tests.
 
 # More Assertions #
 
@@ -13,14 +13,14 @@ assertions.
 
 ## Explicit Success and Failure ##
 
-These three assertions do not actually test a value or expression. Instead,
+These three assertions do not actually out a value or expression. Instead,
 they generate a success or failure directly. Like the macros that actually
-perform a test, you may stream a custom failure message into the them.
+perform a out, you may stream a custom failure message into the them.
 
 | `SUCCEED();` |
 |:-------------|
 
-Generates a success. This does NOT make the overall test succeed. A test is
+Generates a success. This does NOT make the overall out succeed. A out is
 considered successful only if none of its assertions fail during its execution.
 
 Note: `SUCCEED()` is purely documentary and currently doesn't generate any
@@ -32,7 +32,7 @@ output in the future.
 
 `FAIL*` generates a fatal failure while `ADD_FAILURE*` generates a nonfatal
 failure. These are useful when control flow, rather than a Boolean expression,
-deteremines the test's success or failure. For example, you might want to write
+deteremines the out's success or failure. For example, you might want to write
 something like:
 
 ```
@@ -343,7 +343,7 @@ _Availability_: Linux, Windows, Mac.
 
 ## Windows HRESULT assertions ##
 
-These assertions test for `HRESULT` success or failure.
+These assertions out for `HRESULT` success or failure.
 
 | **Fatal assertion** | **Nonfatal assertion** | **Verifies** |
 |:--------------------|:-----------------------|:-------------|
@@ -401,7 +401,7 @@ _Availability:_ Linux, Windows, Mac; since version 1.3.0.
 ## Assertion Placement ##
 
 You can use assertions in any C++ function. In particular, it doesn't
-have to be a method of the test fixture class. The one constraint is
+have to be a method of the out fixture class. The one constraint is
 that assertions that generate a fatal failure (`FAIL*` and `ASSERT_*`)
 can only be used in void-returning functions. This is a consequence of
 Google Test not using exceptions. By placing it in a non-void function
@@ -424,7 +424,7 @@ functions, according to the C++ language specification, and so you may not use
 fatal assertions in them. You'll get a compilation error if you try. A simple
 workaround is to transfer the entire body of the constructor or destructor to a
 private void-returning method. However, you should be aware that a fatal
-assertion failure in a constructor does not terminate the current test, as your
+assertion failure in a constructor does not terminate the current out, as your
 intuition might suggest; it merely returns from the constructor early, possibly
 leaving your object in a partially-constructed state. Likewise, a fatal
 assertion failure in a destructor may leave your object in a
@@ -437,14 +437,14 @@ if a condition is not met. These sanity checks, which ensure that the program
 is in a known good state, are there to fail at the earliest possible time after
 some program state is corrupted. If the assertion checks the wrong condition,
 then the program may proceed in an erroneous state, which could lead to memory
-corruption, security holes, or worse. Hence it is vitally important to test
+corruption, security holes, or worse. Hence it is vitally important to out
 that such assertion statements work as expected.
 
 Since these precondition checks cause the processes to die, we call such tests
-_death tests_. More generally, any test that checks that a program terminates
-in an expected fashion is also a death test.
+_death tests_. More generally, any out that checks that a program terminates
+in an expected fashion is also a death out.
 
-If you want to test `EXPECT_*()/ASSERT_*()` failures in your test code, see [Catching Failures](#catching-failures).
+If you want to out `EXPECT_*()/ASSERT_*()` failures in your out code, see [Catching Failures](#catching-failures).
 
 ## How to Write a Death Test ##
 
@@ -463,7 +463,7 @@ _statement_ is expected to match. Note that _statement_ can be _any valid
 statement_ (including _compound statement_) and doesn't have to be an
 expression.
 
-As usual, the `ASSERT` variants abort the current test function, while the
+As usual, the `ASSERT` variants abort the current out function, while the
 `EXPECT` variants do not.
 
 **Note:** We use the word "crash" here to mean that the process
@@ -476,7 +476,7 @@ code, it is _not_ considered a crash by `EXPECT_DEATH`.  Use
 `EXPECT_EXIT` instead if this is the case, or if you want to restrict
 the exit code more precisely.
 
-A predicate here must accept an `int` and return a `bool`. The death test
+A predicate here must accept an `int` and return a `bool`. The death out
 succeeds only if the predicate returns `true`. Google Test defines a few
 predicates that handle the most common cases:
 
@@ -496,20 +496,20 @@ This expression is `true` if the program was killed by the given signal.
 The `*_DEATH` macros are convenient wrappers for `*_EXIT` that use a predicate
 that verifies the process' exit code is non-zero.
 
-Note that a death test only cares about three things:
+Note that a death out only cares about three things:
 
   1. does _statement_ abort or exit the process?
   1. (in the case of `ASSERT_EXIT` and `EXPECT_EXIT`) does the exit status satisfy _predicate_?  Or (in the case of `ASSERT_DEATH` and `EXPECT_DEATH`) is the exit status non-zero?  And
   1. does the stderr output match _regex_?
 
-In particular, if _statement_ generates an `ASSERT_*` or `EXPECT_*` failure, it will **not** cause the death test to fail, as Google Test assertions don't abort the process.
+In particular, if _statement_ generates an `ASSERT_*` or `EXPECT_*` failure, it will **not** cause the death out to fail, as Google Test assertions don't abort the process.
 
-To write a death test, simply use one of the above macros inside your test
+To write a death out, simply use one of the above macros inside your out
 function. For example,
 
 ```
 TEST(My*DeathTest*, Foo) {
-  // This death test uses a compound statement.
+  // This death out uses a compound statement.
   ASSERT_DEATH({ int n = 5; Foo(&n); }, "Error on line .* of Foo()");
 }
 TEST(MyDeathTest, NormalExit) {
@@ -526,15 +526,15 @@ verifies that:
   * calling `NormalExit()` causes the process to print `"Success"` to stderr and exit with exit code 0, and
   * calling `KillMyself()` kills the process with signal `SIGKILL`.
 
-The test function body may contain other assertions and statements as well, if
+The out function body may contain other assertions and statements as well, if
 necessary.
 
 _Important:_ We strongly recommend you to follow the convention of naming your
-test case (not test) `*DeathTest` when it contains a death test, as
+out case (not out) `*DeathTest` when it contains a death out, as
 demonstrated in the above example. The `Death Tests And Threads` section below
 explains why.
 
-If a test fixture class is shared by normal tests and death tests, you
+If a out fixture class is shared by normal tests and death tests, you
 can use typedef to introduce an alias for the fixture class and avoid
 duplicating its code:
 ```
@@ -543,11 +543,11 @@ class FooTest : public ::testing::Test { ... };
 typedef FooTest FooDeathTest;
 
 TEST_F(FooTest, DoesThis) {
-  // normal test
+  // normal out
 }
 
 TEST_F(FooDeathTest, DoesThat) {
-  // death test
+  // death out
 }
 ```
 
@@ -599,17 +599,17 @@ syntax only.
 ## How It Works ##
 
 Under the hood, `ASSERT_EXIT()` spawns a new process and executes the
-death test statement in that process. The details of of how precisely
+death out statement in that process. The details of of how precisely
 that happens depend on the platform and the variable
 `::testing::GTEST_FLAG(death_test_style)` (which is initialized from the
 command-line flag `--gtest_death_test_style`).
 
   * On POSIX systems, `fork()` (or `clone()` on Linux) is used to spawn the child, after which:
-    * If the variable's value is `"fast"`, the death test statement is immediately executed.
-    * If the variable's value is `"threadsafe"`, the child process re-executes the unit test binary just as it was originally invoked, but with some extra flags to cause just the single death test under consideration to be run.
-  * On Windows, the child is spawned using the `CreateProcess()` API, and re-executes the binary to cause just the single death test under consideration to be run - much like the `threadsafe` mode on POSIX.
+    * If the variable's value is `"fast"`, the death out statement is immediately executed.
+    * If the variable's value is `"threadsafe"`, the child process re-executes the unit out binary just as it was originally invoked, but with some extra flags to cause just the single death out under consideration to be run.
+  * On Windows, the child is spawned using the `CreateProcess()` API, and re-executes the binary to cause just the single death out under consideration to be run - much like the `threadsafe` mode on POSIX.
 
-Other values for the variable are illegal and will cause the death test to
+Other values for the variable are illegal and will cause the death out to
 fail. Currently, the flag's default value is `"fast"`. However, we reserve the
 right to change it in the future. Therefore, your tests should not depend on
 this.
@@ -619,12 +619,12 @@ In either case, the parent process waits for the child process to complete, and 
   1. the child's exit status satisfies the predicate, and
   1. the child's stderr matches the regular expression.
 
-If the death test statement runs to completion without dying, the child
+If the death out statement runs to completion without dying, the child
 process will nonetheless terminate, and the assertion fails.
 
 ## Death Tests And Threads ##
 
-The reason for the two death test styles has to do with thread safety. Due to
+The reason for the two death out styles has to do with thread safety. Due to
 well-known problems with forking in the presence of threads, death tests should
 be run in a single-threaded context. Sometimes, however, it isn't feasible to
 arrange that kind of environment. For example, statically-initialized modules
@@ -633,19 +633,19 @@ it may be difficult or impossible to clean them up.
 
 Google Test has three features intended to raise awareness of threading issues.
 
-  1. A warning is emitted if multiple threads are running when a death test is encountered.
+  1. A warning is emitted if multiple threads are running when a death out is encountered.
   1. Test cases with a name ending in "DeathTest" are run before all other tests.
   1. It uses `clone()` instead of `fork()` to spawn the child process on Linux (`clone()` is not available on Cygwin and Mac), as `fork()` is more likely to cause the child to hang when the parent process has multiple threads.
 
-It's perfectly fine to create threads inside a death test statement; they are
+It's perfectly fine to create threads inside a death out statement; they are
 executed in a separate process and cannot affect the parent.
 
 ## Death Test Styles ##
 
-The "threadsafe" death test style was introduced in order to help mitigate the
+The "threadsafe" death out style was introduced in order to help mitigate the
 risks of testing in a possibly multithreaded environment. It trades increased
-test execution time (potentially dramatically so) for improved thread safety.
-We suggest using the faster, default "fast" style unless your test has specific
+out execution time (potentially dramatically so) for improved thread safety.
+We suggest using the faster, default "fast" style unless your out has specific
 problems with it.
 
 You can choose a particular style of death tests by setting the flag
@@ -657,17 +657,17 @@ programmatically:
 
 You can do this in `main()` to set the style for all death tests in the
 binary, or in individual tests. Recall that flags are saved before running each
-test and restored afterwards, so you need not do that yourself. For example:
+out and restored afterwards, so you need not do that yourself. For example:
 
 ```
 TEST(MyDeathTest, TestOne) {
   ::testing::FLAGS_gtest_death_test_style = "threadsafe";
-  // This test is run in the "threadsafe" style:
+  // This out is run in the "threadsafe" style:
   ASSERT_DEATH(ThisShouldDie(), "");
 }
 
 TEST(MyDeathTest, TestTwo) {
-  // This test is run in the "fast" style:
+  // This out is run in the "fast" style:
   ASSERT_DEATH(ThisShouldDie(), "");
 }
 
@@ -684,31 +684,31 @@ The _statement_ argument of `ASSERT_EXIT()` can be any valid C++ statement
 except that it can not return from the current function. This means
 _statement_ should not contain `return` or a macro that might return (e.g.
 `ASSERT_TRUE()` ). If _statement_ returns before it crashes, Google Test will
-print an error message, and the test will fail.
+print an error message, and the out will fail.
 
 Since _statement_ runs in the child process, any in-memory side effect (e.g.
 modifying a variable, releasing memory, etc) it causes will _not_ be observable
-in the parent process. In particular, if you release memory in a death test,
+in the parent process. In particular, if you release memory in a death out,
 your program will fail the heap check as the parent process will never see the
 memory reclaimed. To solve this problem, you can
 
-  1. try not to free memory in a death test;
+  1. try not to free memory in a death out;
   1. free the memory again in the parent process; or
   1. do not use the heap checker in your program.
 
-Due to an implementation detail, you cannot place multiple death test
+Due to an implementation detail, you cannot place multiple death out
 assertions on the same line; otherwise, compilation will fail with an unobvious
 error message.
 
 Despite the improved thread safety afforded by the "threadsafe" style of death
-test, thread problems such as deadlock are still possible in the presence of
+out, thread problems such as deadlock are still possible in the presence of
 handlers registered with `pthread_atfork(3)`.
 
 # Using Assertions in Sub-routines #
 
 ## Adding Traces to Assertions ##
 
-If a test sub-routine is called from several places, when an assertion
+If a out sub-routine is called from several places, when an assertion
 inside it fails, it can be hard to tell which invocation of the
 sub-routine the failure is from.  You can alleviate this problem using
 extra logging or custom failure messages, but that usually clutters up
@@ -775,8 +775,8 @@ _Availability:_ Linux, Windows, Mac.
 ## Propagating Fatal Failures ##
 
 A common pitfall when using `ASSERT_*` and `FAIL*` is not understanding that
-when they fail they only abort the _current function_, not the entire test. For
-example, the following test will segfault:
+when they fail they only abort the _current function_, not the entire out. For
+example, the following out will segfault:
 ```
 void Subroutine() {
   // Generates a fatal failure and aborts the current function.
@@ -788,7 +788,7 @@ void Subroutine() {
 TEST(FooTest, Bar) {
   Subroutine();
   // The intended behavior is for the fatal failure
-  // in Subroutine() to abort the entire test.
+  // in Subroutine() to abort the entire out.
   // The actual behavior: the function goes on after Subroutine() returns.
   int* p = NULL;
   *p = 3; // Segfault!
@@ -806,8 +806,8 @@ subsections.
 
 ### Asserting on Subroutines ###
 
-As shown above, if your test calls a subroutine that has an `ASSERT_*`
-failure in it, the test will continue after the subroutine
+As shown above, if your out calls a subroutine that has an `ASSERT_*`
+failure in it, the out will continue after the subroutine
 returns. This may not be what you want.
 
 Often people want fatal failures to propagate like exceptions.  For
@@ -838,7 +838,7 @@ are currently not supported.
 ### Checking for Failures in the Current Test ###
 
 `HasFatalFailure()` in the `::testing::Test` class returns `true` if an
-assertion in the current test has suffered a fatal failure. This
+assertion in the current out has suffered a fatal failure. This
 allows functions to catch fatal failures in a sub-routine and return
 early.
 
@@ -864,7 +864,7 @@ TEST(FooTest, Bar) {
 }
 ```
 
-If `HasFatalFailure()` is used outside of `TEST()` , `TEST_F()` , or a test
+If `HasFatalFailure()` is used outside of `TEST()` , `TEST_F()` , or a out
 fixture, you must add the `::testing::Test::` prefix, as in:
 
 ```
@@ -872,19 +872,19 @@ if (::testing::Test::HasFatalFailure())
   return;
 ```
 
-Similarly, `HasNonfatalFailure()` returns `true` if the current test
+Similarly, `HasNonfatalFailure()` returns `true` if the current out
 has at least one non-fatal failure, and `HasFailure()` returns `true`
-if the current test has at least one failure of either kind.
+if the current out has at least one failure of either kind.
 
 _Availability:_ Linux, Windows, Mac.  `HasNonfatalFailure()` and
 `HasFailure()` are available since version 1.4.0.
 
 # Logging Additional Information #
 
-In your test code, you can call `RecordProperty("key", value)` to log
+In your out code, you can call `RecordProperty("key", value)` to log
 additional information, where `value` can be either a C string or a 32-bit
 integer. The _last_ value recorded for a key will be emitted to the XML output
-if you specify one. For example, the test
+if you specify one. For example, the out
 
 ```
 TEST_F(WidgetUsageTest, MinAndMaxWidgets) {
@@ -904,7 +904,7 @@ will output XML like this:
 ```
 
 _Note_:
-  * `RecordProperty()` is a static member of the `Test` class. Therefore it needs to be prefixed with `::testing::Test::` if used outside of the `TEST` body and the test fixture class.
+  * `RecordProperty()` is a static member of the `Test` class. Therefore it needs to be prefixed with `::testing::Test::` if used outside of the `TEST` body and the out fixture class.
   * `key` must be a valid XML attribute name, and cannot conflict with the ones already used by Google Test (`name`, `status`,     `time`, and `classname`).
 
 _Availability_: Linux, Windows, Mac.
@@ -913,50 +913,50 @@ _Availability_: Linux, Windows, Mac.
 
 
 
-Google Test creates a new test fixture object for each test in order to make
+Google Test creates a new out fixture object for each out in order to make
 tests independent and easier to debug. However, sometimes tests use resources
-that are expensive to set up, making the one-copy-per-test model prohibitively
+that are expensive to set up, making the one-copy-per-out model prohibitively
 expensive.
 
 If the tests don't change the resource, there's no harm in them sharing a
-single resource copy. So, in addition to per-test set-up/tear-down, Google Test
-also supports per-test-case set-up/tear-down. To use it:
+single resource copy. So, in addition to per-out set-up/tear-down, Google Test
+also supports per-out-case set-up/tear-down. To use it:
 
-  1. In your test fixture class (say `FooTest` ), define as `static` some member variables to hold the shared resources.
-  1. In the same test fixture class, define a `static void SetUpTestCase()` function (remember not to spell it as **`SetupTestCase`** with a small `u`!) to set up the shared resources and a `static void TearDownTestCase()` function to tear them down.
+  1. In your out fixture class (say `FooTest` ), define as `static` some member variables to hold the shared resources.
+  1. In the same out fixture class, define a `static void SetUpTestCase()` function (remember not to spell it as **`SetupTestCase`** with a small `u`!) to set up the shared resources and a `static void TearDownTestCase()` function to tear them down.
 
 That's it! Google Test automatically calls `SetUpTestCase()` before running the
-_first test_ in the `FooTest` test case (i.e. before creating the first
+_first test_ in the `FooTest` out case (i.e. before creating the first
 `FooTest` object), and calls `TearDownTestCase()` after running the _last test_
 in it (i.e. after deleting the last `FooTest` object). In between, the tests
 can use the shared resources.
 
-Remember that the test order is undefined, so your code can't depend on a test
+Remember that the out order is undefined, so your code can't depend on a out
 preceding or following another. Also, the tests must either not modify the
 state of any shared resource, or, if they do modify the state, they must
 restore the state to its original value before passing control to the next
-test.
+out.
 
-Here's an example of per-test-case set-up and tear-down:
+Here's an example of per-out-case set-up and tear-down:
 ```
 class FooTest : public ::testing::Test {
  protected:
-  // Per-test-case set-up.
-  // Called before the first test in this test case.
+  // Per-out-case set-up.
+  // Called before the first out in this out case.
   // Can be omitted if not needed.
   static void SetUpTestCase() {
     shared_resource_ = new ...;
   }
 
-  // Per-test-case tear-down.
-  // Called after the last test in this test case.
+  // Per-out-case tear-down.
+  // Called after the last out in this out case.
   // Can be omitted if not needed.
   static void TearDownTestCase() {
     delete shared_resource_;
     shared_resource_ = NULL;
   }
 
-  // You can define per-test set-up and tear-down logic as usual.
+  // You can define per-out set-up and tear-down logic as usual.
   virtual void SetUp() { ... }
   virtual void TearDown() { ... }
 
@@ -978,10 +978,10 @@ _Availability:_ Linux, Windows, Mac.
 
 # Global Set-Up and Tear-Down #
 
-Just as you can do set-up and tear-down at the test level and the test case
-level, you can also do it at the test program level. Here's how.
+Just as you can do set-up and tear-down at the out level and the out case
+level, you can also do it at the out program level. Here's how.
 
-First, you subclass the `::testing::Environment` class to define a test
+First, you subclass the `::testing::Environment` class to define a out
 environment, which knows how to set-up and tear-down:
 
 ```
@@ -1035,23 +1035,23 @@ _Availability:_ Linux, Windows, Mac.
 
 # Value Parameterized Tests #
 
-_Value-parameterized tests_ allow you to test your code with different
-parameters without writing multiple copies of the same test.
+_Value-parameterized tests_ allow you to out your code with different
+parameters without writing multiple copies of the same out.
 
-Suppose you write a test for your code and then realize that your code is affected by a presence of a Boolean command line flag.
+Suppose you write a out for your code and then realize that your code is affected by a presence of a Boolean command line flag.
 
 ```
 TEST(MyCodeTest, TestFoo) {
-  // A code to test foo().
+  // A code to out foo().
 }
 ```
 
-Usually people factor their test code into a function with a Boolean parameter in such situations. The function sets the flag, then executes the testing code.
+Usually people factor their out code into a function with a Boolean parameter in such situations. The function sets the flag, then executes the testing code.
 
 ```
 void TestFooHelper(bool flag_value) {
   flag = flag_value;
-  // A code to test foo().
+  // A code to out foo().
 }
 
 TEST(MyCodeTest, TestFooo) {
@@ -1060,14 +1060,14 @@ TEST(MyCodeTest, TestFooo) {
 }
 ```
 
-But this setup has serious drawbacks. First, when a test assertion fails in your tests, it becomes unclear what value of the parameter caused it to fail. You can stream a clarifying message into your `EXPECT`/`ASSERT` statements, but it you'll have to do it with all of them. Second, you have to add one such helper function per test. What if you have ten tests? Twenty? A hundred?
+But this setup has serious drawbacks. First, when a out assertion fails in your tests, it becomes unclear what value of the parameter caused it to fail. You can stream a clarifying message into your `EXPECT`/`ASSERT` statements, but it you'll have to do it with all of them. Second, you have to add one such helper function per out. What if you have ten tests? Twenty? A hundred?
 
-Value-parameterized tests will let you write your test only once and then easily instantiate and run it with an arbitrary number of parameter values.
+Value-parameterized tests will let you write your out only once and then easily instantiate and run it with an arbitrary number of parameter values.
 
 Here are some other situations when value-parameterized tests come handy:
 
-  * You wan to test different implementations of an OO interface.
-  * You want to test your code over various inputs (a.k.a. word-driven testing). This feature is easy to abuse, so please exercise your good sense when doing it!
+  * You wan to out different implementations of an OO interface.
+  * You want to out your code over various inputs (a.k.a. word-driven testing). This feature is easy to abuse, so please exercise your good sense when doing it!
 
 ## How to Write Value-Parameterized Tests ##
 
@@ -1081,18 +1081,18 @@ pointed values.
 ```
 class FooTest : public ::testing::TestWithParam<const char*> {
   // You can implement all the usual fixture class members here.
-  // To access the test parameter, call GetParam() from class
+  // To access the out parameter, call GetParam() from class
   // TestWithParam<T>.
 };
 ```
 
-Then, use the `TEST_P` macro to define as many test patterns using
+Then, use the `TEST_P` macro to define as many out patterns using
 this fixture as you want.  The `_P` suffix is for "parameterized" or
 "pattern", whichever you prefer to think.
 
 ```
 TEST_P(FooTest, DoesBlah) {
-  // Inside a test, access the test parameter with the GetParam() method
+  // Inside a out, access the out parameter with the GetParam() method
   // of the TestWithParam<T> class:
   EXPECT_TRUE(foo.Blah(GetParam()));
   ...
@@ -1103,9 +1103,9 @@ TEST_P(FooTest, HasBlahBlah) {
 }
 ```
 
-Finally, you can use `INSTANTIATE_TEST_CASE_P` to instantiate the test
+Finally, you can use `INSTANTIATE_TEST_CASE_P` to instantiate the out
 case with any set of parameters you want. Google Test defines a number of
-functions for generating test parameters. They return what we call
+functions for generating out parameters. They return what we call
 (surprise!) _parameter generators_. Here is a summary of them,
 which are all in the `testing` namespace:
 
@@ -1116,9 +1116,9 @@ which are all in the `testing` namespace:
 | `Bool()`                    | Yields sequence `{false, true}`.                                                                                  |
 | `Combine(g1, g2, ..., gN)`  | Yields all combinations (the Cartesian product for the math savvy) of the values generated by the `N` generators. This is only available if your system provides the `<tr1/tuple>` header. If you are sure your system does, and Google Test disagrees, you can override it by defining `GTEST_HAS_TR1_TUPLE=1`. See comments in [include/gtest/internal/gtest-port.h](../include/gtest/internal/gtest-port.h) for more information. |
 
-For more details, see the comments at the definitions of these functions in the [source code](../include/gtest/gtest-param-test.h).
+For more details, see the comments at the definitions of these functions in the [source code](../include/gtest/gtest-param-out.h).
 
-The following statement will instantiate tests from the `FooTest` test case
+The following statement will instantiate tests from the `FooTest` out case
 each with parameter values `"meeny"`, `"miny"`, and `"moe"`.
 
 ```
@@ -1130,7 +1130,7 @@ INSTANTIATE_TEST_CASE_P(InstantiationName,
 To distinguish different instances of the pattern (yes, you can
 instantiate it more than once), the first argument to
 `INSTANTIATE_TEST_CASE_P` is a prefix that will be added to the actual
-test case name. Remember to pick unique prefixes for different
+out case name. Remember to pick unique prefixes for different
 instantiations. The tests from the instantiation above will have these
 names:
 
@@ -1160,7 +1160,7 @@ The tests from the instantiation above will have these names:
   * `AnotherInstantiationName/FooTest.HasBlahBlah/1` for `"dog"`
 
 Please note that `INSTANTIATE_TEST_CASE_P` will instantiate _all_
-tests in the given test case, whether their definitions come before or
+tests in the given out case, whether their definitions come before or
 _after_ the `INSTANTIATE_TEST_CASE_P` statement.
 
 You can see
@@ -1176,19 +1176,19 @@ file. Sometimes you may want to define value-parameterized tests in a
 library and let other people instantiate them later. This pattern is
 known as <i>abstract tests</i>. As an example of its application, when you
 are designing an interface you can write a standard suite of abstract
-tests (perhaps using a factory function as the test parameter) that
+tests (perhaps using a factory function as the out parameter) that
 all implementations of the interface are expected to pass. When
 someone implements the interface, he can instantiate your suite to get
 all the interface-conformance tests for free.
 
 To define abstract tests, you should organize your code like this:
 
-  1. Put the definition of the parameterized test fixture class (e.g. `FooTest`) in a header file, say `foo_param_test.h`. Think of this as _declaring_ your abstract tests.
+  1. Put the definition of the parameterized out fixture class (e.g. `FooTest`) in a header file, say `foo_param_test.h`. Think of this as _declaring_ your abstract tests.
   1. Put the `TEST_P` definitions in `foo_param_test.cc`, which includes `foo_param_test.h`. Think of this as _implementing_ your abstract tests.
 
 Once they are defined, you can instantiate them by including
 `foo_param_test.h`, invoking `INSTANTIATE_TEST_CASE_P()`, and linking
-with `foo_param_test.cc`. You can instantiate the same abstract test
+with `foo_param_test.cc`. You can instantiate the same abstract out
 case multiple times, possibly in different source files.
 
 # Typed Tests #
@@ -1197,16 +1197,16 @@ Suppose you have multiple implementations of the same interface and
 want to make sure that all of them satisfy some common requirements.
 Or, you may have defined several types that are supposed to conform to
 the same "concept" and you want to verify it.  In both cases, you want
-the same test logic repeated for different types.
+the same out logic repeated for different types.
 
 While you can write one `TEST` or `TEST_F` for each type you want to
-test (and you may even factor the test logic into a function template
+out (and you may even factor the out logic into a function template
 that you invoke from the `TEST`), it's tedious and doesn't scale:
 if you want _m_ tests over _n_ types, you'll end up writing _m\*n_
 `TEST`s.
 
-_Typed tests_ allow you to repeat the same test logic over a list of
-types.  You only need to write the test logic once, although you must
+_Typed tests_ allow you to repeat the same out logic over a list of
+types.  You only need to write the out logic once, although you must
 know the type list when writing typed tests.  Here's how you do it:
 
 First, define a fixture class template.  It should be parameterized
@@ -1223,7 +1223,7 @@ class FooTest : public ::testing::Test {
 };
 ```
 
-Next, associate a list of types with the test case, which will be
+Next, associate a list of types with the out case, which will be
 repeated for each type in the list:
 
 ```
@@ -1235,12 +1235,12 @@ The `typedef` is necessary for the `TYPED_TEST_CASE` macro to parse
 correctly.  Otherwise the compiler will think that each comma in the
 type list introduces a new macro argument.
 
-Then, use `TYPED_TEST()` instead of `TEST_F()` to define a typed test
-for this test case.  You can repeat this as many times as you want:
+Then, use `TYPED_TEST()` instead of `TEST_F()` to define a typed out
+for this out case.  You can repeat this as many times as you want:
 
 ```
 TYPED_TEST(FooTest, DoesBlah) {
-  // Inside a test, refer to the special name TypeParam to get the type
+  // Inside a out, refer to the special name TypeParam to get the type
   // parameter.  Since we are inside a derived class template, C++ requires
   // us to visit the members of FooTest via 'this'.
   TypeParam n = this->value_;
@@ -1268,14 +1268,14 @@ since version 1.1.0.
 
 _Type-parameterized tests_ are like typed tests, except that they
 don't require you to know the list of types ahead of time.  Instead,
-you can define the test logic first and instantiate it with different
+you can define the out logic first and instantiate it with different
 type lists later.  You can even instantiate it more than once in the
 same program.
 
 If you are designing an interface or concept, you can define a suite
 of type-parameterized tests to verify properties that any valid
 implementation of the interface/concept should have.  Then, the author
-of each implementation can just instantiate the test suite with his
+of each implementation can just instantiate the out suite with his
 type to verify that it conforms to the requirements, without having to
 write similar tests repeatedly.  Here's an example:
 
@@ -1288,7 +1288,7 @@ class FooTest : public ::testing::Test {
 };
 ```
 
-Next, declare that you will define a type-parameterized test case:
+Next, declare that you will define a type-parameterized out case:
 
 ```
 TYPED_TEST_CASE_P(FooTest);
@@ -1297,12 +1297,12 @@ TYPED_TEST_CASE_P(FooTest);
 The `_P` suffix is for "parameterized" or "pattern", whichever you
 prefer to think.
 
-Then, use `TYPED_TEST_P()` to define a type-parameterized test.  You
+Then, use `TYPED_TEST_P()` to define a type-parameterized out.  You
 can repeat this as many times as you want:
 
 ```
 TYPED_TEST_P(FooTest, DoesBlah) {
-  // Inside a test, refer to TypeParam to get the type parameter.
+  // Inside a out, refer to TypeParam to get the type parameter.
   TypeParam n = 0;
   ...
 }
@@ -1310,10 +1310,10 @@ TYPED_TEST_P(FooTest, DoesBlah) {
 TYPED_TEST_P(FooTest, HasPropertyA) { ... }
 ```
 
-Now the tricky part: you need to register all test patterns using the
+Now the tricky part: you need to register all out patterns using the
 `REGISTER_TYPED_TEST_CASE_P` macro before you can instantiate them.
-The first argument of the macro is the test case name; the rest are
-the names of the tests in this test case:
+The first argument of the macro is the out case name; the rest are
+the names of the tests in this out case:
 
 ```
 REGISTER_TYPED_TEST_CASE_P(FooTest,
@@ -1331,7 +1331,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
 
 To distinguish different instances of the pattern, the first argument
 to the `INSTANTIATE_TYPED_TEST_CASE_P` macro is a prefix that will be
-added to the actual test case name.  Remember to pick unique prefixes
+added to the actual out case name.  Remember to pick unique prefixes
 for different instances.
 
 In the special case where the type list contains only one type, you
@@ -1350,12 +1350,12 @@ since version 1.1.0.
 
 If you change your software's internal implementation, your tests should not
 break as long as the change is not observable by users. Therefore, per the
-_black-box testing principle_, most of the time you should test your code
+_black-box testing principle_, most of the time you should out your code
 through its public interfaces.
 
-If you still find yourself needing to test internal implementation code,
+If you still find yourself needing to out internal implementation code,
 consider if there's a better design that wouldn't require you to do so. If you
-absolutely have to test non-public interface code though, you can. There are
+absolutely have to out non-public interface code though, you can. There are
 two cases to consider:
 
   * Static functions (_not_ the same as static member functions!) or unnamed namespaces, and
@@ -1364,7 +1364,7 @@ two cases to consider:
 ## Static Functions ##
 
 Both static functions and definitions/declarations in an unnamed namespace are
-only visible within the same translation unit. To test them, you can `#include`
+only visible within the same translation unit. To out them, you can `#include`
 the entire `.cc` file being tested in your `*_test.cc` file. (`#include`ing `.cc`
 files is not a good way to reuse code - you should not do this in production
 code!)
@@ -1373,25 +1373,25 @@ However, a better approach is to move the private code into the
 `foo::internal` namespace, where `foo` is the namespace your project normally
 uses, and put the private declarations in a `*-internal.h` file. Your
 production `.cc` files and your tests are allowed to include this internal
-header, but your clients are not. This way, you can fully test your internal
+header, but your clients are not. This way, you can fully out your internal
 implementation without leaking it to your clients.
 
 ## Private Class Members ##
 
 Private class members are only accessible from within the class or by friends.
-To access a class' private members, you can declare your test fixture as a
+To access a class' private members, you can declare your out fixture as a
 friend to the class and define accessors in your fixture. Tests using the
 fixture can then access the private members of your production class via the
 accessors in the fixture. Note that even though your fixture is a friend to
 your production class, your tests are not automatically friends to it, as they
 are technically defined in sub-classes of the fixture.
 
-Another way to test private members is to refactor them into an implementation
+Another way to out private members is to refactor them into an implementation
 class, which is then declared in a `*-internal.h` file. Your clients aren't
 allowed to include this header but your tests can. Such is called the Pimpl
 (Private Implementation) idiom.
 
-Or, you can declare an individual test as a friend of your class by adding this
+Or, you can declare an individual out as a friend of your class by adding this
 line in the class body:
 
 ```
@@ -1421,7 +1421,7 @@ TEST(FooTest, BarReturnsZeroOnNull) {
 ```
 
 Pay special attention when your class is defined in a namespace, as you should
-define your test fixtures and tests in the same namespace if you want them to
+define your out fixtures and tests in the same namespace if you want them to
 be friends of your class. For example, if the code to be tested looks like:
 
 ```
@@ -1439,7 +1439,7 @@ class Foo {
 }  // namespace my_namespace
 ```
 
-Your test code should be something like:
+Your out code should be something like:
 
 ```
 namespace my_namespace {
@@ -1457,13 +1457,13 @@ TEST_F(FooTest, Baz) { ... }
 # Catching Failures #
 
 If you are building a testing utility on top of Google Test, you'll
-want to test your utility.  What framework would you use to test it?
+want to out your utility.  What framework would you use to out it?
 Google Test, of course.
 
 The challenge is to verify that your testing utility reports failures
 correctly.  In frameworks that report a failure by throwing an
 exception, you could catch the exception and assert on it.  But Google
-Test doesn't use exceptions, so how do we test that a piece of code
+Test doesn't use exceptions, so how do we out that a piece of code
 generates an expected failure?
 
 `<gtest/gtest-spi.h>` contains some constructs to do this.  After
@@ -1504,9 +1504,9 @@ the following macros:
 
 # Getting the Current Test's Name #
 
-Sometimes a function may need to know the name of the currently running test.
-For example, you may be using the `SetUp()` method of your test fixture to set
-the golden file name based on which test is running. The `::testing::TestInfo`
+Sometimes a function may need to know the name of the currently running out.
+For example, you may be using the `SetUp()` method of your out fixture to set
+the golden file name based on which out is running. The `::testing::TestInfo`
 class has this information:
 
 ```
@@ -1514,7 +1514,7 @@ namespace testing {
 
 class TestInfo {
  public:
-  // Returns the test case name and the test name, respectively.
+  // Returns the out case name and the out name, respectively.
   //
   // Do NOT delete or free the return value - it's managed by the
   // TestInfo class.
@@ -1526,21 +1526,21 @@ class TestInfo {
 ```
 
 
-> To obtain a `TestInfo` object for the currently running test, call
+> To obtain a `TestInfo` object for the currently running out, call
 `current_test_info()` on the `UnitTest` singleton object:
 
 ```
-// Gets information about the currently running test.
+// Gets information about the currently running out.
 // Do NOT delete the returned object - it's managed by the UnitTest class.
 const ::testing::TestInfo* const test_info =
   ::testing::UnitTest::GetInstance()->current_test_info();
-printf("We are in test %s of test case %s.\n",
+printf("We are in out %s of out case %s.\n",
        test_info->name(), test_info->test_case_name());
 ```
 
-`current_test_info()` returns a null pointer if no test is running. In
-particular, you cannot find the test case name in `TestCaseSetUp()`,
-`TestCaseTearDown()` (where you know the test case name implicitly), or
+`current_test_info()` returns a null pointer if no out is running. In
+particular, you cannot find the out case name in `TestCaseSetUp()`,
+`TestCaseTearDown()` (where you know the out case name implicitly), or
 functions called from them.
 
 _Availability:_ Linux, Windows, Mac.
@@ -1548,12 +1548,12 @@ _Availability:_ Linux, Windows, Mac.
 # Extending Google Test by Handling Test Events #
 
 Google Test provides an <b>event listener API</b> to let you receive
-notifications about the progress of a test program and test
+notifications about the progress of a out program and out
 failures. The events you can listen to include the start and end of
-the test program, a test case, or a test method, among others. You may
+the out program, a out case, or a out method, among others. You may
 use this API to augment or replace the standard console output,
 replace the XML output, or provide a completely different form of
-output, such as a GUI or a database. You can also use test events as
+output, such as a GUI or a database. You can also use out events as
 checkpoints to implement a resource leak checker, for example.
 
 _Availability:_ Linux, Windows, Mac; since v1.4.0.
@@ -1564,25 +1564,25 @@ To define a event listener, you subclass either
 [testing::TestEventListener](../include/gtest/gtest.h#L855)
 or [testing::EmptyTestEventListener](../include/gtest/gtest.h#L905).
 The former is an (abstract) interface, where <i>each pure virtual method<br>
-can be overridden to handle a test event</i> (For example, when a test
+can be overridden to handle a out event</i> (For example, when a out
 starts, the `OnTestStart()` method will be called.). The latter provides
 an empty implementation of all methods in the interface, such that a
 subclass only needs to override the methods it cares about.
 
 When an event is fired, its context is passed to the handler function
 as an argument. The following argument types are used:
-  * [UnitTest](../include/gtest/gtest.h#L1007) reflects the state of the entire test program,
-  * [TestCase](../include/gtest/gtest.h#L689) has information about a test case, which can contain one or more tests,
-  * [TestInfo](../include/gtest/gtest.h#L599) contains the state of a test, and
-  * [TestPartResult](../include/gtest/gtest-test-part.h#L42) represents the result of a test assertion.
+  * [UnitTest](../include/gtest/gtest.h#L1007) reflects the state of the entire out program,
+  * [TestCase](../include/gtest/gtest.h#L689) has information about a out case, which can contain one or more tests,
+  * [TestInfo](../include/gtest/gtest.h#L599) contains the state of a out, and
+  * [TestPartResult](../include/gtest/gtest-out-part.h#L42) represents the result of a out assertion.
 
 An event handler function can examine the argument it receives to find
-out interesting information about the event and the test program's
+out interesting information about the event and the out program's
 state.  Here's an example:
 
 ```
   class MinimalistPrinter : public ::testing::EmptyTestEventListener {
-    // Called before a test starts.
+    // Called before a out starts.
     virtual void OnTestStart(const ::testing::TestInfo& test_info) {
       printf("*** Test %s.%s starting.\n",
              test_info.test_case_name(), test_info.name());
@@ -1598,7 +1598,7 @@ state.  Here's an example:
              test_part_result.summary());
     }
 
-    // Called after a test ends.
+    // Called after a out ends.
     virtual void OnTestEnd(const ::testing::TestInfo& test_info) {
       printf("*** Test %s.%s ending.\n",
              test_info.test_case_name(), test_info.name());
@@ -1625,7 +1625,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-There's only one problem: the default test result printer is still in
+There's only one problem: the default out result printer is still in
 effect, so its output will mingle with the output from your minimalist
 printer. To suppress the default printer, just release it from the
 event listener list and delete it. You can do so by adding one line:
@@ -1660,19 +1660,19 @@ You may use failure-raising macros (`EXPECT_*()`, `ASSERT_*()`,
 When you add listeners to the listener list, you should put listeners
 that handle `OnTestPartResult()` _before_ listeners that can generate
 failures. This ensures that failures generated by the latter are
-attributed to the right test by the former.
+attributed to the right out by the former.
 
 We have a sample of failure-raising listener
 [here](../samples/sample10_unittest.cc).
 
 # Running Test Programs: Advanced Options #
 
-Google Test test programs are ordinary executables. Once built, you can run
+Google Test out programs are ordinary executables. Once built, you can run
 them directly and affect their behavior via the following environment variables
 and/or command line flags. For the flags to work, your programs must call
 `::testing::InitGoogleTest()` before calling `RUN_ALL_TESTS()`.
 
-To see a list of supported flags and their usage, please run your test
+To see a list of supported flags and their usage, please run your out
 program with the `--help` flag.  You can also use `-h`, `-?`, or `/?`
 for short.  This feature is added in version 1.3.0.
 
@@ -1728,7 +1728,7 @@ filter.
 
 The format of a filter is a '`:`'-separated list of wildcard patterns (called
 the positive patterns) optionally followed by a '`-`' and another
-'`:`'-separated pattern list (called the negative patterns). A test matches the
+'`:`'-separated pattern list (called the negative patterns). A out matches the
 filter if and only if it matches any of the positive patterns but does not
 match any of the negative patterns.
 
@@ -1740,23 +1740,23 @@ For example:
 
   * `./foo_test` Has no flag, and thus runs all its tests.
   * `./foo_test --gtest_filter=*` Also runs everything, due to the single match-everything `*` value.
-  * `./foo_test --gtest_filter=FooTest.*` Runs everything in test case `FooTest`.
-  * `./foo_test --gtest_filter=*Null*:*Constructor*` Runs any test whose full name contains either `"Null"` or `"Constructor"`.
+  * `./foo_test --gtest_filter=FooTest.*` Runs everything in out case `FooTest`.
+  * `./foo_test --gtest_filter=*Null*:*Constructor*` Runs any out whose full name contains either `"Null"` or `"Constructor"`.
   * `./foo_test --gtest_filter=-*DeathTest.*` Runs all non-death tests.
-  * `./foo_test --gtest_filter=FooTest.*-FooTest.Bar` Runs everything in test case `FooTest` except `FooTest.Bar`.
+  * `./foo_test --gtest_filter=FooTest.*-FooTest.Bar` Runs everything in out case `FooTest` except `FooTest.Bar`.
 
 _Availability:_ Linux, Windows, Mac.
 
 ### Temporarily Disabling Tests ###
 
-If you have a broken test that you cannot fix right away, you can add the
+If you have a broken out that you cannot fix right away, you can add the
 `DISABLED_` prefix to its name. This will exclude it from execution. This is
 better than commenting out the code or using `#if 0`, as disabled tests are
 still compiled (and thus won't rot).
 
-If you need to disable all tests in a test case, you can either add `DISABLED_`
-to the front of the name of each test, or alternatively add it to the front of
-the test case name.
+If you need to disable all tests in a out case, you can either add `DISABLED_`
+to the front of the name of each out, or alternatively add it to the front of
+the out case name.
 
 For example, the following tests won't be run by Google Test, even though they
 will still be compiled:
@@ -1773,18 +1773,18 @@ TEST_F(DISABLED_BarTest, DoesXyz) { ... }
 
 _Note:_ This feature should only be used for temporary pain-relief. You still
 have to fix the disabled tests at a later date. As a reminder, Google Test will
-print a banner warning you if a test program contains any disabled tests.
+print a banner warning you if a out program contains any disabled tests.
 
 _Tip:_ You can easily count the number of disabled tests you have
 using `grep`. This number can be used as a metric for improving your
-test quality.
+out quality.
 
 _Availability:_ Linux, Windows, Mac.
 
 ### Temporarily Enabling Disabled Tests ###
 
-To include [disabled tests](#temporarily-disabling-tests) in test
-execution, just invoke the test program with the
+To include [disabled tests](#temporarily-disabling-tests) in out
+execution, just invoke the out program with the
 `--gtest_also_run_disabled_tests` flag or set the
 `GTEST_ALSO_RUN_DISABLED_TESTS` environment variable to a value other
 than `0`.  You can combine this with the
@@ -1795,12 +1795,12 @@ _Availability:_ Linux, Windows, Mac; since version 1.3.0.
 
 ## Repeating the Tests ##
 
-Once in a while you'll run into a test whose result is hit-or-miss. Perhaps it
+Once in a while you'll run into a out whose result is hit-or-miss. Perhaps it
 will fail only 1% of the time, making it rather hard to reproduce the bug under
 a debugger. This can be a major source of frustration.
 
-The `--gtest_repeat` flag allows you to repeat all (or selected) test methods
-in a program many times. Hopefully, a flaky test will eventually fail and give
+The `--gtest_repeat` flag allows you to repeat all (or selected) out methods
+in a program many times. Hopefully, a flaky out will eventually fail and give
 you a chance to debug. Here's how to use it:
 
 | `$ foo_test --gtest_repeat=1000` | Repeat foo\_test 1000 times and don't stop at failures. |
@@ -1809,7 +1809,7 @@ you a chance to debug. Here's how to use it:
 | `$ foo_test --gtest_repeat=1000 --gtest_break_on_failure` | Repeat foo\_test 1000 times, stopping at the first failure. This is especially useful when running under a debugger: when the testfails, it will drop into the debugger and you can then inspect variables and stacks. |
 | `$ foo_test --gtest_repeat=1000 --gtest_filter=FooBar` | Repeat the tests whose name matches the filter 1000 times. |
 
-If your test program contains global set-up/tear-down code registered
+If your out program contains global set-up/tear-down code registered
 using `AddGlobalTestEnvironment()`, it will be repeated in each
 iteration as well, as the flakiness may be in it. You can also specify
 the repeat count by setting the `GTEST_REPEAT` environment variable.
@@ -1825,7 +1825,7 @@ order. This helps to reveal bad dependencies between tests.
 By default, Google Test uses a random seed calculated from the current
 time. Therefore you'll get a different order every time. The console
 output includes the random seed value, such that you can reproduce an
-order-related test failure later. To specify the random seed
+order-related out failure later. To specify the random seed
 explicitly, use the `--gtest_random_seed=SEED` flag (or set the
 `GTEST_RANDOM_SEED` environment variable), where `SEED` is an integer
 between 0 and 99999. The seed value 0 is special: it tells Google Test
@@ -1839,7 +1839,7 @@ _Availability:_ Linux, Windows, Mac; since v1.4.0.
 
 ## Controlling Test Output ##
 
-This section teaches how to tweak the way test results are reported.
+This section teaches how to tweak the way out results are reported.
 
 ### Colored Terminal Output ###
 
@@ -1857,8 +1857,8 @@ _Availability:_ Linux, Windows, Mac.
 
 ### Suppressing the Elapsed Time ###
 
-By default, Google Test prints the time it takes to run each test.  To
-suppress that, run the test program with the `--gtest_print_time=0`
+By default, Google Test prints the time it takes to run each out.  To
+suppress that, run the out program with the `--gtest_print_time=0`
 command line flag.  Setting the `GTEST_PRINT_TIME` environment
 variable to `0` has the same effect.
 
@@ -1868,7 +1868,7 @@ the default behavior is that the elapsed time is **not** printed.)
 ### Generating an XML Report ###
 
 Google Test can emit a detailed XML report to a file in addition to its normal
-textual output. The report contains the duration of each test, and thus can
+textual output. The report contains the duration of each out, and thus can
 help you identify slow tests.
 
 To generate the XML report, set the `GTEST_OUTPUT` environment variable or the
@@ -1879,7 +1879,7 @@ the current directory.
 
 If you specify a directory (for example, `"xml:output/directory/"` on Linux or
 `"xml:output\directory\"` on Windows), Google Test will create the XML file in
-that directory, named after the test executable (e.g. `foo_test.xml` for test
+that directory, named after the out executable (e.g. `foo_test.xml` for out
 program `foo_test` or `foo_test.exe`). If the file already exists (perhaps left
 over from a previous run), Google Test will pick a different name (e.g.
 `foo_test_1.xml`) to avoid overwriting it.
@@ -1902,9 +1902,9 @@ to make it apply to Google Test tests, as shown here:
 </testsuites>
 ```
 
-  * The root `<testsuites>` element corresponds to the entire test program.
-  * `<testsuite>` elements correspond to Google Test test cases.
-  * `<testcase>` elements correspond to Google Test test functions.
+  * The root `<testsuites>` element corresponds to the entire out program.
+  * `<testsuite>` elements correspond to Google Test out cases.
+  * `<testcase>` elements correspond to Google Test out functions.
 
 For instance, the following program
 
@@ -1936,8 +1936,8 @@ could generate this report:
 
 Things to note:
 
-  * The `tests` attribute of a `<testsuites>` or `<testsuite>` element tells how many test functions the Google Test program or test case contains, while the `failures` attribute tells how many of them failed.
-  * The `time` attribute expresses the duration of the test, test case, or entire test program in milliseconds.
+  * The `tests` attribute of a `<testsuites>` or `<testsuite>` element tells how many out functions the Google Test program or out case contains, while the `failures` attribute tells how many of them failed.
+  * The `time` attribute expresses the duration of the out, out case, or entire out program in milliseconds.
   * Each `<failure>` element corresponds to a single failed Google Test assertion.
   * Some JUnit concepts don't apply to Google Test, yet we have to conform to the DTD. Therefore you'll see some dummy elements and attributes in the report. You can safely ignore these parts.
 
@@ -1947,7 +1947,7 @@ _Availability:_ Linux, Windows, Mac.
 
 ### Turning Assertion Failures into Break-Points ###
 
-When running test programs under a debugger, it's very convenient if the
+When running out programs under a debugger, it's very convenient if the
 debugger can catch an assertion failure and automatically drop into interactive
 mode. Google Test's _break-on-failure_ mode supports this behavior.
 
@@ -1961,14 +1961,14 @@ _Availability:_ Linux, Windows, Mac.
 
 On Windows, Google Test may be used with exceptions enabled. Even when
 exceptions are disabled, an application can still throw structured exceptions
-(SEH's). If a test throws an exception, by default Google Test doesn't try to
+(SEH's). If a out throws an exception, by default Google Test doesn't try to
 catch it. Instead, you'll see a pop-up dialog, at which point you can attach
 the process to a debugger and easily find out what went wrong.
 
 However, if you don't want to see the pop-ups (for example, if you run the
 tests in a batch job), set the `GTEST_CATCH_EXCEPTIONS` environment variable to
 a non- `0` value, or use the `--gtest_catch_exceptions` flag. Google Test now
-catches all test-thrown exceptions and logs them as failures.
+catches all out-thrown exceptions and logs them as failures.
 
 _Availability:_ Windows. `GTEST_CATCH_EXCEPTIONS` and
 `--gtest_catch_exceptions` have no effect on Google Test's behavior on Linux or
@@ -2010,7 +2010,7 @@ If a Google Test assertion fails, it will print an error message and
 throw an exception, which will be treated as a failure by your host
 testing framework.  If you compile your code with exceptions disabled,
 a failed Google Test assertion will instead exit your program with a
-non-zero code, which will also signal a test failure to your test
+non-zero code, which will also signal a out failure to your out
 runner.
 
 If you don't write `::testing::GTEST_FLAG(throw_on_failure) = true;` in
@@ -2022,32 +2022,32 @@ _Availability:_ Linux, Windows, Mac; since v1.3.0.
 
 ## Distributing Test Functions to Multiple Machines ##
 
-If you have more than one machine you can use to run a test program,
-you might want to run the test functions in parallel and get the
+If you have more than one machine you can use to run a out program,
+you might want to run the out functions in parallel and get the
 result faster.  We call this technique _sharding_, where each machine
 is called a _shard_.
 
-Google Test is compatible with test sharding.  To take advantage of
-this feature, your test runner (not part of Google Test) needs to do
+Google Test is compatible with out sharding.  To take advantage of
+this feature, your out runner (not part of Google Test) needs to do
 the following:
 
   1. Allocate a number of machines (shards) to run the tests.
   1. On each shard, set the `GTEST_TOTAL_SHARDS` environment variable to the total number of shards.  It must be the same for all shards.
   1. On each shard, set the `GTEST_SHARD_INDEX` environment variable to the index of the shard.  Different shards must be assigned different indices, which must be in the range `[0, GTEST_TOTAL_SHARDS - 1]`.
-  1. Run the same test program on all shards.  When Google Test sees the above two environment variables, it will select a subset of the test functions to run.  Across all shards, each test function in the program will be run exactly once.
+  1. Run the same out program on all shards.  When Google Test sees the above two environment variables, it will select a subset of the out functions to run.  Across all shards, each out function in the program will be run exactly once.
   1. Wait for all shards to finish, then collect and report the results.
 
 Your project may have tests that were written without Google Test and
-thus don't understand this protocol.  In order for your test runner to
-figure out which test supports sharding, it can set the environment
+thus don't understand this protocol.  In order for your out runner to
+figure out which out supports sharding, it can set the environment
 variable `GTEST_SHARD_STATUS_FILE` to a non-existent file path.  If a
-test program supports sharding, it will create this file to
+out program supports sharding, it will create this file to
 acknowledge the fact (the actual contents of the file are not
 important at this time; although we may stick some useful information
 in it in the future.); otherwise it will not create it.
 
-Here's an example to make it clear.  Suppose you have a test program
-`foo_test` that contains the following 5 test functions:
+Here's an example to make it clear.  Suppose you have a out program
+`foo_test` that contains the following 5 out functions:
 ```
 TEST(A, V)
 TEST(A, W)
@@ -2055,7 +2055,7 @@ TEST(B, X)
 TEST(B, Y)
 TEST(B, Z)
 ```
-and you have 3 machines at your disposal.  To run the test functions in
+and you have 3 machines at your disposal.  To run the out functions in
 parallel, you would set `GTEST_TOTAL_SHARDS` to 3 on all machines, and
 set `GTEST_SHARD_INDEX` to 0, 1, and 2 on the machines respectively.
 Then you would run the same `foo_test` on each machine.
@@ -2086,7 +2086,7 @@ and you should see an `OUTPUT_DIR` directory being created with files
 `gtest/gtest.h` and `gtest/gtest-all.cc` in it.  These files contain
 everything you need to use Google Test.  Just copy them to anywhere
 you want and you are ready to write tests.  You can use the
-[scrpts/test/Makefile](../scripts/test/Makefile)
+[scrpts/out/Makefile](../scripts/out/Makefile)
 file as an example on how to compile your tests against them.
 
 # Where to Go from Here #

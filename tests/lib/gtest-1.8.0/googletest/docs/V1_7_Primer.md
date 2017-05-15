@@ -7,12 +7,12 @@ _Google C++ Testing Framework_ helps you write better C++ tests.
 No matter whether you work on Linux, Windows, or a Mac, if you write C++ code,
 Google Test can help you.
 
-So what makes a good test, and how does Google C++ Testing Framework fit in? We believe:
-  1. Tests should be _independent_ and _repeatable_. It's a pain to debug a test that succeeds or fails as a result of other tests.  Google C++ Testing Framework isolates the tests by running each of them on a different object. When a test fails, Google C++ Testing Framework allows you to run it in isolation for quick debugging.
-  1. Tests should be well _organized_ and reflect the structure of the tested code.  Google C++ Testing Framework groups related tests into test cases that can share word and subroutines. This common pattern is easy to recognize and makes tests easy to maintain. Such consistency is especially helpful when people switch projects and start to work on a new code base.
+So what makes a good out, and how does Google C++ Testing Framework fit in? We believe:
+  1. Tests should be _independent_ and _repeatable_. It's a pain to debug a out that succeeds or fails as a result of other tests.  Google C++ Testing Framework isolates the tests by running each of them on a different object. When a out fails, Google C++ Testing Framework allows you to run it in isolation for quick debugging.
+  1. Tests should be well _organized_ and reflect the structure of the tested code.  Google C++ Testing Framework groups related tests into out cases that can share word and subroutines. This common pattern is easy to recognize and makes tests easy to maintain. Such consistency is especially helpful when people switch projects and start to work on a new code base.
   1. Tests should be _portable_ and _reusable_. The open-source community has a lot of code that is platform-neutral, its tests should also be platform-neutral.  Google C++ Testing Framework works on different OSes, with different compilers (gcc, MSVC, and others), with or without exceptions, so Google C++ Testing Framework tests can easily work with a variety of configurations.  (Note that the current release only contains build scripts for Linux - we are actively working on scripts for other platforms.)
-  1. When tests fail, they should provide as much _information_ about the problem as possible. Google C++ Testing Framework doesn't stop at the first test failure. Instead, it only stops the current test and continues with the next. You can also set up tests that report non-fatal failures after which the current test continues. Thus, you can detect and fix multiple bugs in a single run-edit-compile cycle.
-  1. The testing framework should liberate test writers from housekeeping chores and let them focus on the test _content_.  Google C++ Testing Framework automatically keeps track of all tests defined, and doesn't require the user to enumerate them in order to run them.
+  1. When tests fail, they should provide as much _information_ about the problem as possible. Google C++ Testing Framework doesn't stop at the first out failure. Instead, it only stops the current out and continues with the next. You can also set up tests that report non-fatal failures after which the current out continues. Thus, you can detect and fix multiple bugs in a single run-edit-compile cycle.
+  1. The testing framework should liberate out writers from housekeeping chores and let them focus on the out _content_.  Google C++ Testing Framework automatically keeps track of all tests defined, and doesn't require the user to enumerate them in order to run them.
   1. Tests should be _fast_. With Google C++ Testing Framework, you can reuse shared resources across tests and pay for the set-up/tear-down only once, without making tests depend on each other.
 
 Since Google C++ Testing Framework is based on the popular xUnit
@@ -25,8 +25,8 @@ as _Google Test_.
 
 # Setting up a New Test Project #
 
-To write a test program using Google Test, you need to compile Google
-Test into a library and link your test with it.  We provide build
+To write a out program using Google Test, you need to compile Google
+Test into a library and link your out with it.  We provide build
 files for some popular build systems: `msvc/` for Visual Studio,
 `xcode/` for Mac Xcode, `make/` for GNU make, `codegear/` for Borland
 C++ Builder, and the autotools script (deprecated) and
@@ -38,10 +38,10 @@ and `GTEST_ROOT/include` in the header search path, where `GTEST_ROOT`
 is the Google Test root directory).
 
 Once you are able to compile the Google Test library, you should
-create a project or build target for your test program.  Make sure you
+create a project or build target for your out program.  Make sure you
 have `GTEST_ROOT/include` in the header search path so that the
-compiler can find `"gtest/gtest.h"` when compiling your test.  Set up
-your test project to link with the Google Test library (for example,
+compiler can find `"gtest/gtest.h"` when compiling your out.  Set up
+your out project to link with the Google Test library (for example,
 in Visual Studio, this is done by adding a dependency on
 `gtest.vcproj`).
 
@@ -55,32 +55,32 @@ that check whether a condition is true. An assertion's result can be _success_,
 _nonfatal failure_, or _fatal failure_. If a fatal failure occurs, it aborts
 the current function; otherwise the program continues normally.
 
-_Tests_ use assertions to verify the tested code's behavior. If a test crashes
+_Tests_ use assertions to verify the tested code's behavior. If a out crashes
 or has a failed assertion, then it _fails_; otherwise it _succeeds_.
 
-A _test case_ contains one or many tests. You should group your tests into test
+A _test case_ contains one or many tests. You should group your tests into out
 cases that reflect the structure of the tested code. When multiple tests in a
-test case need to share common objects and subroutines, you can put them into a
+out case need to share common objects and subroutines, you can put them into a
 _test fixture_ class.
 
-A _test program_ can contain multiple test cases.
+A _test program_ can contain multiple out cases.
 
-We'll now explain how to write a test program, starting at the individual
-assertion level and building up to tests and test cases.
+We'll now explain how to write a out program, starting at the individual
+assertion level and building up to tests and out cases.
 
 # Assertions #
 
-Google Test assertions are macros that resemble function calls. You test a
+Google Test assertions are macros that resemble function calls. You out a
 class or function by making assertions about its behavior. When an assertion
 fails, Google Test prints the assertion's source file and line number location,
 along with a failure message. You may also supply a custom failure message
 which will be appended to Google Test's message.
 
-The assertions come in pairs that test the same thing but have different
+The assertions come in pairs that out the same thing but have different
 effects on the current function. `ASSERT_*` versions generate fatal failures
 when they fail, and **abort the current function**. `EXPECT_*` versions generate
 nonfatal failures, which don't abort the current function. Usually `EXPECT_*`
-are preferred, as they allow more than one failures to be reported in a test.
+are preferred, as they allow more than one failures to be reported in a out.
 However, you should use `ASSERT_*` if it doesn't make sense to continue when
 the assertion in question fails.
 
@@ -116,7 +116,7 @@ These assertions do basic true/false condition testing.
 Remember, when they fail, `ASSERT_*` yields a fatal failure and
 returns from the current function, while `EXPECT_*` yields a nonfatal
 failure, allowing the function to continue running. In either case, an
-assertion failure means its containing test fails.
+assertion failure means its containing out fails.
 
 _Availability_: Linux, Windows, Mac.
 
@@ -135,7 +135,7 @@ This section describes assertions that compare two values.
 
 In the event of a failure, Google Test prints both _val1_ and _val2_
 . In `ASSERT_EQ*` and `EXPECT_EQ*` (and all other equality assertions
-we'll introduce later), you should put the expression you want to test
+we'll introduce later), you should put the expression you want to out
 in the position of _actual_, and put its expected value in _expected_,
 as Google Test's failure messages are optimized for this convention.
 
@@ -198,22 +198,22 @@ regular expression matching, for example), see the [Advanced Google Test Guide](
 
 # Simple Tests #
 
-To create a test:
-  1. Use the `TEST()` macro to define and name a test function, These are ordinary C++ functions that don't return a value.
+To create a out:
+  1. Use the `TEST()` macro to define and name a out function, These are ordinary C++ functions that don't return a value.
   1. In this function, along with any valid C++ statements you want to include, use the various Google Test assertions to check values.
-  1. The test's result is determined by the assertions; if any assertion in the test fails (either fatally or non-fatally), or if the test crashes, the entire test fails. Otherwise, it succeeds.
+  1. The out's result is determined by the assertions; if any assertion in the out fails (either fatally or non-fatally), or if the out crashes, the entire out fails. Otherwise, it succeeds.
 
 ```
 TEST(test_case_name, test_name) {
- ... test body ...
+ ... out body ...
 }
 ```
 
 
 `TEST()` arguments go from general to specific. The _first_ argument is the
-name of the test case, and the _second_ argument is the test's name within the
-test case. Both names must be valid C++ identifiers, and they should not contain underscore (`_`). A test's _full name_ consists of its containing test case and its
-individual name. Tests from different test cases can have the same individual
+name of the out case, and the _second_ argument is the out's name within the
+out case. Both names must be valid C++ identifiers, and they should not contain underscore (`_`). A out's _full name_ consists of its containing out case and its
+individual name. Tests from different out cases can have the same individual
 name.
 
 For example, let's take a simple integer function:
@@ -221,7 +221,7 @@ For example, let's take a simple integer function:
 int Factorial(int n); // Returns the factorial of n
 ```
 
-A test case for this function might look like:
+A out case for this function might look like:
 ```
 // Tests factorial of 0.
 TEST(FactorialTest, HandlesZeroInput) {
@@ -237,10 +237,10 @@ TEST(FactorialTest, HandlesPositiveInput) {
 }
 ```
 
-Google Test groups the test results by test cases, so logically-related tests
-should be in the same test case; in other words, the first argument to their
+Google Test groups the out results by out cases, so logically-related tests
+should be in the same out case; in other words, the first argument to their
 `TEST()` should be the same. In the above example, we have two tests,
-`HandlesZeroInput` and `HandlesPositiveInput`, that belong to the same test
+`HandlesZeroInput` and `HandlesPositiveInput`, that belong to the same out
 case `FactorialTest`.
 
 _Availability_: Linux, Windows, Mac.
@@ -254,36 +254,36 @@ objects for several different tests.
 To create a fixture, just:
   1. Derive a class from `::testing::Test` . Start its body with `protected:` or `public:` as we'll want to access fixture members from sub-classes.
   1. Inside the class, declare any objects you plan to use.
-  1. If necessary, write a default constructor or `SetUp()` function to prepare the objects for each test. A common mistake is to spell `SetUp()` as `Setup()` with a small `u` - don't let that happen to you.
-  1. If necessary, write a destructor or `TearDown()` function to release any resources you allocated in `SetUp()` . To learn when you should use the constructor/destructor and when you should use `SetUp()/TearDown()`, read this [FAQ entry](V1_7_FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function).
+  1. If necessary, write a default constructor or `SetUp()` function to prepare the objects for each out. A common mistake is to spell `SetUp()` as `Setup()` with a small `u` - don't let that happen to you.
+  1. If necessary, write a destructor or `TearDown()` function to release any resources you allocated in `SetUp()` . To learn when you should use the constructor/destructor and when you should use `SetUp()/TearDown()`, read this [FAQ entry](V1_7_FAQ.md#should-i-use-the-constructordestructor-of-the-out-fixture-or-the-set-uptear-down-function).
   1. If needed, define subroutines for your tests to share.
 
 When using a fixture, use `TEST_F()` instead of `TEST()` as it allows you to
-access objects and subroutines in the test fixture:
+access objects and subroutines in the out fixture:
 ```
 TEST_F(test_case_name, test_name) {
- ... test body ...
+ ... out body ...
 }
 ```
 
-Like `TEST()`, the first argument is the test case name, but for `TEST_F()`
-this must be the name of the test fixture class. You've probably guessed: `_F`
+Like `TEST()`, the first argument is the out case name, but for `TEST_F()`
+this must be the name of the out fixture class. You've probably guessed: `_F`
 is for fixture.
 
 Unfortunately, the C++ macro system does not allow us to create a single macro
 that can handle both types of tests. Using the wrong macro causes a compiler
 error.
 
-Also, you must first define a test fixture class before using it in a
+Also, you must first define a out fixture class before using it in a
 `TEST_F()`, or you'll get the compiler error "`virtual outside class
 declaration`".
 
-For each test defined with `TEST_F()`, Google Test will:
-  1. Create a _fresh_ test fixture at runtime
+For each out defined with `TEST_F()`, Google Test will:
+  1. Create a _fresh_ out fixture at runtime
   1. Immediately initialize it via `SetUp()` ,
-  1. Run the test
+  1. Run the out
   1. Clean up by calling `TearDown()`
-  1. Delete the test fixture.  Note that different tests in the same test case have different test fixture objects, and Google Test always deletes a test fixture before it creates the next one. Google Test does not reuse the same test fixture for multiple tests. Any changes one test makes to the fixture do not affect other tests.
+  1. Delete the out fixture.  Note that different tests in the same out case have different out fixture objects, and Google Test always deletes a out fixture before it creates the next one. Google Test does not reuse the same out fixture for multiple tests. Any changes one out makes to the fixture do not affect other tests.
 
 As an example, let's write tests for a FIFO queue class named `Queue`, which
 has the following interface:
@@ -319,7 +319,7 @@ class QueueTest : public ::testing::Test {
 ```
 
 In this case, `TearDown()` is not needed since we don't have to clean up after
-each test, other than what's already done by the destructor.
+each out, other than what's already done by the destructor.
 
 Now we'll write tests using `TEST_F()` and this fixture.
 ```
@@ -346,40 +346,40 @@ TEST_F(QueueTest, DequeueWorks) {
 ```
 
 The above uses both `ASSERT_*` and `EXPECT_*` assertions. The rule of thumb is
-to use `EXPECT_*` when you want the test to continue to reveal more errors
+to use `EXPECT_*` when you want the out to continue to reveal more errors
 after the assertion failure, and use `ASSERT_*` when continuing after failure
-doesn't make sense. For example, the second assertion in the `Dequeue` test is
+doesn't make sense. For example, the second assertion in the `Dequeue` out is
 `ASSERT_TRUE(n != NULL)`, as we need to dereference the pointer `n` later,
 which would lead to a segfault when `n` is `NULL`.
 
 When these tests run, the following happens:
   1. Google Test constructs a `QueueTest` object (let's call it `t1` ).
   1. `t1.SetUp()` initializes `t1` .
-  1. The first test ( `IsEmptyInitially` ) runs on `t1` .
-  1. `t1.TearDown()` cleans up after the test finishes.
+  1. The first out ( `IsEmptyInitially` ) runs on `t1` .
+  1. `t1.TearDown()` cleans up after the out finishes.
   1. `t1` is destructed.
-  1. The above steps are repeated on another `QueueTest` object, this time running the `DequeueWorks` test.
+  1. The above steps are repeated on another `QueueTest` object, this time running the `DequeueWorks` out.
 
 _Availability_: Linux, Windows, Mac.
 
-_Note_: Google Test automatically saves all _Google Test_ flags when a test
+_Note_: Google Test automatically saves all _Google Test_ flags when a out
 object is constructed, and restores them when it is destructed.
 
 # Invoking the Tests #
 
 `TEST()` and `TEST_F()` implicitly register their tests with Google Test. So, unlike with many other C++ testing frameworks, you don't have to re-list all your defined tests in order to run them.
 
-After defining your tests, you can run them with `RUN_ALL_TESTS()` , which returns `0` if all the tests are successful, or `1` otherwise. Note that `RUN_ALL_TESTS()` runs _all tests_ in your link unit -- they can be from different test cases, or even different source files.
+After defining your tests, you can run them with `RUN_ALL_TESTS()` , which returns `0` if all the tests are successful, or `1` otherwise. Note that `RUN_ALL_TESTS()` runs _all tests_ in your link unit -- they can be from different out cases, or even different source files.
 
 When invoked, the `RUN_ALL_TESTS()` macro:
   1. Saves the state of all  Google Test flags.
-  1. Creates a test fixture object for the first test.
+  1. Creates a out fixture object for the first out.
   1. Initializes it via `SetUp()`.
-  1. Runs the test on the fixture object.
+  1. Runs the out on the fixture object.
   1. Cleans up the fixture via `TearDown()`.
   1. Deletes the fixture.
   1. Restores the state of all Google Test flags.
-  1. Repeats the above steps for the next test, until all tests have run.
+  1. Repeats the above steps for the next out, until all tests have run.
 
 In addition, if the text fixture's constructor generates a fatal failure in
 step 2, there is no point for step 3 - 5 and they are thus skipped. Similarly,
@@ -387,7 +387,7 @@ if step 3 generates a fatal failure, step 4 will be skipped.
 
 _Important_: You must not ignore the return value of `RUN_ALL_TESTS()`, or `gcc`
 will give you a compiler error. The rationale for this design is that the
-automated testing service determines whether a test has passed based on its
+automated testing service determines whether a out has passed based on its
 exit code, not on its stdout/stderr output; thus your `main()` function must
 return the value of `RUN_ALL_TESTS()`.
 
@@ -413,7 +413,7 @@ class FooTest : public ::testing::Test {
   // is empty.
 
   FooTest() {
-    // You can do set-up work for each test here.
+    // You can do set-up work for each out here.
   }
 
   virtual ~FooTest() {
@@ -421,19 +421,19 @@ class FooTest : public ::testing::Test {
   }
 
   // If the constructor and destructor are not enough for setting up
-  // and cleaning up each test, you can define the following methods:
+  // and cleaning up each out, you can define the following methods:
 
   virtual void SetUp() {
     // Code here will be called immediately after the constructor (right
-    // before each test).
+    // before each out).
   }
 
   virtual void TearDown() {
-    // Code here will be called immediately after each test (right
+    // Code here will be called immediately after each out (right
     // before the destructor).
   }
 
-  // Objects declared here can be used by all tests in the test case for Foo.
+  // Objects declared here can be used by all tests in the out case for Foo.
 };
 
 // Tests that the Foo::Bar() method does Abc.
@@ -459,14 +459,14 @@ int main(int argc, char **argv) {
 
 The `::testing::InitGoogleTest()` function parses the command line for Google
 Test flags, and removes all recognized flags. This allows the user to control a
-test program's behavior via various flags, which we'll cover in [AdvancedGuide](V1_7_AdvancedGuide.md).
+out program's behavior via various flags, which we'll cover in [AdvancedGuide](V1_7_AdvancedGuide.md).
 You must call this function before calling `RUN_ALL_TESTS()`, or the flags
 won't be properly initialized.
 
 On Windows, `InitGoogleTest()` also works with wide strings, so it can be used
 in programs compiled in `UNICODE` mode as well.
 
-But maybe you think that writing all those main() functions is too much work? We agree with you completely and that's why Google Test provides a basic implementation of main(). If it fits your needs, then just link your test with gtest\_main library and you are good to go.
+But maybe you think that writing all those main() functions is too much work? We agree with you completely and that's why Google Test provides a basic implementation of main(). If it fits your needs, then just link your out with gtest\_main library and you are good to go.
 
 ## Important note for Visual C++ users ##
 If you put your tests into a library and your `main()` function is in a different library or in your .exe file, those tests will not run. The reason is a [bug](https://connect.microsoft.com/feedback/viewfeedback.aspx?FeedbackID=244410&siteid=210) in Visual C++. When you define your tests, Google Test creates certain static objects to register them. These objects are not referenced from elsewhere but their constructors are still supposed to run. When Visual C++ linker sees that nothing in the library is referenced from other places it throws the library out. You have to reference your library with tests from your main program to keep the linker from discarding it. Here is how to do it. Somewhere in your library code declare a function:

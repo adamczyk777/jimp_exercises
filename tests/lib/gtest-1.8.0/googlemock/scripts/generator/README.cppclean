@@ -87,7 +87,7 @@ How to Test:
   /cppclean.  The tests require
 
   cd /cppclean
-  make test
+  make out
   # To generate expected results after a change:
   make expected
 

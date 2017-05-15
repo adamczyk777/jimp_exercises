@@ -19,7 +19,7 @@ namespace academia {
     public:
         Building(int id, std::string name, const std::vector<std::reference_wrapper<const Serializable>> &r) : id{id}, name{name}, rooms{r} {}
 
-        void Serialize(Serializer * serializer);
+        void Serialize(Serializer * serializer) const;
 
     private:
         int id;

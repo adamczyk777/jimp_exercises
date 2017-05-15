@@ -26,7 +26,7 @@ something like the following will do:
 
 (We need `-pthread` as Google Test uses threads.)
 
-Next, you should compile your test source file with
+Next, you should compile your out source file with
 `${GTEST_DIR}/include` in the system header search path, and link it
 with gtest and any other necessary libraries:
 
@@ -37,7 +37,7 @@ As an example, the make/ directory contains a Makefile that you can
 use to build Google Test on systems where GNU make is available
 (e.g. Linux, Mac OS X, and Cygwin).  It doesn't try to build Google
 Test's own tests.  Instead, it just builds the Google Test library and
-a sample test.  You can use it as a starting point for your own build
+a sample out.  You can use it as a starting point for your own build
 script.
 
 If the default settings are correct for your environment, the
@@ -98,7 +98,7 @@ Studio project.  Files that have names ending with -md use DLL
 versions of Microsoft runtime libraries (the /MD or the /MDd compiler
 option).  Files without that suffix use static versions of the runtime
 libraries (the /MT or the /MTd option).  Please note that one must use
-the same option to compile both gtest and the test code.  If you use
+the same option to compile both gtest and the out code.  If you use
 Visual Studio 2005 or above, we recommend the -md version as /MD is
 the default for new projects in these versions of Visual Studio.
 
@@ -242,7 +242,7 @@ instead of
 
     TEST(SomeTest, DoesThis) { ... }
 
-in order to define a test.
+in order to define a out.
 
 ## Developing Google Test ##
 
@@ -269,7 +269,7 @@ executable can be found:
 Next, you can build Google Test and all of its own tests.  On \*nix,
 this is usually done by 'make'.  To run the tests, do
 
-    make test
+    make out
 
 All tests should pass.
 

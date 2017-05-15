@@ -116,7 +116,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\test\gtest_prod_test.cc">
+				RelativePath="..\out\gtest_prod_test.cc">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -133,7 +133,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\test\production.cc">
+				RelativePath="..\out\production.cc">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -155,7 +155,7 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\test\production.h">
+				RelativePath="..\out\production.h">
 			</File>
 		</Filter>
 	</Files>

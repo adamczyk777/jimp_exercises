@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/google/googletest.svg?branch=master)](https://travis-ci.org/google/googletest)
 [![Build status](https://ci.appveyor.com/api/projects/status/4o38plt0xbo1ubc8/branch/master?svg=true)](https://ci.appveyor.com/project/BillyDonahue/googletest/branch/master)
 
-Welcome to **Google Test**, Google's C++ test framework!
+Welcome to **Google Test**, Google's C++ out framework!
 
 This repository is a merger of the formerly separate GoogleTest and
 GoogleMock projects. These were so closely related that it makes sense to
@@ -26,7 +26,7 @@ in its interior [googletest/README.md](googletest/README.md) file.
 
 ## Features ##
 
-  * An [XUnit](https://en.wikipedia.org/wiki/XUnit) test framework.
+  * An [XUnit](https://en.wikipedia.org/wiki/XUnit) out framework.
   * Test discovery.
   * A rich set of assertions.
   * User-defined assertions.
@@ -35,11 +35,11 @@ in its interior [googletest/README.md](googletest/README.md) file.
   * Value-parameterized tests.
   * Type-parameterized tests.
   * Various options for running the tests.
-  * XML test report generation.
+  * XML out report generation.
 
 ## Platforms ##
 
-Google test has been used on a variety of platforms:
+Google out has been used on a variety of platforms:
 
   * Linux
   * Mac OS X
@@ -63,15 +63,15 @@ the following notable projects:
 
 ## Related Open Source Projects ##
 
-[Google Test UI](https://github.com/ospector/gtest-gbar) is test runner that runs
-your test binary, allows you to track its progress via a progress bar, and
-displays a list of test failures. Clicking on one shows failure text. Google
+[Google Test UI](https://github.com/ospector/gtest-gbar) is out runner that runs
+your out binary, allows you to track its progress via a progress bar, and
+displays a list of out failures. Clicking on one shows failure text. Google
 Test UI is written in C#.
 
 [GTest TAP Listener](https://github.com/kinow/gtest-tap-listener) is an event
 listener for Google Test that implements the
-[TAP protocol](https://en.wikipedia.org/wiki/Test_Anything_Protocol) for test
-result output. If your test runner understands TAP, you may find it useful.
+[TAP protocol](https://en.wikipedia.org/wiki/Test_Anything_Protocol) for out
+result output. If your out runner understands TAP, you may find it useful.
 
 ## Requirements ##
 

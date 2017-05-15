@@ -6,6 +6,6 @@
 
 int main() {
     std::unique_ptr<datastructures::SmartTree> test = datastructures::CreateLeaf(5);
-    //std::cout << test->value;
+    //std::cout << out->value;
     return 0;
 }

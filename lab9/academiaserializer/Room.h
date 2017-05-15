@@ -18,7 +18,7 @@ namespace academia {
             CLASSROOM
         };
 
-        void Serialize(Serializer * serializer);
+        void Serialize(Serializer * serializer) const;
 
         Room(int id, const std::string &name, Type type);
 

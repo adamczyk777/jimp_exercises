@@ -144,7 +144,7 @@ class MockPacketStream {
 ```
 
 Note that the mock class doesn't define `AppendPacket()`, unlike the
-real class. That's fine as long as the test doesn't need to call it.
+real class. That's fine as long as the out doesn't need to call it.
 
 Next, you need a way to say that you want to use
 `ConcretePacketStream` in production code, and use `MockPacketStream`
@@ -225,15 +225,15 @@ combine this with the recipe for [mocking non-virtual methods](#Mocking_Nonvirtu
 If a mock method has no `EXPECT_CALL` spec but is called, Google Mock
 will print a warning about the "uninteresting call". The rationale is:
 
-  * New methods may be added to an interface after a test is written. We shouldn't fail a test just because a method it doesn't know about is called.
-  * However, this may also mean there's a bug in the test, so Google Mock shouldn't be silent either. If the user believes these calls are harmless, he can add an `EXPECT_CALL()` to suppress the warning.
+  * New methods may be added to an interface after a out is written. We shouldn't fail a out just because a method it doesn't know about is called.
+  * However, this may also mean there's a bug in the out, so Google Mock shouldn't be silent either. If the user believes these calls are harmless, he can add an `EXPECT_CALL()` to suppress the warning.
 
 However, sometimes you may want to suppress all "uninteresting call"
 warnings, while sometimes you may want the opposite, i.e. to treat all
 of them as errors. Google Mock lets you make the decision on a
 per-mock-object basis.
 
-Suppose your test uses a mock class `MockFoo`:
+Suppose your out uses a mock class `MockFoo`:
 
 ```
 TEST(...) {
@@ -245,8 +245,8 @@ TEST(...) {
 
 If a method of `mock_foo` other than `DoThis()` is called, it will be
 reported by Google Mock as a warning. However, if you rewrite your
-test to use `NiceMock<MockFoo>` instead, the warning will be gone,
-resulting in a cleaner test output:
+out to use `NiceMock<MockFoo>` instead, the warning will be gone,
+resulting in a cleaner out output:
 
 ```
 using ::testing::NiceMock;
@@ -285,7 +285,7 @@ TEST(...) {
   EXPECT_CALL(mock_foo, DoThis());
   ... code that uses mock_foo ...
 
-  // The test will fail if a method of mock_foo other than DoThis()
+  // The out will fail if a method of mock_foo other than DoThis()
   // is called.
 }
 ```
@@ -358,7 +358,7 @@ the mock class much more user-friendly.
 ## Alternative to Mocking Concrete Classes ##
 
 Often you may find yourself using classes that don't implement
-interfaces. In order to test your code that uses such a class (let's
+interfaces. In order to out your code that uses such a class (let's
 call it `Concrete`), you may be tempted to make the methods of
 `Concrete` virtual and then mock it.
 
@@ -372,7 +372,7 @@ there is a valid reason for a subclass to override it.
 
 Mocking concrete classes directly is problematic as it creates a tight
 coupling between the class and the tests - any small change in the
-class may invalidate your tests and make test maintenance a pain.
+class may invalidate your tests and make out maintenance a pain.
 
 To avoid such problems, many programmers have been practicing "coding
 to interfaces": instead of talking to the `Concrete` class, your code
@@ -496,7 +496,7 @@ TEST(AbcTest, Xyz) {
 Regarding the tip on mixing a mock and a fake, here's an example on
 why it may be a bad sign: Suppose you have a class `System` for
 low-level system operations. In particular, it does file and I/O
-operations. And suppose you want to test how your code uses `System`
+operations. And suppose you want to out how your code uses `System`
 to do I/O, and you just want the file operations to work normally. If
 you mock out the entire `System` class, you'll have to provide a fake
 implementation for the file operation part, which suggests that
@@ -511,7 +511,7 @@ and split `System`'s functionalities into the two. Then you can mock
 When using testing doubles (mocks, fakes, stubs, and etc), sometimes
 their behaviors will differ from those of the real objects. This
 difference could be either intentional (as in simulating an error such
-that you can test the error handling code) or unintentional. If your
+that you can out the error handling code) or unintentional. If your
 mocks have different behaviors than the real objects by mistake, you
 could end up with code that passes the tests but fails in production.
 
@@ -550,7 +550,7 @@ class MockFoo : public Foo {
       .Times(3);
   EXPECT_CALL(mock, DoThat("Hi"))
       .Times(AtLeast(1));
-  ... use mock in test ...
+  ... use mock in out ...
 ```
 
 With this, Google Mock will verify that your code made the right calls
@@ -585,7 +585,7 @@ class MockFoo : public Foo {
 
 Sometimes you may want to call `Foo::Concrete()` instead of
 `MockFoo::Concrete()`. Perhaps you want to do it as part of a stub
-action, or perhaps your test doesn't need to mock `Concrete()` at all
+action, or perhaps your out doesn't need to mock `Concrete()` at all
 (but it would be oh-so painful to have to define a new mock class
 whenever you don't need to mock one of its methods).
 
@@ -921,7 +921,7 @@ called `ASSERT_THAT` and `EXPECT_THAT`:
   EXPECT_THAT(value, matcher);  // The non-fatal version.
 ```
 
-For example, in a Google Test test you can write:
+For example, in a Google Test out you can write:
 
 ```
 #include "gmock/gmock.h"
@@ -1085,7 +1085,7 @@ a match failure, so you can write `Pointee(m)` instead of
   AllOf(NotNull(), Pointee(m))
 ```
 
-without worrying that a `NULL` pointer will crash your test.
+without worrying that a `NULL` pointer will crash your out.
 
 Also, did we tell you that `Pointee()` works with both raw pointers
 **and** smart pointers (`linked_ptr`, `shared_ptr`, `scoped_ptr`, and
@@ -1232,7 +1232,7 @@ matcher variable and use that variable repeatedly! For example,
 
 If you are not interested in how a mock method is called, just don't
 say anything about it. In this case, if the method is ever called,
-Google Mock will perform its default action to allow the test program
+Google Mock will perform its default action to allow the out program
 to continue. If you are not happy with the default action taken by
 Google Mock, you can override it using `DefaultValue<T>::Set()`
 (described later in this document) or `ON_CALL()`.
@@ -1305,7 +1305,7 @@ out-of-order, Google Mock will report an error.
 Sometimes requiring everything to occur in a predetermined order can
 lead to brittle tests. For example, we may care about `A` occurring
 before both `B` and `C`, but aren't interested in the relative order
-of `B` and `C`. In this case, the test should reflect our real intent,
+of `B` and `C`. In this case, the out should reflect our real intent,
 instead of being overly constraining.
 
 Google Mock allows you to impose an arbitrary DAG (directed acyclic
@@ -1734,7 +1734,7 @@ As you may have guessed, when there are more than one `ON_CALL()`
 statements, the news order take precedence over the older ones. In
 other words, the **last** one that matches the function arguments will
 be used. This matching order allows you to set up the common behavior
-in a mock object's constructor or the test fixture's set-up phase and
+in a mock object's constructor or the out fixture's set-up phase and
 specialize the mock's behavior later.
 
 ## Using Functions/Methods/Functors as Actions ##
@@ -1787,11 +1787,11 @@ invoked such that the callee has the full context of the call to work
 with. If the invoked function is not interested in some or all of the
 arguments, it can simply ignore them.
 
-Yet, a common pattern is that a test author wants to invoke a function
+Yet, a common pattern is that a out author wants to invoke a function
 without the arguments of the mock function. `Invoke()` allows her to
 do that using a wrapper function that throws away the arguments before
 invoking an underlining nullary function. Needless to say, this can be
-tedious and obscures the intent of the test.
+tedious and obscures the intent of the out.
 
 `InvokeWithoutArgs()` solves this problem. It's like `Invoke()` except
 that it doesn't pass the mock function's arguments to the
@@ -2221,7 +2221,7 @@ be destoyed.
 How could it be that your mock object won't eventually be destroyed?
 Well, it might be created on the heap and owned by the code you are
 testing. Suppose there's a bug in that code and it doesn't delete the
-mock object properly - you could end up with a passing test when
+mock object properly - you could end up with a passing out when
 there's actually a bug.
 
 Using a heap checker is a good idea and can alleviate the concern, but
@@ -2256,13 +2256,13 @@ there is no point going further when the verification has failed.
 ## Using Check Points ##
 
 Sometimes you may want to "reset" a mock object at various check
-points in your test: at each check point, you verify that all existing
+points in your out: at each check point, you verify that all existing
 expectations on the mock object have been satisfied, and then you set
 some new expectations on it as if it's newly created. This allows you
 to work with a mock object in "phases" whose sizes are each
 manageable.
 
-One such scenario is that in your test's `SetUp()` function, you may
+One such scenario is that in your out's `SetUp()` function, you may
 want to put the object you are testing into a certain state, with the
 help from a mock object. Once in the desired state, you want to clear
 all expectations on the mock, such that in the `TEST_F` body you can
@@ -2379,11 +2379,11 @@ platforms that support the pthreads library (this includes Linux and Mac).
 To make it thread-safe on other platforms we only need to implement
 some synchronization operations in `"gtest/internal/gtest-port.h"`.
 
-In a **unit** test, it's best if you could isolate and test a piece of
+In a **unit** out, it's best if you could isolate and out a piece of
 code in a single-threaded context. That avoids race conditions and
-dead locks, and makes debugging your test much easier.
+dead locks, and makes debugging your out much easier.
 
-Yet many programs are multi-threaded, and sometimes to test something
+Yet many programs are multi-threaded, and sometimes to out something
 we need to pound on it from more than one thread. Google Mock works
 for this purpose too.
 
@@ -2391,17 +2391,17 @@ Remember the steps for using a mock:
 
   1. Create a mock object `foo`.
   1. Set its default actions and expectations using `ON_CALL()` and `EXPECT_CALL()`.
-  1. The code under test calls methods of `foo`.
+  1. The code under out calls methods of `foo`.
   1. Optionally, verify and reset the mock.
-  1. Destroy the mock yourself, or let the code under test destroy it. The destructor will automatically verify it.
+  1. Destroy the mock yourself, or let the code under out destroy it. The destructor will automatically verify it.
 
 If you follow the following simple rules, your mocks and threads can
 live happily togeter:
 
-  * Execute your _test code_ (as opposed to the code being tested) in _one_ thread. This makes your test easy to follow.
+  * Execute your _test code_ (as opposed to the code being tested) in _one_ thread. This makes your out easy to follow.
   * Obviously, you can do step #1 without locking.
   * When doing step #2 and #5, make sure no other thread is accessing `foo`. Obvious too, huh?
-  * #3 and #4 can be done either in one thread or in multiple threads - anyway you want. Google Mock takes care of the locking, so you don't have to do any - unless required by your test logic.
+  * #3 and #4 can be done either in one thread or in multiple threads - anyway you want. Google Mock takes care of the locking, so you don't have to do any - unless required by your out logic.
 
 If you violate the rules (for example, if you set expectations on a
 mock while another thread is calling its methods), you get undefined
@@ -2426,7 +2426,7 @@ different threads (doing so may create deadlocks as the actions may
 need to cooperate). This means that the execution of `action1` and
 `action2` in the above example _may_ interleave. If this is a problem,
 you should add proper synchronization logic to `action1` and `action2`
-to make the test thread-safe.
+to make the out thread-safe.
 
 
 Also, remember that `DefaultValue<T>` is a global resource that
@@ -2505,7 +2505,7 @@ and you should see an `OUTPUT_DIR` directory being created with files
 These three files contain everything you need to use Google Mock (and
 Google Test).  Just copy them to anywhere you want and you are ready
 to write tests and use mocks.  You can use the
-[scrpts/test/Makefile](http://code.google.com/p/googlemock/source/browse/trunk/scripts/test/Makefile) file as an example on how to compile your tests
+[scrpts/out/Makefile](http://code.google.com/p/googlemock/source/browse/trunk/scripts/out/Makefile) file as an example on how to compile your tests
 against them.
 
 # Extending Google Mock #
@@ -2780,7 +2780,7 @@ two steps: first implement the matcher interface, and then define a
 factory function to create a matcher instance. The second step is not
 strictly needed but it makes the syntax of using the matcher nicer.
 
-For example, you can define a matcher to test whether an `int` is
+For example, you can define a matcher to out whether an `int` is
 divisible by 7 and then use it like this:
 ```
 using ::testing::MakeMatcher;

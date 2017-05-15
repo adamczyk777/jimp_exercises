@@ -6,6 +6,11 @@
 
 namespace academia {
 
+    /*
+     * Definitions for Json Serializer
+     * Makes use of Serializer method in serializable
+     */
+
     void JsonSerializer::IntegerField(const std::string &field_name, int value) {
         *this->test << "\"" << field_name << "\": "  << value;
     }

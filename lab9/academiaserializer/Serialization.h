@@ -5,6 +5,10 @@
 #ifndef JIMP_EXERCISES_SERIALIZATION_H
 #define JIMP_EXERCISES_SERIALIZATION_H
 
+/*
+ * This file is necessary for tests to work properly
+ */
+
 #include "Serializable.h"
 #include "Building.h"
 #include "Room.h"

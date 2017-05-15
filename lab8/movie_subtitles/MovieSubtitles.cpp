@@ -41,15 +41,25 @@ void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream
     // regex wrong patterns:
     regex dot_instead_of_comma{
             R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}(\,|\.)[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}(\,|\.)[0-9]{3})"};
-    regex arrow_too_short{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} -> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex missing_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex semicolon_instead_of_colon{R"([0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3} --> [0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3})"};
-    regex seconds_out_of_range{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{5})"};
-    regex missing_milliseconds_first{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"}; // TODO  (\,[0-9]{3}|)
-    regex missing_milliseconds_second{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}$)"}; // TODO  (\,[0-9]{3}|)
-    regex wrong_field_format{R"((\w+)[0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};  // TODO magic
-    regex missing_spaces{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}-->[0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
-    regex too_long_arrow{R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} -+--> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"}; // TODO add + after - so it works for arrows longer than --->
+    regex arrow_too_short{
+            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} -> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
+    regex missing_arrow
+            {R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}\ [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
+    regex semicolon_instead_of_colon{
+            R"([0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3} --> [0-9]{2}(\;|\:)[0-9]{2}(\;|\:)[0-9]{2}\,[0-9]{3})"};
+    regex seconds_out_of_range{
+            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{5})"};
+    regex missing_milliseconds_first{
+            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"}; // TODO  (\,[0-9]{3}|)
+    regex missing_milliseconds_second{
+            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{2}\:[0-9]{2}\:[0-9]{2}$)"}; // TODO  (\,[0-9]{3}|)
+    regex wrong_field_format{
+            R"((\w+)[0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} --> [0-9]{1}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};  // TODO magic
+    regex missing_spaces{
+            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3}-->[0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
+    regex too_long_arrow{
+            R"([0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3} -+--> [0-9]{2}\:[0-9]{2}\:[0-9]{2}\,[0-9]{3})"};
+    // TODO add + after - so it works for arrows longer than --->
 
     int line_counter = 0;
     /*int current_frame = 0;
@@ -57,7 +67,8 @@ void SubRipSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstream
 
     while (std::getline(*input, line)) {
         if (regex_match(line, pattern)) { // matching correct pattern first
-            line_counter++; // we increment line counter only if we find time line, because subrip format doesn't use /n as a separator between 'sets'
+            line_counter++; // we increment line counter only if we find time line,
+            // because subrip format doesn't use /n as a separator between 'sets'
            /* current_frame = int(line[0] - '0');
             cout << "tutaj " << current_frame << endl;*/
             int combined_time1 = delay + stoi(line.substr(0, 2)) * 3600000 + stoi(line.substr(3, 2)) * 60000
@@ -210,9 +221,11 @@ void MicroDvdSubtitles::ShiftAllSubtitlesBy(int delay, int framerate, stringstre
         if(currentLine[0] != '{') {
             throw InvalidSubtitleLineFormat(); // first line character isn't '{'
         }
-        // czytam od poczatku linii. Jesli pierwszy znak linii to nie { - wywalam exception. Jesli napotkam } lub koniec linii \n przestaje czytac.
+        // czytam od poczatku linii. Jesli pierwszy znak linii to nie { - wywalam exception.
+        // Jesli napotkam } lub koniec linii \n przestaje czytac.
 
-        if (std::regex_search(currentLine, matches, pharse)) { // TODO: uzyc grupowania matches zeby nie musiec obcinac stringa
+        if (std::regex_search(currentLine, matches, pharse)) {
+            // TODO: uzyc grupowania matches zeby nie musiec obcinac stringa
             startFrame = matches[0];
             //charCounter += startFrame.size();
             startFrame = startFrame.substr(1, startFrame.size() - 2);

@@ -42,7 +42,7 @@ namespace algo {
     }
 
     std::string Join(const std::string &joiner, const std::vector<double> &v) {
-        return std::__cxx11::string();
+        return std::string();
     }
 
     int Sum(const std::vector<int> &v) {

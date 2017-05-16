@@ -12,6 +12,7 @@
 #include<algorithm>
 
 class Algorithms {
+public:
     std::set<std::string> Keys(const std::map<std::string, int> &m);
 
     std::vector<int> Values(const std::map<std::string, int> &m);

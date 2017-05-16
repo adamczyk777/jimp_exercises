@@ -2,7 +2,7 @@
 // Created by adamc on 16.05.2017.
 //
 
-#include "Algorithms.h"
+#include "Algo.h"
 
 std::set<std::string> Algorithms::Keys(const std::map<std::string, int> &m) {
     return std::set<std::string>();
@@ -17,23 +17,24 @@ std::map<std::string, int> Algorithms::DivisableBy(const std::map<std::string, i
 }
 
 void Algorithms::SortInPlace(std::vector<int> *v) {
-
+    std::stable_sort(v->begin(), v->end());
 }
 
 std::vector<int> Algorithms::Sort(const std::vector<int> &v) {
-    return std::vector<int>();
+    std::sort(v.begin(), v.end());
+    return v;
 }
 
 void Algorithms::SortByFirstInPlace(std::vector<std::pair<int, int>> *v) {
-
+    std::stable_sort(v->begin()->first, v->end()->first);
 }
 
 void Algorithms::SortBySecondInPlace(std::vector<std::pair<int, int>> *v) {
-
+    std::stable_sort(v->begin()->second, v->end()->second);
 }
 
 void Algorithms::SortByThirdInPlace(std::vector<std::tuple<int, int, int>> *v) {
-
+    std::stable_sort(v->begin()[2], v->end()[2]);
 }
 
 std::vector<std::string> Algorithms::MapToString(const std::vector<double> &v) {

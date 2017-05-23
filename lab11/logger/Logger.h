@@ -6,7 +6,12 @@
 #define JIMP_EXERCISES_LOGGER_H
 
 
-class logger {
+class Logger {
+public:
+    void Debug();
+    void Info();
+    void Warning();
+    void Error();
 
 };
 

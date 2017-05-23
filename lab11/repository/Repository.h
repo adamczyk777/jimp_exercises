@@ -1,0 +1,8 @@
+//
+// Created by Tay on 5/23/2017.
+//
+
+#ifndef JIMP_EXERCISES_REPOSITORY_H
+#define JIMP_EXERCISES_REPOSITORY_H
+
+#endif //JIMP_EXERCISES_REPOSITORY_H

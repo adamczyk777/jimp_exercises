@@ -3,8 +3,10 @@
 //
 
 #include "Algo.h"
+
 namespace algo {
-    std::set<std::string> Keys(const std::map<std::string, int> &m) {
+    std::set<std::string> Keys(const std::map<std::string, int> &m) { // takes map and returns set of map keys
+
         return std::set<std::string>();
     }
 
@@ -20,8 +22,8 @@ namespace algo {
         std::stable_sort(v->begin(), v->end());
     }
 
-    std::vector<int> Sort(const std::vector<int> &v) {
-        //std::sort(v.begin(), v.end());
+    std::vector<int> Sort(std::vector<int> &v) {
+        std::sort(v.begin(), v.end());
         return v;
     }
 
@@ -46,11 +48,14 @@ namespace algo {
     }
 
     int Sum(const std::vector<int> &v) {
+
         return 0;
     }
 
     int Product(const std::vector<int> &v) {
-        return 0;
+        int product = 1;
+        //for_each(v.begin(), v.end(), );
+        return product;
     }
 
     bool Contains(const std::vector<int> &v, int element) {
@@ -62,6 +67,7 @@ namespace algo {
     }
 
     bool ContainsValue(const std::map<std::string, int> &v, int value) {
+        // find()
         return false;
     }
 
@@ -70,15 +76,17 @@ namespace algo {
     }
 
     void RemoveDuplicatesInPlace(std::vector<std::string> *v) {
-
+        // unique?
     }
 
     void InitializeWith(int initial_value, std::vector<int> *v) {
         std::fill(v->begin(), v->end(), initial_value);
     }
 
-    std::vector<int> InitializedVectorOfLength(int length, int initial_value) {
-        return std::vector<int>();
+    std::vector<int> InitializedVectorOfLength(int length, int initial_value) { // inicjalizuje wektor danej dlugosci zadana wartoscia
+        std::vector<int> v;
+        std::fill_n(v.begin(), length, initial_value);
+        return v;
     }
 
     void CopyInto(const std::vector<int> &v, int n_elements, std::vector<int> *out) {

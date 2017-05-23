@@ -5,7 +5,8 @@
 #include "Algo.h"
 
 namespace algo {
-    std::set<std::string> Keys(const std::map<std::string, int> &m) {
+    std::set<std::string> Keys(const std::map<std::string, int> &m) { // takes map and returns set of map keys
+
         return std::set<std::string>();
     }
 
@@ -21,8 +22,8 @@ namespace algo {
         std::stable_sort(v->begin(), v->end());
     }
 
-    std::vector<int> Sort(const std::vector<int> &v) {
-        //std::sort(v.begin(), v.end());
+    std::vector<int> Sort(std::vector<int> &v) {
+        std::sort(v.begin(), v.end());
         return v;
     }
 
@@ -43,7 +44,7 @@ namespace algo {
     }
 
     std::string Join(const std::string &joiner, const std::vector<double> &v) {
-        return std::__cxx11::string();
+        return std::string();
     }
 
     int Sum(const std::vector<int> &v) {

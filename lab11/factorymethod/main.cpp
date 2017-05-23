@@ -11,9 +11,9 @@ T factoryMethod() {
     return T{};
 }
 
-class Dupa{
+class TestClass{
 public:
-    Dupa() {};
+    TestClass() {};
     void test() {
         cout << "dziala" << endl;
     }
@@ -21,7 +21,9 @@ public:
 
 int main() {
 
-    auto object = factoryMethod<Dupa>();
+    int i = factoryMethod<int>();
+    cout << i << endl;
+    auto object = factoryMethod<TestClass>();
     object.test();
     return 0;
 }

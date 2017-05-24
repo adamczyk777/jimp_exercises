@@ -6,6 +6,7 @@
 #define JIMP_EXERCISES_SCHEDULE_H
 
 #include<vector>
+#include "SchedulingItem.h"
 
 namespace academia {
     class Schedule { // caly harmonogram
@@ -14,11 +15,12 @@ namespace academia {
         Schedule OfRoom(int room_id) const; // wylicza harmonogram dla danej sali
         Schedule OfYear(int year) const; // wylicza harmonogram dla danego roku studiów (1. 2. itd)
         std::vector<int> AvailableTimeSlots(int n_time_slots) const; // zwraca wolne terminy dla zajec
-        int Size() const;
+        std::size_t Size() const;
 
-       Schedule operator[](int i) const {
+       SchedulingItem& operator[](std::size_t i);
 
-        }
+    private:
+        std::vector<SchedulingItem> schedule;
     };
 }
 #endif //JIMP_EXERCISES_SCHEDULE_H

@@ -4,22 +4,30 @@
 
 #include "Schedule.h"
 
-int academia::Schedule::Size() const {
-    return 0;
-}
+namespace academia {
 
-std::vector<int> academia::Schedule::AvailableTimeSlots(int n_time_slots) const {
-    return std::vector<int>();
-}
+    std::size_t Schedule::Size() const {
+        return 0;
+    }
 
-academia::Schedule academia::Schedule::OfTeacher(int teacher_id) const {
-    return academia::Schedule();
-}
+    std::vector<int> Schedule::AvailableTimeSlots(int n_time_slots) const {
+        return std::vector<int>();
+    }
 
-academia::Schedule academia::Schedule::OfRoom(int room_id) const {
-    return academia::Schedule();
-}
+    Schedule Schedule::OfTeacher(int teacher_id) const {
+        return Schedule();
+    }
 
-academia::Schedule academia::Schedule::OfYear(int year) const {
-    return academia::Schedule();
+    Schedule Schedule::OfRoom(int room_id) const {
+        return Schedule();
+    }
+
+    Schedule Schedule::OfYear(int year) const {
+        return Schedule();
+    }
+
+    SchedulingItem &Schedule::operator[](std::size_t i) {
+        return this->schedule[i];
+    }
+
 }

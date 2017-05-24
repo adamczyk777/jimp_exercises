@@ -8,21 +8,17 @@
 namespace academia {
     class SchedulingItem { // pojedynczy przedmiot szkolny
     public:
-    private:
-        int course_id;
-        int teacher_id;
-    public:
+        SchedulingItem(int course_id, int teacher_id, int room_id, int time_slot, int year);
+
         int CourseId() const;
-
         int TeacherId() const;
-
         int RoomId() const;
-
         int TimeSlot() const;
-
         int Year() const;
 
     private:
+        int course_id;
+        int teacher_id;
         int room_id;
         int time_slot; // kazde 2h, nie zachodza, od pon 8:00 przez caly tydzien
         int year;

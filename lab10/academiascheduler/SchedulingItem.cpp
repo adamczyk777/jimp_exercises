@@ -4,22 +4,28 @@
 
 #include "SchedulingItem.h"
 
-int academia::SchedulingItem::CourseId() const {
-    return course_id;
-}
+namespace academia {
+    SchedulingItem::SchedulingItem(int course, int teacher, int room, int time, int y) :
+            course_id{course}, teacher_id{teacher}, room_id{room}, time_slot{time}, year{y} {}
 
-int academia::SchedulingItem::TeacherId() const {
-    return teacher_id;
-}
 
-int academia::SchedulingItem::RoomId() const {
-    return room_id;
-}
+    int SchedulingItem::CourseId() const {
+        return course_id;
+    }
 
-int academia::SchedulingItem::TimeSlot() const {
-    return time_slot;
-}
+    int SchedulingItem::TeacherId() const {
+        return teacher_id;
+    }
 
-int academia::SchedulingItem::Year() const {
-    return year;
+    int SchedulingItem::RoomId() const {
+        return room_id;
+    }
+
+    int SchedulingItem::TimeSlot() const {
+        return time_slot;
+    }
+
+    int SchedulingItem::Year() const {
+        return year;
+    }
 }

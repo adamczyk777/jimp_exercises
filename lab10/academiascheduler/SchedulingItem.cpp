@@ -5,8 +5,8 @@
 #include "SchedulingItem.h"
 
 namespace academia {
-    SchedulingItem::SchedulingItem(int course, int teacher, int room, int time, int y) :
-            course_id{course}, teacher_id{teacher}, room_id{room}, time_slot{time}, year{y} {}
+    SchedulingItem::SchedulingItem(int course_id, int teacher_id, int room_id, int time_slot, int year) :
+            course_id{course_id}, teacher_id{teacher_id}, room_id{room_id}, time_slot{time_slot}, year{year} {}
 
 
     int SchedulingItem::CourseId() const {

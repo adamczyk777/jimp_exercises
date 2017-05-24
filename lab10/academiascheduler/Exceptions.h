@@ -5,11 +5,14 @@
 #ifndef JIMP_EXERCISES_EXCEPTIONS_H
 #define JIMP_EXERCISES_EXCEPTIONS_H
 
-namespace academia {
-    class NoViableSolutionFound {
-    public:
+#include <stdexcept>
 
+namespace academia {
+    class NoViableSolutionFound : public std::runtime_error {
+    public:
+        NoViableSolutionFound() : std::runtime_error("can't make schedule") {}
     };
+
 }
 
 #endif //JIMP_EXERCISES_EXCEPTIONS_H

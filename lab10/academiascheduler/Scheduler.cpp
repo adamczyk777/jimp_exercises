@@ -4,4 +4,3 @@
 
 #include "Scheduler.h"
 
-namespace academia {}

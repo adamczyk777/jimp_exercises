@@ -8,7 +8,7 @@
 #include "SchedulerInterface.h"
 
 namespace academia {
-    class GreedyScheduler : Scheduler {
+    class GreedyScheduler : public Scheduler {
     public:
         Schedule PrepareNewSchedule(const std::vector<int> &rooms,
                                     const std::map<int, std::vector<int>> &teacher_courses_assignment,

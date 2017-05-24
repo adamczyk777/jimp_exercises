@@ -5,10 +5,10 @@
 #ifndef JIMP_EXERCISES_EXCEPTIONS_H
 #define JIMP_EXERCISES_EXCEPTIONS_H
 
+namespace academia {
+    class NoViableSolutionFound {
 
-class NoViableSolutionFound {
-
-};
-
+    };
+}
 
 #endif //JIMP_EXERCISES_EXCEPTIONS_H

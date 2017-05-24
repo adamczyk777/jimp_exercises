@@ -5,10 +5,12 @@
 #ifndef JIMP_EXERCISES_GREEDYSCHEDULER_H
 #define JIMP_EXERCISES_GREEDYSCHEDULER_H
 
+#include "SchedulerInterface.h"
 
-class GreedyScheduler {
+namespace academia {
+    class GreedyScheduler : Scheduler {
 
-};
-
+    };
+}
 
 #endif //JIMP_EXERCISES_GREEDYSCHEDULER_H

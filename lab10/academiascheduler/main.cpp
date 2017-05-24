@@ -2,4 +2,6 @@
 // Created by Tay on 5/23/2017.
 //
 
-#include "Schedule.h"
+int main() {
+    return 0;
+}

@@ -1,5 +1,5 @@
 
-project(scheduler)
+project(academiascheduler)
 
 set(HEDEAR_FILES Scheduler.h)
 set(SOURCE_FILES Scheduler.cpp)

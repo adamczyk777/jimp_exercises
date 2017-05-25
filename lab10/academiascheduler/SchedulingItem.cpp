@@ -9,6 +9,8 @@ namespace academia {
             course_id{course_id}, teacher_id{teacher_id}, room_id{room_id}, time_slot{time_slot}, year{year} {}
 
 
+    // Getters for Shedulingitem properties
+
     int SchedulingItem::CourseId() const {
         return course_id;
     }

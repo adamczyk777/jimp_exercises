@@ -29,21 +29,26 @@ namespace academia {
 }
 
 namespace academia {
-    class SchedulingItem { // pojedynczy przedmiot szkolny
+    class SchedulingItem { // Single item to be scheduled, one lesson
     public:
         SchedulingItem(int course_id, int teacher_id, int room_id, int time_slot, int year);
 
         int CourseId() const;
+
         int TeacherId() const;
+
         int RoomId() const;
+
         int TimeSlot() const;
+
         int Year() const;
 
     private:
         int course_id;
         int teacher_id;
         int room_id;
-        int time_slot; // kazde 2h, nie zachodza, od pon 8:00 przez caly tydzien
+        int time_slot;  // slot where certain lesson fall in
+        // (np. dla 20: 1 ⇒ pon 8:00-10:00, 2 ⇒ pon 10:00-12:00, … 20 ⇒ pią 14:00-16:00)
         int year;
     };
 }
@@ -52,14 +57,16 @@ namespace academia {
     class Schedule { // caly harmonogram
     public:
         Schedule() {};
+
         Schedule OfTeacher(int teacher_id) const; // wylicza fragment harmonogramu dla danego nauczyciela
         Schedule OfRoom(int room_id) const; // wylicza harmonogram dla danej sali
         Schedule OfYear(int year) const; // wylicza harmonogram dla danego roku studiów (1. 2. itd)
         std::vector<int> AvailableTimeSlots(int n_time_slots) const; // zwraca wolne terminy dla zajec
         std::size_t Size() const;
+
         void InsertScheduleItem(const SchedulingItem &item);
 
-        const SchedulingItem& operator[](std::size_t i) const;
+        const SchedulingItem &operator[](std::size_t i) const;
 
     private:
         std::vector<SchedulingItem> schedule;
@@ -81,6 +88,7 @@ namespace academia {
         Schedule PrepareNewSchedule(const std::vector<int> &rooms,
                                     const std::map<int, std::vector<int>> &teacher_courses_assignment,
                                     const std::map<int, std::set<int>> &courses_of_year, int n_time_slots);
+
     private:
         bool Contains(const std::vector<int> &v, int value);
 

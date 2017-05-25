@@ -54,14 +54,19 @@ namespace academia {
 }
 
 namespace academia {
-    class Schedule { // caly harmonogram
+    class Schedule { // Complete Timetable for whole week and all lessons
     public:
         Schedule() {};
 
-        Schedule OfTeacher(int teacher_id) const; // wylicza fragment harmonogramu dla danego nauczyciela
-        Schedule OfRoom(int room_id) const; // wylicza harmonogram dla danej sali
-        Schedule OfYear(int year) const; // wylicza harmonogram dla danego roku studiów (1. 2. itd)
-        std::vector<int> AvailableTimeSlots(int n_time_slots) const; // zwraca wolne terminy dla zajec
+        /* Returns complete schedule for a single teacher with certain id */
+        Schedule OfTeacher(int teacher_id) const;
+        /* Returns complete schedule for a single room with certain id */
+        Schedule OfRoom(int room_id) const;
+        /* Returns complete schedule for certain year students with certain id */
+        Schedule OfYear(int year) const;
+        /* Returns list of free time slots*/
+        std::vector<int> AvailableTimeSlots(int n_time_slots) const;
+        /* Returns plan/schedule size */
         std::size_t Size() const;
 
         void InsertScheduleItem(const SchedulingItem &item);
@@ -69,13 +74,16 @@ namespace academia {
         const SchedulingItem &operator[](std::size_t i) const;
 
     private:
+        // List that holds Scheduleitem objects
         std::vector<SchedulingItem> schedule;
     };
 }
 
 namespace academia {
-    class Scheduler { // interfejs ukladacza planu
+    // Scheduler Interface, contract for how to write a timetable/plan/schedule scheduler
+    class Scheduler {
     public:
+        // Function that should calculate and return more/less optimal schedule blueprint
         virtual Schedule PrepareNewSchedule(const std::vector<int> &rooms,
                                             const std::map<int, std::vector<int>> &teacher_courses_assignment,
                                             const std::map<int, std::set<int>> &courses_of_year, int n_time_slots) = 0;
@@ -83,8 +91,11 @@ namespace academia {
 }
 
 namespace academia {
+    // GreedyScheduler Interface, contract for how to write a timetable/plan/schedule scheduler that
+    // uses greedy algorithm as it's logic
     class GreedyScheduler : public Scheduler {
     public:
+        // Function that should calculate and return more/less optimal schedule blueprint
         Schedule PrepareNewSchedule(const std::vector<int> &rooms,
                                     const std::map<int, std::vector<int>> &teacher_courses_assignment,
                                     const std::map<int, std::set<int>> &courses_of_year, int n_time_slots);

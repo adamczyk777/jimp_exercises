@@ -18,11 +18,12 @@
 #include <stdexcept>
 #include <algorithm>
 
+// musialem dac wszystko do jednego pliku, gdyz jesli podziele po plikach wyrzuca blad.
 
 namespace academia {
     class NoViableSolutionFound : public std::runtime_error {
     public:
-        NoViableSolutionFound() : std::runtime_error("can't make schedule") {}
+        NoViableSolutionFound() : std::runtime_error("Can't create schedule") {}
     };
 
 }

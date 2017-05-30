@@ -72,6 +72,7 @@ public:
                 }
                 else {
                     root->setRight(element);
+                    return element;
                 }
             } else {
                 if(root->getLeft() != nullptr) {
@@ -79,6 +80,7 @@ public:
                 }
                 else {
                     root->setLeft(element);
+                    return element;
                 }
             }
         }

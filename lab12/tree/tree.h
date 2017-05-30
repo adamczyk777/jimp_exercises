@@ -14,18 +14,9 @@ template<class T>
 class node {
 public:
     node(T value) {
-        this->parent = nullptr;
         this->left = nullptr;
         this->right = nullptr;
         this->value = value;
-    }
-
-    node *getParent() const {
-        return parent;
-    }
-
-    void setParent(node *parent) {
-        node::parent = parent;
     }
 
     node *getLeft() const {
@@ -53,7 +44,6 @@ public:
     }
 
 private:
-    node *parent;
     node *left;
     node *right;
     T value;
@@ -85,7 +75,6 @@ public:
                 }
             }
         }
-        return element;
     }
 
     node<T> *Search(T value) {

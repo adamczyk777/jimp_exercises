@@ -65,21 +65,22 @@ public:
     tree(node<T> *root) : root(root) {}
 
     node<T> *Insert(node<T> *element) {
-        while(root != nullptr) {
-            if (element->getValue() >= root->getValue()) {
-                if(root->getRight() != nullptr) {
-                    root = (root->getRight());
+        node<T> *tmp = root;
+        while(tmp != nullptr) {
+            if (element->getValue() >= tmp->getValue()) {
+                if(tmp->getRight() != nullptr) {
+                    tmp = (tmp->getRight());
                 }
                 else {
-                    root->setRight(element);
+                    tmp->setRight(element);
                     return element;
                 }
             } else {
-                if(root->getLeft() != nullptr) {
-                    root = (root->getLeft());
+                if(tmp->getLeft() != nullptr) {
+                    tmp = (tmp->getLeft());
                 }
                 else {
-                    root->setLeft(element);
+                    tmp->setLeft(element);
                     return element;
                 }
             }

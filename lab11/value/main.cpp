@@ -5,15 +5,18 @@
 #include <iostream>
 #include <memory>
 
-template <typename T> T value(T* obj) {
+template<class T>
+T value(T *obj) {
     return *obj;
 }
 
 int main() {
     std::weak_ptr<int> weak;
-    int * pointer;
+    std::shared_ptr<int> shared;
+    int *pointer;
     int a = 5;
     weak = std::make_shared<int>(a);
+    shared = std::make_shared<int>(a);
     pointer = &a;
 
     std::cout << *pointer << std::endl;

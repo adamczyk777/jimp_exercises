@@ -88,6 +88,17 @@ public:
     }
 
     node<T> *Search(T value) {
+        while(root != nullptr) {
+            if(root->getValue() == value) {
+                return root;
+            }
+            if (root->getValue() > value) {
+                root = root->getRight();
+            }
+            else {
+                root = root->getLeft();
+            }
+        }
         return nullptr;
     }
 

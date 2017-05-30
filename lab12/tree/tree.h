@@ -5,6 +5,11 @@
 #ifndef JIMP_EXERCISES_TREE_H
 #define JIMP_EXERCISES_TREE_H
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
+
 template<class T>
 class node {
 public:
@@ -57,9 +62,9 @@ private:
 template<class T>
 class tree {
 public:
-    tree(node *root) : root(root) {}
+    tree(node<T> *root) : root(root) {}
 
-    node *Insert(node *element) {
+    node<T> *Insert(node<T> *element) {
         while(root != nullptr) {
             if (element->getValue() >= root->getValue()) {
                 if(root->getRight() != nullptr) {
@@ -80,12 +85,12 @@ public:
         return element;
     }
 
-    node *Search(T value) {
+    node<T> *Search(T value) {
         return nullptr;
     }
 
 private:
-    node *root;
+    node<T> *root;
 };
 
 

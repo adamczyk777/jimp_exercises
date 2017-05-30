@@ -83,7 +83,7 @@ public:
             if(tmp->getValue() == value) {
                 return tmp;
             }
-            if (tmp->getValue() > value) {
+            if (tmp->getValue() < value) {
                 tmp = tmp->getRight();
             }
             else {

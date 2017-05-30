@@ -59,7 +59,7 @@ class tree {
 public:
     tree(node *root) : root(root) {}
 
-    node *tree::Insert(node *element) {
+    node *Insert(node *element) {
         while(root != nullptr) {
             if (element->getValue() >= root->getValue()) {
                 if(root->getRight() != nullptr) {
@@ -80,7 +80,7 @@ public:
         return element;
     }
 
-    node *tree::Search(T value) {
+    node *Search(T value) {
         return nullptr;
     }
 

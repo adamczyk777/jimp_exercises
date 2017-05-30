@@ -89,15 +89,16 @@ public:
     }
 
     node<T> *Search(T value) {
-        while(root != nullptr) {
-            if(root->getValue() == value) {
-                return root;
+        node<T> *tmp = root;
+        while(tmp != nullptr) {
+            if(tmp->getValue() == value) {
+                return tmp;
             }
-            if (root->getValue() > value) {
-                root = root->getRight();
+            if (tmp->getValue() > value) {
+                tmp = tmp->getRight();
             }
             else {
-                root = root->getLeft();
+                tmp = tmp->getLeft();
             }
         }
         return nullptr;

@@ -23,10 +23,10 @@ int main() {
     cout << (c.getRight())->getValue() << endl;
 
     //expected nullptr
-    cout << tree1.Search(10) << endl;
+    cout << tree1.Search(10)->getValue() << endl;
 
     //expected value
-    cout << tree1.Search(6) << endl;
+    cout << tree1.Search(6)->getValue() << endl;
 
     return 0;
 }

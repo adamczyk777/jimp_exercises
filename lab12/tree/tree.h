@@ -6,6 +6,7 @@
 #define JIMP_EXERCISES_TREE_H
 
 #include <iostream>
+
 using std::cout;
 using std::endl;
 
@@ -56,20 +57,18 @@ public:
 
     node<T> *Insert(node<T> *element) {
         node<T> *tmp = root;
-        while(tmp != nullptr) {
+        while (tmp != nullptr) {
             if (element->getValue() >= tmp->getValue()) {
-                if(tmp->getRight() != nullptr) {
+                if (tmp->getRight() != nullptr) {
                     tmp = (tmp->getRight());
-                }
-                else {
+                } else {
                     tmp->setRight(element);
                     return element;
                 }
             } else {
-                if(tmp->getLeft() != nullptr) {
+                if (tmp->getLeft() != nullptr) {
                     tmp = (tmp->getLeft());
-                }
-                else {
+                } else {
                     tmp->setLeft(element);
                     return element;
                 }
@@ -79,14 +78,13 @@ public:
 
     node<T> *Search(T value) {
         node<T> *tmp = root;
-        while(tmp != nullptr) {
-            if(tmp->getValue() == value) {
+        while (tmp != nullptr) {
+            if (tmp->getValue() == value) {
                 return tmp;
             }
             if (tmp->getValue() > value) {
                 tmp = tmp->getRight();
-            }
-            else {
+            } else {
                 tmp = tmp->getLeft();
             }
         }

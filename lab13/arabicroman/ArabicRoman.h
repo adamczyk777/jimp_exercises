@@ -4,10 +4,16 @@
 
 #ifndef JIMP_EXERCISES_ARABICROMAN_H
 #define JIMP_EXERCISES_ARABICROMAN_H
+#include <iostream>
+#include <string>
 
-#include<string>
+using std::string;
 
 class ArabicRoman {
+
+public:
+    static double toRoman(int arabic);
+
     static int ToArabic(std::string roman);
 };
 

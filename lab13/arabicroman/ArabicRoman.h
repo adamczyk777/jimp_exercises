@@ -5,9 +5,10 @@
 #ifndef JIMP_EXERCISES_ARABICROMAN_H
 #define JIMP_EXERCISES_ARABICROMAN_H
 
+#include<string>
 
 class ArabicRoman {
-
+    static int ToArabic(std::string roman);
 };
 
 

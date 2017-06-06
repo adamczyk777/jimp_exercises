@@ -1,5 +1,5 @@
 //
-// Created by Tay on 6/6/17.
+// Created by jadamczyk on 06.06.17.
 //
 
 #include "ArabicRoman.h"

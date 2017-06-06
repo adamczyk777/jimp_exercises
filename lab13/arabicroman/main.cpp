@@ -5,6 +5,6 @@
 #include "ArabicRoman.h"
 
 int main() {
-    std::cout << ArabicRoman::ToArabic("MDVIII");
+    std::cout << ArabicRoman::toArabic("MDVIII");
     return 0;
 }

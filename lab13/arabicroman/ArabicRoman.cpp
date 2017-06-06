@@ -7,7 +7,7 @@
 #include<iostream>
 #include <sstream>
 
-int ArabicRoman::ToArabic(std::string roman) {
+int ArabicRoman::toArabic(std::string roman) {
     int arabic = 0;
     std::map<std::string, int> roman_numerals;
     roman_numerals["M"] = 1000;

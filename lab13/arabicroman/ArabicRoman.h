@@ -14,7 +14,7 @@ class ArabicRoman {
 public:
     static string toRoman(int arabic);
 
-    static int ToArabic(std::string roman);
+    static int toArabic(std::string roman);
 };
 
 

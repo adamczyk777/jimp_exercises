@@ -8,7 +8,7 @@
 
 int ArabicRoman::ToArabic(std::string roman) {
     int arabic = 0;
-    std::map roman_numerals<std::string, int>;
+    std::map<std::string, int> roman_numerals;
     roman_numerals["M"] = 1000;
     roman_numerals["CM"] = 900;
     roman_numerals["D"] = 500;
@@ -23,12 +23,29 @@ int ArabicRoman::ToArabic(std::string roman) {
     roman_numerals["IV"] = 4;
     roman_numerals["I"] = 1;
 
-    std::string current = roman.substr(0,2);
-
-    while(current[1] != '\0') {
-            if(roman_numerals.count(current)) {
-                std::cout << "test";
+    std::string current = roman.substr(0, 2);
+    unsigned int left = 0;
+    unsigned int right = 2;
+    std::string current_single;
+    while (current[1] != '\0' && current[0] != '\0') {
+        current_single = current.substr(0,1);
+        if (roman_numerals.count(current)) {
+            arabic += roman_numerals[current];
+            left += 2;
+            right += 2;
+            current = roman.substr(left, right);
+        } else if (roman_numerals.count(current_single)) {
+            arabic += roman_numerals[current_single];
+            left += 1;
+            right += 1;
+            current = roman.substr(left, right);
+        } else {
+            std::cout << "error";
+            break;
         }
+    }
+    if(current[0] != '\0') {
+        arabic += roman_numerals[current.substr(0)];
     }
     return arabic;
 }

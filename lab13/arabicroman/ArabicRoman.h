@@ -12,7 +12,7 @@ using std::string;
 class ArabicRoman {
 
 public:
-    static double toRoman(int arabic);
+    static string toRoman(int arabic);
 
     static int ToArabic(std::string roman);
 };

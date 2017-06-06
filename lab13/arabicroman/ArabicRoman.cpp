@@ -33,8 +33,10 @@ int ArabicRoman::ToArabic(std::string roman) {
     return arabic;
 }
 
-double ArabicRoman::toRoman(int arabic) {
-    int roman;
+string ArabicRoman::toRoman(int arabic) {
+    string roman;
+
+
 
     return roman;
 }

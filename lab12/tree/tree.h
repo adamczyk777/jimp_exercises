@@ -84,51 +84,5 @@ public:
 
 };
 
-// Legacy Code:
-//template<class T>
-//class tree {
-//public:
-//    tree(node<T> *root) : root(root) {}
-//
-//    node<T> *Insert(node<T> *element) {
-//        node<T> *tmp = root;
-//        while (tmp != nullptr) {
-//            if (element->getValue() >= tmp->getValue()) {
-//                if (tmp->getRight() != nullptr) {
-//                    tmp = (tmp->getRight());
-//                } else {
-//                    tmp->setRight(element);
-//                    return element;
-//                }
-//            } else {
-//                if (tmp->getLeft() != nullptr) {
-//                    tmp = (tmp->getLeft());
-//                } else {
-//                    tmp->setLeft(element);
-//                    return element;
-//                }
-//            }
-//        }
-//    }
-//
-//    node<T> *Search(T value) {
-//        node<T> *tmp = root;
-//        while (tmp != nullptr) {
-//            if (tmp->getValue() == value) {
-//                return tmp;
-//            }
-//            if (tmp->getValue() < value) {
-//                tmp = tmp->getRight();
-//            } else {
-//                tmp = tmp->getLeft();
-//            }
-//        }
-//        return nullptr;
-//    }
-//
-//private:
-//    node<T> *root;
-//};
-
 
 #endif //JIMP_EXERCISES_TREE_H

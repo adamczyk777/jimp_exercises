@@ -1,25 +1,20 @@
 //
-// Created by jadamczyk on 30/05/17.
+// Created by jadamczyk on 10.06.17.
 //
 
-#include "tree.h"
+#include "Tree.h"
 
 int main() {
 
-    tree<int> tree1;
-
-    tree1.insert(5);
-    tree1.insert(4);
-    tree1.insert(7);
-    tree1.insert(9);
-    tree1.insert(1);
-    tree1.insert(2);
-
-    tree1.printTree();
-
-    cout << "That was a tree :)" << endl;
-    cout << tree1.search(5)->value << endl;
-    cout << tree1.search(0)->value << endl;
+    tree::Tree<int> tree{5};
+    auto value = tree.Value();
+    cout << value << endl;
+    cout << "should be 5" << endl;
+//        EXPECT_EQ(5, value);
+    cout << "should be 1, is:" + tree.Size() << endl;
+//        EXPECT_EQ(1, tree.Size());
+    cout << "should be 1 bit is:" + tree.Depth() << endl;
+//        EXPECT_EQ(1, tree.Depth());
 
     return 0;
 }

@@ -2,24 +2,28 @@
 // Created by jadamczyk on 30/05/17.
 //
 
-#include "tree.h"
+#include "Tree.h"
 
-int main() {
+namespace tree {
 
-    tree<int> tree1;
+    int main() {
 
-    tree1.insert(5);
-    tree1.insert(4);
-    tree1.insert(7);
-    tree1.insert(9);
-    tree1.insert(1);
-    tree1.insert(2);
+        Tree<int> tree1;
 
-    tree1.printTree();
+        tree1.insert(5);
+        tree1.insert(4);
+        tree1.insert(7);
+        tree1.insert(9);
+        tree1.insert(1);
+        tree1.insert(2);
 
-    cout << "That was a tree :)" << endl;
-    cout << tree1.search(5)->value << endl;
-    cout << tree1.search(0)->value << endl;
+        tree1.printTree();
 
-    return 0;
+        cout << "That was a tree :)" << endl;
+        cout << tree1.search(5)->value << endl;
+        cout << tree1.search(0)->value << endl;
+
+        return 0;
+    }
+
 }

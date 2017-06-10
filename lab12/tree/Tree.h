@@ -70,15 +70,15 @@ namespace tree {
             printHelper(root->right);
         }
 
-        void DeleteAllNodes(node<T> *root) {
-            if (root->left) {
-                DeleteAllNodes(root->left);
-            }
-            if (root->right) {
-                DeleteAllNodes(root->right);
-            }
-            delete(root);
-        }
+//        void DeleteAllNodes(node<T> *root) {
+//            if (root->left) {
+//                DeleteAllNodes(root->left);
+//            }
+//            if (root->right) {
+//                DeleteAllNodes(root->right);
+//            }
+//            delete(root);
+//        }
 
     public:
         Tree() {}
@@ -87,9 +87,9 @@ namespace tree {
             this->Insert(root);
         }
 
-        virtual ~Tree() {
-            DeleteAllNodes(this->root);
-        }
+//        virtual ~Tree() {
+//            DeleteAllNodes(this->root);
+//        }
 
         T Value() {
             return root->value;

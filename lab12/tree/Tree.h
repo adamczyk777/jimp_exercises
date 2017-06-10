@@ -28,6 +28,8 @@ namespace tree {
     private:
         node<T> *root;
         int size;
+        int tmpDepth;
+        int maxDepth;
 
         void insertHelper(node<T> *root, T value) {
             if (value < root->value) {
@@ -42,6 +44,10 @@ namespace tree {
                 } else {
                     insertHelper(root->right, value);
                 }
+            }
+            this->tmpDepth++;
+            if (tmpDepth > maxDepth) {
+                maxDepth = tmpDepth;
             }
         }
 
@@ -64,11 +70,25 @@ namespace tree {
             printHelper(root->right);
         }
 
+        void DeleteAllNodes(node<T> *root) {
+            if (root->left) {
+                DeleteAllNodes(root->left);
+            }
+            if (root->right) {
+                DeleteAllNodes(root->right);
+            }
+            delete(root);
+        }
+
     public:
         Tree() {}
 
         Tree(T root) {
-            this->insert(root);
+            this->Insert(root);
+        }
+
+        virtual ~Tree() {
+            DeleteAllNodes(this->root);
         }
 
         T Value() {
@@ -80,14 +100,14 @@ namespace tree {
         }
 
         int Depth() {
-
+            return this->maxDepth;
         }
 
         void printTree() {
             printHelper(root);
         }
 
-        void insert(T value) {
+        void Insert(T value) {
             if (root) {
                 insertHelper(root, value);
             } else {
@@ -96,7 +116,7 @@ namespace tree {
             this->size++;
         }
 
-        node<T> *search(T value) {
+        node<T> *Search(T value) {
             return searchHelper(root, value);
         }
 

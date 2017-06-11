@@ -6,19 +6,24 @@
 #define JIMP_EXERCISES_TIMERECORDER_H
 
 #include <chrono>
-#include <utility>
-
+#include <tuple>
 
 namespace profiling {
+    template<class T>
+    auto TimeRecorder(const T &object) {
+        auto TimeStart = std::chrono::system_clock::now();
 
-        template<typename T>
-        std::pair<T, double> TimeRecoder(T object) {
-            auto time_start = std::chrono::high_resolution_clock::now();
-            auto object_return = (object)();
-            auto time_end = std::chrono::high_resolution_clock::now();
-            double measured_time = std::chrono::duration<double, std::milli>(time_end - time_start).count();
-            return std::make_pair(object_return, measured_time);
-        }
+        auto ToReturn = object();
+
+        auto TimeEnd = std::chrono::system_clock::now();
+
+        std::chrono::duration<double, std::milli> difference = TimeEnd - TimeStart;
+
+        double time = difference.count();
+
+        return std::make_pair(ToReturn, time);
+    };
 }
+
 
 #endif //JIMP_EXERCISES_TIMERECORDER_H

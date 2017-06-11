@@ -5,13 +5,30 @@
 #ifndef JIMP_EXERCISES_TREEITERATORS_H
 #define JIMP_EXERCISES_TREEITERATORS_H
 
+#include "../tree/Tree.h"
 
-class TreeIterators {
-private:
+namespace tree {
+    template<class T>
+    class PreOrderIterator {
+    public:
+        PreOrderIterator() {}
 
-public:
-    
-};
+        PreOrderIterator(const Tree<T> *tree) : tree(tree) {}
+
+    private:
+        const Tree<T> *tree;
+    };
+
+    template<class T>
+    class InOrderIterator {
+
+    };
+
+    template<class T>
+    class PostOrderIterator {
+
+    };
+}
 
 
 #endif //JIMP_EXERCISES_TREEITERATORS_H

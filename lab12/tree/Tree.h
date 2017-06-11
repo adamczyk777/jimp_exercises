@@ -17,7 +17,11 @@ namespace tree {
         node *left;
         node *right;
 
-        node(T value) : value(value) {}
+        node(T value) : value(value) {
+            this->left = nullptr;
+            this->right = nullptr;
+
+        }
 
         node(T value, node *left, node *right) : value(value), left(left), right(right) {}
 
@@ -26,7 +30,7 @@ namespace tree {
     template<class T>
     class Tree {
     private:
-        node<T> *root = nullptr;
+        node<T> *root;
         size_t size = 0;
 
         void insertHelper(node<T> *root, T value) {
@@ -73,9 +77,11 @@ namespace tree {
 
     public:
         Tree() {
+            this->root = nullptr;
         }
 
         Tree(T root) {
+            this->root = nullptr;
             this->Insert(root);
         }
 
@@ -96,10 +102,10 @@ namespace tree {
         }
 
         void Insert(T value) {
-            if (this->root) {
-                insertHelper(this->root, value);
-            } else {
+            if (!this->root) {
                 this->root = new node<T>(value);
+            } else {
+                insertHelper(this->root, value);
             }
             this->size++;
         }

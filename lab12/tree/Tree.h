@@ -26,7 +26,7 @@ namespace tree {
     template<class T>
     class Tree {
     private:
-        node<T> *root;
+        node<T> *root = nullptr;
         size_t size = 0;
 
         void insertHelper(node<T> *root, T value) {
@@ -73,11 +73,9 @@ namespace tree {
 
     public:
         Tree() {
-            this->root = nullptr;
         }
 
         Tree(T root) {
-            this->root = nullptr;
             this->Insert(root);
         }
 
@@ -98,8 +96,8 @@ namespace tree {
         }
 
         void Insert(T value) {
-            if (root) {
-                insertHelper(root, value);
+            if (this->root) {
+                insertHelper(this->root, value);
             } else {
                 this->root = new node<T>(value);
             }
